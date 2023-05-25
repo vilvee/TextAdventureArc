@@ -1,0 +1,19 @@
+﻿<Window x:Name="MyGame" x:Class="Arcane.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Arcane"
+        mc:Ignorable="d"
+        Title="Arcane" Height="690" Width="735">
+    <Canvas Margin="0,-2,0,2">
+        <Label Content="Hit Points:" Canvas.Left="18" Canvas.Top="74"/>
+        <Label Content="Level:" Canvas.Left="18" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Content="Experience:" Canvas.Left="18" Canvas.Top="46" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Content="Gold:" Canvas.Left="18" Canvas.Top="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label x:Name="lbHitPoints" Content="" Canvas.Left="110" Canvas.Top="73" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Height="28"/>
+        <Label x:Name="lbLevel" Content="" Canvas.Left="110" Canvas.Top="19" Width="65" Height="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label x:Name="lbExperience" Content="" Canvas.Left="110" Canvas.Top="45" Width="65" Height="28" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label x:Name="lbGold" Content="" Canvas.Left="110" Canvas.Top="99" Width="65" Height="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Canvas>
+</Window>
