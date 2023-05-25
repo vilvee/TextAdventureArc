@@ -1,0 +1,12 @@
+C:\Users\vvile\Documents\Arcane\Engine\bin\Release\net7.0\Engine.deps.json
+C:\Users\vvile\Documents\Arcane\Engine\bin\Release\net7.0\Engine.dll
+C:\Users\vvile\Documents\Arcane\Engine\bin\Release\net7.0\Engine.pdb
+C:\Users\vvile\Documents\Arcane\Engine\obj\Release\net7.0\Engine.csproj.AssemblyReference.cache
+C:\Users\vvile\Documents\Arcane\Engine\obj\Release\net7.0\Engine.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vvile\Documents\Arcane\Engine\obj\Release\net7.0\Engine.AssemblyInfoInputs.cache
+C:\Users\vvile\Documents\Arcane\Engine\obj\Release\net7.0\Engine.AssemblyInfo.cs
+C:\Users\vvile\Documents\Arcane\Engine\obj\Release\net7.0\Engine.csproj.CoreCompileInputs.cache
+C:\Users\vvile\Documents\Arcane\Engine\obj\Release\net7.0\Engine.dll
+C:\Users\vvile\Documents\Arcane\Engine\obj\Release\net7.0\refint\Engine.dll
+C:\Users\vvile\Documents\Arcane\Engine\obj\Release\net7.0\Engine.pdb
+C:\Users\vvile\Documents\Arcane\Engine\obj\Release\net7.0\ref\Engine.dll

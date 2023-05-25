@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Arcane"
         mc:Ignorable="d"
-        Title="Arcane" Height="690" Width="735">
+        Title="Arcane" Height="690" Width="735" Closed="MyGame_Closed">
     <Canvas Margin="0,-2,0,2">
         <Label Content="Hit Points:" Canvas.Left="18" Canvas.Top="74"/>
         <Label Content="Level:" Canvas.Left="18" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -16,8 +16,7 @@
         <Label x:Name="lbExperience" Content="" Canvas.Left="110" Canvas.Top="45" Width="65" Height="28" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label x:Name="lbGold" Content="" Canvas.Left="110" Canvas.Top="99" Width="65" Height="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Label Content="Select Action:" Canvas.Left="617" Canvas.Top="531"/>
-        <ComboBox x:Name="cboWeapons" DisplayMemberPath="Name" SelectedValuePath="ID" Canvas.Left="369" Canvas.Top="559" Width="227" IsDropDownOpen="True" SelectionChanged="ComboBox_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <ComboBox x:Name="cboPotions" DisplayMemberPath="Name" SelectedValuePath="ID" Canvas.Left="369" Canvas.Top="593" Width="227" IsDropDownOpen="True" SelectionChanged="ComboBox_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18"/>
+        <ComboBox x:Name="cboWeapons" DisplayMemberPath="Name" SelectedValuePath="ID" Canvas.Left="369" Canvas.Top="559" Width="227" IsDropDownOpen="False" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="cboWeapons_SelectionChanged"/>
         <Button x:Name="btnUseWeapon" Content="Use" Canvas.Left="620" Canvas.Top="559" HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Click="btnUseWeapon_Click"/>
         <Button x:Name="btnUsePotion" Content="Use" Canvas.Left="620" Canvas.Top="593" Width="78" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnUsePotion_Click"/>
         <Button x:Name="btnNorth" Content="North" Canvas.Left="493" Canvas.Top="433" Height="22" Width="45" Click="btnNorth_Click"/>
@@ -31,14 +30,15 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <RichTextBox x:Name="rtbMessages" Height="286" Width="351" Canvas.Top="130" Canvas.Left="347" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <RichTextBox x:Name="rtbMessages" Height="286" Width="351" Canvas.Top="130" Canvas.Left="347" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="rtbMessages_TextChanged" VerticalScrollBarVisibility="Visible">
             <FlowDocument>
                 <Paragraph>
                     <Run Text=""/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <DataGrid x:Name="dgvInventory" Height="309" Width="312" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Top="130" Canvas.Left="16" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" IsReadOnly="True" IsEnabled="False" HeadersVisibility="None" SelectionMode="Single"/>
-        <DataGrid x:Name="dgvQuests" Height="189" Width="312" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Top="446" Canvas.Left="16" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" SelectionMode="Single" HeadersVisibility="None" IsEnabled="False"/>
+        <DataGrid x:Name="dgvInventory" Height="309" Width="312" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Top="130" Canvas.Left="16" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="False" HeadersVisibility="Column" SelectionMode="Single"/>
+        <DataGrid x:Name="dgvQuests" Height="189" Width="312" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Top="446" Canvas.Left="16" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" SelectionMode="Single" HeadersVisibility="Column" IsEnabled="False"/>
+        <ComboBox x:Name="cboPotions" DisplayMemberPath="Name" SelectedValuePath="ID" Canvas.Left="368" Canvas.Top="591" Width="228" IsDropDownOpen="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
     </Canvas>
 </Window>
