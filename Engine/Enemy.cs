@@ -14,7 +14,7 @@ namespace Engine
         public int RewardExperiencePoints { get; set; }
         public int RewardGold { get; set; }
 
-        public List<Loot> Loot { get; set; }
+        public List<Loot> LootTable { get; set; }
 
         public Enemy(int iD, string name, int maximumDamage, int rewardExperiencePoints, int rewardGold, int maxHit, int currentHit) : base(maxHit, currentHit)
         {
@@ -23,7 +23,7 @@ namespace Engine
             MaximumDamage = maximumDamage;
             RewardExperiencePoints = rewardExperiencePoints;
             RewardGold = rewardGold;
-            Loot = new List<Loot>();
+            LootTable = new List<Loot>();
         }
     }
 }

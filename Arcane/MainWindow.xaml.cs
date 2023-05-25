@@ -37,5 +37,37 @@ namespace Arcane
             lbLevel.Content = _player.Level.ToString();
         }
 
+
+        private void btnNorth_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEast_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSouth_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnWest_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnUseWeapon_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnUsePotion_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+ 
     }
 }
