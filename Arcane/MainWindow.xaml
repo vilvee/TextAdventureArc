@@ -37,8 +37,19 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <DataGrid x:Name="dgvInventory" Height="309" Width="312" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Top="130" Canvas.Left="16" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="False" HeadersVisibility="Column" SelectionMode="Single"/>
-        <DataGrid x:Name="dgvQuests" Height="189" Width="312" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Top="446" Canvas.Left="16" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" SelectionMode="Single" HeadersVisibility="Column" IsEnabled="False"/>
+        <DataGrid x:Name="dgvInventory" Height="309" Width="312" Canvas.Top="130" Canvas.Left="16" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="False" HeadersVisibility="Column" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="197" Binding="{Binding Description}" />
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="dgvQuests" Height="189" Width="312" Canvas.Top="446" Canvas.Left="16" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" SelectionMode="Single" HeadersVisibility="Column" IsEnabled="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="197" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Done?" Binding="{Binding IsCompleted}" />
+            </DataGrid.Columns>
+        </DataGrid>
         <ComboBox x:Name="cboPotions" DisplayMemberPath="Name" SelectedValuePath="ID" Canvas.Left="368" Canvas.Top="591" Width="228" IsDropDownOpen="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
     </Canvas>
 </Window>
