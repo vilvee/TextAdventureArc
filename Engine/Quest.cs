@@ -8,10 +8,10 @@ namespace Engine
 {
     public class Quest
     {
-        public Quest Details { get; set; }
+        public Level Details { get; set; }
         public bool IsCompleted { get; set; }
 
-        public Quest(Quest details)
+        public Quest(Level details)
         {
             Details = details;
             IsCompleted = false;

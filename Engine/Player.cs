@@ -12,7 +12,7 @@ namespace Engine
         public int Level { get; set; }
         public int ExperiencePoints { get; set; }
         public int Gold { get; set; }
-
+        public Location CurrentLocation { get; set; }
         public List<InventoryItem> Inventory { get; set; }
         public List<Quest> Quests { get; set; }
 
