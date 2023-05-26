@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Engine
 {
@@ -12,10 +6,9 @@ namespace Engine
     {
         private int _currentHitPoints;
 
-        public int MaximumHitPoints { get; set; }
         public int CurrentHitPoints
         {
-            get => _currentHitPoints;
+            get { return _currentHitPoints; }
             set
             {
                 _currentHitPoints = value;
@@ -23,16 +16,24 @@ namespace Engine
             }
         }
 
-        public Entity(int maxHit, int currentHit)
+        public int MaximumHitPoints { get; set; }
+
+        public bool IsDead { get { return CurrentHitPoints <= 0; } }
+
+        public Entity(int currentHitPoints, int maximumHitPoints)
         {
-            MaximumHitPoints = maxHit;
-            CurrentHitPoints = currentHit;
+            CurrentHitPoints = currentHitPoints;
+            MaximumHitPoints = maximumHitPoints;
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged(string name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
         }
     }
 }

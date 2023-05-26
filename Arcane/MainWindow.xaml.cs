@@ -52,41 +52,8 @@ namespace Arcane
 
             dgvInventory.AutoGenerateColumns = false;
             dgvInventory.ItemsSource = _player.Inventory;
-            /*dgvInventory.HeadersVisibility = DataGridHeadersVisibility.None;*/
-
-          /*  DataGridTextColumn nameColumn = new DataGridTextColumn
-            {
-                Header = "Name",
-                Width = 197,
-                Binding = new Binding("Description")
-            };
-            dgvInventory.Columns.Add(nameColumn);
-
-            DataGridTextColumn quantityColumn = new DataGridTextColumn
-            {
-                Header = "Quantity",
-                Binding = new Binding("Quantity")
-            };
-            dgvInventory.Columns.Add(quantityColumn);*/
-
             dgvQuests.AutoGenerateColumns = false;
             dgvQuests.ItemsSource = _player.Quests;
-           /* dgvQuests.HeadersVisibility = DataGridHeadersVisibility.None;*/
-
-           /* DataGridTextColumn nameColumn1 = new DataGridTextColumn
-            {
-                Header = "Name",
-                Width = 197,
-                Binding = new Binding("Name")
-            };
-            dgvQuests.Columns.Add(nameColumn1);
-
-            DataGridTextColumn doneColumn = new DataGridTextColumn
-            {
-                Header = "Done?",
-                Binding = new Binding("IsCompleted")
-            };
-            dgvQuests.Columns.Add(doneColumn);*/
 
             cboWeapons.ItemsSource = _player.Weapons;
             cboWeapons.DisplayMemberPath = "Name";
@@ -203,7 +170,7 @@ namespace Arcane
                 rtbLocation.Document = flowDocument;
 
 
-                if (_player.CurrentLocation.EnemyPresent == null)
+                if (_player.CurrentLocation.NewInstanceOfEnemyLivingHere() == null)
                 {
                     cboWeapons.Visibility = Visibility.Collapsed;
                     cboPotions.Visibility = Visibility.Collapsed;
@@ -240,7 +207,7 @@ namespace Arcane
 
         private void btnMap_Click(object sender, RoutedEventArgs e)
         {
-            WorldMap mapScreen = new WorldMap();
+            WorldMap mapScreen = new WorldMap(_player);
             mapScreen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             mapScreen.ShowDialog();
         }

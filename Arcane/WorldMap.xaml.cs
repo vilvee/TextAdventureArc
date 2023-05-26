@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Path = System.IO.Path;
-
+using Engine;
 namespace Arcane
 {
     /// <summary>
@@ -25,18 +26,18 @@ namespace Arcane
 
         readonly Assembly _thisAssembly = Assembly.GetExecutingAssembly();
 
-        public WorldMap()
+        public WorldMap(Player player)
         {
             InitializeComponent();
-            SetImage(pic_0_2, "HerbalistsGarden");
-            SetImage(pic_1_2, "HerbalistsHut");
-            SetImage(pic_2_0, "FarmFields");
-            SetImage(pic_2_1, "Farmhouse");
-            SetImage(pic_2_2, "TownSquare");
-            SetImage(pic_2_3, "TownGate");
-            SetImage(pic_2_4, "Bridge");
-            SetImage(pic_2_5, "SpiderForest");
-            SetImage(pic_3_2, "Home");
+            SetImage(pic_0_2, player.LocationsVisited.Contains(5) ? "HerbalistsGarden" : "FogLocation");
+            SetImage(pic_1_2, player.LocationsVisited.Contains(4) ? "HerbalistsHut" : "FogLocation");
+            SetImage(pic_2_0, player.LocationsVisited.Contains(7) ? "FarmFields" : "FogLocation");
+            SetImage(pic_2_1, player.LocationsVisited.Contains(6) ? "Farmhouse" : "FogLocation");
+            SetImage(pic_2_2, player.LocationsVisited.Contains(2) ? "TownSquare" : "FogLocation");
+            SetImage(pic_2_3, player.LocationsVisited.Contains(3) ? "TownGate" : "FogLocation");
+            SetImage(pic_2_4, player.LocationsVisited.Contains(8) ? "Bridge" : "FogLocation");
+            SetImage(pic_2_5, player.LocationsVisited.Contains(9) ? "SpiderForest" : "FogLocation");
+            SetImage(pic_3_2, player.LocationsVisited.Contains(1) ? "Home" : "FogLocation");
         }
 
         private void SetImage(Image pictureBox, string imageName)
