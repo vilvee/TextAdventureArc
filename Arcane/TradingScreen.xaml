@@ -1,0 +1,50 @@
+﻿<Window x:Class="Arcane.TradingScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Arcane"
+        mc:Ignorable="d"
+        Title="TradingScreen" Height="349" Width="544">
+    <Canvas>
+        <Label Content="My Inventory" x:Name="lblMyInventory" Canvas.Left="99" Canvas.Top="13"/>
+        <Label Content="Vendor's Inventory" x:Name="lblVendorInventory" Canvas.Left="349" Canvas.Top="13"/>
+        <DataGrid x:Name="dgvMyItems" AutoGenerateColumns="False" Canvas.Left="13" Canvas.Top="43" Width="240" Height="216" EnableRowVirtualization="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="120" Binding="{Binding Description, Mode=OneWay}" />
+                <DataGridTextColumn Header="Qty" Width="30" Binding="{Binding Quantity, Mode=OneWay}" ElementStyle="{StaticResource RightAlignStyle}" />
+                <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Price, Mode=OneWay}" ElementStyle="{StaticResource RightAlignStyle}" />
+                <DataGridTemplateColumn Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Sell 1" Click="dgvMyItems_CellClick" Tag="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="dgvVendorItems" AutoGenerateColumns="False" Canvas.Left="276" Canvas.Top="43" Width="240" Height="216" SelectionMode="Single" EnableRowVirtualization="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="150" Binding="{Binding Description, Mode=OneWay}" />
+                <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Price, Mode=OneWay}" ElementStyle="{StaticResource RightAlignStyle}" />
+                <DataGridTemplateColumn Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Buy 1" Click="dgvVendorItems_CellClick" Tag="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+       
+
+
+
+        <Button Content="Close" x:Name="btnClose" Canvas.Left="441" Canvas.Top="274" Width="75" Height="23" Click="btnClose_Click"/>
+    </Canvas>
+
+
+
+
+</Window>

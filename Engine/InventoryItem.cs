@@ -31,6 +31,8 @@ namespace Engine
                 OnPropertyChanged("Description");
             }
         }
+        public int ItemID => Detail.ID;
+        public int Price => Detail.Price;
         public string Description => Quantity > 1 ? Detail.NamePlural : Detail.Name;
 
         public InventoryItem (Item detail, int quantity)

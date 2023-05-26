@@ -23,7 +23,7 @@ namespace Arcane
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string PLAYER_DATA_FILE_NAME = "PlayerData1.xml";
+        private const string PLAYER_DATA_FILE_NAME = "PlayerData2.xml";
 
         private Player _player;
 
@@ -31,15 +31,19 @@ namespace Arcane
         public MainWindow()
         {
             InitializeComponent();
+            _player = PlayerDataMapper.CreateFromDatabase();
+            if (_player == null)
+            {
+                if (File.Exists(PLAYER_DATA_FILE_NAME))
+                {
+                    _player = Player.CreatePlayerFromXmlString(File.ReadAllText(PLAYER_DATA_FILE_NAME));
+                }
+                else
+                {
+                    _player = Player.CreateDefaultPlayer();
+                }
+            }
 
-            if (File.Exists(PLAYER_DATA_FILE_NAME))
-            {
-                _player = Player.CreatePlayerFromXmlString(File.ReadAllText(PLAYER_DATA_FILE_NAME));
-            }
-            else
-            {
-                _player = Player.CreateDefaultPlayer();
-            }
 
             lbHitPoints.SetBinding(ContentProperty, new Binding("CurrentHitPoints") { Source = _player });
             lbGold.SetBinding(ContentProperty, new Binding("Gold") { Source = _player });
@@ -48,9 +52,9 @@ namespace Arcane
 
             dgvInventory.AutoGenerateColumns = false;
             dgvInventory.ItemsSource = _player.Inventory;
-            dgvInventory.HeadersVisibility = DataGridHeadersVisibility.None;
+            /*dgvInventory.HeadersVisibility = DataGridHeadersVisibility.None;*/
 
-            DataGridTextColumn nameColumn = new DataGridTextColumn
+          /*  DataGridTextColumn nameColumn = new DataGridTextColumn
             {
                 Header = "Name",
                 Width = 197,
@@ -63,13 +67,13 @@ namespace Arcane
                 Header = "Quantity",
                 Binding = new Binding("Quantity")
             };
-            dgvInventory.Columns.Add(quantityColumn);
+            dgvInventory.Columns.Add(quantityColumn);*/
 
             dgvQuests.AutoGenerateColumns = false;
             dgvQuests.ItemsSource = _player.Quests;
-            dgvQuests.HeadersVisibility = DataGridHeadersVisibility.None;
+           /* dgvQuests.HeadersVisibility = DataGridHeadersVisibility.None;*/
 
-            DataGridTextColumn nameColumn1 = new DataGridTextColumn
+           /* DataGridTextColumn nameColumn1 = new DataGridTextColumn
             {
                 Header = "Name",
                 Width = 197,
@@ -82,7 +86,7 @@ namespace Arcane
                 Header = "Done?",
                 Binding = new Binding("IsCompleted")
             };
-            dgvQuests.Columns.Add(doneColumn);
+            dgvQuests.Columns.Add(doneColumn);*/
 
             cboWeapons.ItemsSource = _player.Weapons;
             cboWeapons.DisplayMemberPath = "Name";
@@ -149,6 +153,7 @@ namespace Arcane
         private void MyGame_Closed(object sender, EventArgs e)
         {
             File.WriteAllText(PLAYER_DATA_FILE_NAME, _player.ToXmlString());
+            PlayerDataMapper.SaveToDatabase(_player);
         }
 
         private void cboWeapons_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -183,7 +188,7 @@ namespace Arcane
                 btnEast.Visibility = (_player.CurrentLocation.LocationToEast != null) ? Visibility.Visible : Visibility.Collapsed;
                 btnSouth.Visibility = (_player.CurrentLocation.LocationToSouth != null) ? Visibility.Visible : Visibility.Collapsed;
                 btnWest.Visibility = (_player.CurrentLocation.LocationToWest != null) ? Visibility.Visible : Visibility.Collapsed;
-
+                btnTrade.Visibility = (_player.CurrentLocation.VendorWorkingHere != null)? Visibility.Visible : Visibility.Collapsed;
                 // Display current location name and description
                 FlowDocument flowDocument = new FlowDocument();
 
@@ -225,6 +230,14 @@ namespace Arcane
             }
             rtbMessages.ScrollToEnd();
         }
+
+        private void btnTrade_Click(object sender, RoutedEventArgs e)
+        {
+            TradingScreen tradingScreen = new TradingScreen(_player);
+            tradingScreen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            tradingScreen.ShowDialog();
+        }
+
 
     }
 }

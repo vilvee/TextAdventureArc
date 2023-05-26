@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:Arcane"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+            <Style x:Key="RightAlignStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="TextAlignment" Value="Right" />
+            </Style>
+
+
     </Application.Resources>
+
 </Application>

@@ -22,6 +22,7 @@
         <Button x:Name="btnNorth" Content="North" Canvas.Left="493" Canvas.Top="433" Height="22" Width="45" Click="btnNorth_Click"/>
         <Button x:Name="btnEast" Content="East" Canvas.Left="573" Canvas.Top="457" Height="22" Width="45" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnEast_Click"/>
         <Button x:Name="btnSouth" Content="South" Canvas.Left="493" Canvas.Top="487" Height="22" Width="45" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSouth_Click"/>
+        <Button x:Name="btnTrade" Content="Trade" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="23" Margin="493,620,0,0" Click="btnTrade_Click"/>
         <Button x:Name="btnWest" Content="West" Canvas.Left="412" Canvas.Top="457" Height="22" Width="45" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnbtnWest_Click"/>
         <RichTextBox x:Name="rtbLocation" Height="105" Width="351" Canvas.Top="19" Canvas.Left="347" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Center">
             <FlowDocument>
@@ -32,22 +33,22 @@
         </RichTextBox>
         <RichTextBox x:Name="rtbMessages" Height="286" Width="351" Canvas.Top="130" Canvas.Left="347" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="rtbMessages_TextChanged" VerticalScrollBarVisibility="Visible">
             <FlowDocument>
-                <Paragraph>
+                <Paragraph AllowDrop="False">
                     <Run Text=""/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <DataGrid x:Name="dgvInventory" Height="309" Width="312" Canvas.Top="130" Canvas.Left="16" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="False" HeadersVisibility="Column" SelectionMode="Single">
+        <DataGrid x:Name="dgvInventory" Height="309" Width="312" Canvas.Top="130" Canvas.Left="16" CanUserSortColumns="True" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="False" HeadersVisibility="Column" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Width="197" Binding="{Binding Description}" />
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
+                <DataGridTextColumn Header="Quantity" Width="*" Binding="{Binding Quantity}" />
             </DataGrid.Columns>
         </DataGrid>
 
-        <DataGrid x:Name="dgvQuests" Height="189" Width="312" Canvas.Top="446" Canvas.Left="16" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" SelectionMode="Single" HeadersVisibility="Column" IsEnabled="False">
+        <DataGrid x:Name="dgvQuests" Height="189" Width="312" Canvas.Top="446" Canvas.Left="16" IsSynchronizedWithCurrentItem="True" CanUserSortColumns="True" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" SelectionMode="Single" IsEnabled="False" HeadersVisibility="Column" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Width="197" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Done?" Binding="{Binding IsCompleted}" />
+                <DataGridTextColumn Header="Done?" Width="*" Binding="{Binding IsCompleted}" />
             </DataGrid.Columns>
         </DataGrid>
         <ComboBox x:Name="cboPotions" DisplayMemberPath="Name" SelectedValuePath="ID" Canvas.Left="368" Canvas.Top="591" Width="228" IsDropDownOpen="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
