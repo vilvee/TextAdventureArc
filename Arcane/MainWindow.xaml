@@ -17,6 +17,7 @@
         <Label x:Name="lbGold" Content="" Canvas.Left="110" Canvas.Top="99" Width="65" Height="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Label Content="Select Action:" Canvas.Left="617" Canvas.Top="531"/>
         <ComboBox x:Name="cboWeapons" DisplayMemberPath="Name" SelectedValuePath="ID" Canvas.Left="369" Canvas.Top="559" Width="227" IsDropDownOpen="False" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="cboWeapons_SelectionChanged"/>
+        <Button x:Name="btnMap" Content="Map" Canvas.Left="478" Canvas.Top="459" Width="75" Height="23" Click="btnMap_Click" />
         <Button x:Name="btnUseWeapon" Content="Use" Canvas.Left="620" Canvas.Top="559" HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Click="btnUseWeapon_Click"/>
         <Button x:Name="btnUsePotion" Content="Use" Canvas.Left="620" Canvas.Top="593" Width="78" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnUsePotion_Click"/>
         <Button x:Name="btnNorth" Content="North" Canvas.Left="493" Canvas.Top="433" Height="22" Width="45" Click="btnNorth_Click"/>

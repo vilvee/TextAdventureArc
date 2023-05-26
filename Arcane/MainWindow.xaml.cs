@@ -238,6 +238,11 @@ namespace Arcane
             tradingScreen.ShowDialog();
         }
 
-
+        private void btnMap_Click(object sender, RoutedEventArgs e)
+        {
+            WorldMap mapScreen = new WorldMap();
+            mapScreen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            mapScreen.ShowDialog();
+        }
     }
 }
