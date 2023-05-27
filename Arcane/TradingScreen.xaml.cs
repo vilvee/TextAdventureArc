@@ -124,5 +124,43 @@ namespace Arcane
                 }
             }
         }
+        #region WindowControls
+
+        private void TriggerMoveWindow(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (WindowState == System.Windows.WindowState.Maximized)
+                {
+                    WindowState = System.Windows.WindowState.Normal;
+
+                    double pct = PointToScreen(e.GetPosition(this)).X / System.Windows.SystemParameters.PrimaryScreenWidth;
+                    Top = 0;
+                    Left = e.GetPosition(this).X - (pct * Width);
+                }
+
+                DragMove();
+            }
+        }
+
+        private void TriggerMaximize(object sender, MouseButtonEventArgs e)
+        {
+            if (WindowState == System.Windows.WindowState.Maximized)
+                WindowState = System.Windows.WindowState.Normal;
+            else if (WindowState == System.Windows.WindowState.Normal)
+                WindowState = System.Windows.WindowState.Maximized;
+        }
+
+        private void TriggerClose(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void TriggerMinimize(object sender, RoutedEventArgs e)
+        {
+            WindowState = System.Windows.WindowState.Minimized;
+        }
+
+        #endregion
     }
 }

@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{737374
 		..\Images\HerbalistsGarden.png = ..\Images\HerbalistsGarden.png
 		..\Images\HerbalistsHut.png = ..\Images\HerbalistsHut.png
 		..\Images\Home.png = ..\Images\Home.png
+		..\Images\MainBackground.jpg = ..\Images\MainBackground.jpg
 		..\Images\SpiderForest.png = ..\Images\SpiderForest.png
 		..\Images\TownGate.png = ..\Images\TownGate.png
 		..\Images\TownSquare.png = ..\Images\TownSquare.png
