@@ -10,6 +10,7 @@ using System.IO;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using System.Reflection;
 
 namespace Arcane
 {
@@ -48,6 +49,8 @@ namespace Arcane
             dgvInventory.ItemsSource = _player.Inventory;
             dgvQuests.AutoGenerateColumns = false;
             dgvQuests.ItemsSource = _player.Quests;
+
+
 
             cboWeapons.ItemsSource = _player.Weapons;
             cboWeapons.DisplayMemberPath = "Name";
@@ -244,5 +247,55 @@ namespace Arcane
         }
 
         #endregion
+
+        private ListSortDirection dgvInventorySortDirection = ListSortDirection.Ascending;
+        private ListSortDirection dgvQuestsSortDirection = ListSortDirection.Ascending;
+
+        private void dgvInventory_Sorting(object sender, DataGridSortingEventArgs e)
+        {
+            e.Handled = true;
+
+            string propertyName = e.Column.SortMemberPath;
+            BindingList<InventoryItem> inventory = _player.Inventory;
+
+            if (inventory != null)
+            {
+                List<InventoryItem> sortedInventory = dgvInventorySortDirection == ListSortDirection.Ascending ?
+                    inventory.OrderBy(x => GetPropertyValue(x, propertyName)).ToList() :
+                    inventory.OrderByDescending(x => GetPropertyValue(x, propertyName)).ToList();
+
+                dgvInventory.ItemsSource = null;
+                dgvInventory.ItemsSource = sortedInventory;
+                dgvInventorySortDirection = dgvInventorySortDirection == ListSortDirection.Ascending ?
+                    ListSortDirection.Descending : ListSortDirection.Ascending;
+            }
+        }
+
+        private void dgvQuests_Sorting(object sender, DataGridSortingEventArgs e)
+        {
+            e.Handled = true;
+
+            string propertyName = e.Column.SortMemberPath;
+            BindingList<Quest> quests = _player.Quests;
+
+            if (quests != null)
+            {
+                List<Quest> sortedQuests = dgvQuestsSortDirection == ListSortDirection.Ascending ?
+                    quests.OrderBy(x => GetPropertyValue(x, propertyName)).ToList() :
+                    quests.OrderByDescending(x => GetPropertyValue(x, propertyName)).ToList();
+
+                dgvQuests.ItemsSource = null;
+                dgvQuests.ItemsSource = sortedQuests;
+                dgvQuestsSortDirection = dgvQuestsSortDirection == ListSortDirection.Ascending ?
+                    ListSortDirection.Descending : ListSortDirection.Ascending;
+            }
+        }
+
+        private object GetPropertyValue(object obj, string propertyName)
+        {
+            PropertyInfo property = obj.GetType().GetProperty(propertyName);
+            return property.GetValue(obj);
+        }
+
     }
 }

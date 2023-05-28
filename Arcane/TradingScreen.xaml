@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowStyle="None"
         AllowsTransparency="True"
-        ResizeMode="CanResizeWithGrip"
         xmlns:local="clr-namespace:Arcane"
         Title="TradingScreen" Height="349" Width="544">
     <Window.Resources>
@@ -18,28 +17,31 @@
             <Setter Property="Cursor"
                     Value="{x:Null}" />
             <Setter Property="Foreground"
-                    Value="#000" />
+                    Value="White" />
         </Style>
     </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="/shopjpg.jpg"/>
+    </Window.Background>
 
     <DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <TextBlock DockPanel.Dock="Right"
-                       VerticalAlignment="Center" Margin="0,0,12,0">
+                       VerticalAlignment="Center" Margin="0,0,12,0" Foreground="White" FontFamily="Book Antiqua">
                 <Hyperlink Click="TriggerClose"
                            Style="{StaticResource WindowIconStyle}">r</Hyperlink>
             </TextBlock>
             <TextBlock DockPanel.Dock="Right"
-                       VerticalAlignment="Center" Margin="0,0,29,0">
+                       VerticalAlignment="Center" Margin="0,0,18,0" Foreground="White">
                 <Hyperlink Click="TriggerMinimize"
                            Style="{StaticResource WindowIconStyle}">0</Hyperlink>
             </TextBlock>
             <StatusBar Background="Transparent"
                        MouseDoubleClick="TriggerMaximize"
                        MouseMove="TriggerMoveWindow">
-                <TextBlock DockPanel.Dock="Left"
+                <TextBlock x:Name="Shop" DockPanel.Dock="Left"
                            Text="Shop"
-                           FontSize="16" Margin="9,0,0,0"/>
+                           FontSize="16" Margin="9,0,0,0" Foreground="White" FontFamily="Book Antiqua"/>
             </StatusBar>
 
         </DockPanel>
@@ -47,39 +49,90 @@
         <Canvas>
         <Label Content="My Inventory" x:Name="lblMyInventory" Canvas.Left="99" Canvas.Top="13"/>
         <Label Content="Vendor's Inventory" x:Name="lblVendorInventory" Canvas.Left="349" Canvas.Top="13"/>
-        <DataGrid x:Name="dgvMyItems" AutoGenerateColumns="False" Canvas.Left="13" Canvas.Top="43" Width="240" Height="216" EnableRowVirtualization="False" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Width="120" Binding="{Binding Description, Mode=OneWay}" />
-                <DataGridTextColumn Header="Qty" Width="30" Binding="{Binding Quantity, Mode=OneWay}" ElementStyle="{StaticResource RightAlignStyle}" />
-                <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Price, Mode=OneWay}" ElementStyle="{StaticResource RightAlignStyle}" />
-                <DataGridTemplateColumn Width="50">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Sell 1" Click="dgvMyItems_CellClick" Tag="{Binding}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+            <DataGrid x:Name="dgvMyItems" AutoGenerateColumns="False" Canvas.Left="13" Canvas.Top="43" Width="240" Height="216" EnableRowVirtualization="False"
+          HorizontalGridLinesBrush="#FF4E4E4E" VerticalGridLinesBrush="#FF4E4E4E" AlternationCount="2" AlternatingRowBackground="#FFB1AFAF" Foreground="#F3000000" Background="#9CF0F0F0" BorderBrush="{x:Null}">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Foreground" Value="#FFFFFF" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Background" Value="#FFA9884B" />
+                    </Style>
+                    <Style TargetType="Separator">
+                        <Setter Property="Background" Value="#FFA9884B" />
+                        <Setter Property="Margin" Value="0" />
+                    </Style>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Background" Value="#107D6A31" />
+                        <Setter Property="Foreground" Value="#FFA9884B" />
+                        <Setter Property="BorderBrush" Value="{x:Null}" />
+                        <Setter Property="Padding" Value="5" />
+                    </Style>
+                    <Style TargetType="Button" x:Key="SellButtonStyle">
+                        <Setter Property="Background" Value="#107D6A31" />
+                        <Setter Property="Foreground" Value="#FFA9884B" />
+                        <Setter Property="BorderBrush" Value="#00688CAF" />
+                        <Setter Property="Padding" Value="5" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header=" Name" Width="120" Binding="{Binding Description, Mode=OneWay}"  />
+                    <DataGridTextColumn Header="Qty" Width="30" Binding="{Binding Quantity, Mode=OneWay}" ElementStyle="{StaticResource RightAlignStyle}" />
+                    <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Price, Mode=OneWay}" ElementStyle="{StaticResource RightAlignStyle}" />
+                    <DataGridTemplateColumn Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Sell 1" Click="dgvMyItems_CellClick" Tag="{Binding}" Style="{StaticResource SellButtonStyle}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <DataGrid x:Name="dgvVendorItems" AutoGenerateColumns="False" Canvas.Left="276" Canvas.Top="43" Width="240" Height="216" SelectionMode="Single" EnableRowVirtualization="False" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Width="150" Binding="{Binding Description, Mode=OneWay}" />
-                <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Price, Mode=OneWay}" ElementStyle="{StaticResource RightAlignStyle}" />
-                <DataGridTemplateColumn Width="50">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Buy 1" Click="dgvVendorItems_CellClick" Tag="{Binding}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-       
+
+            <DataGrid x:Name="dgvVendorItems" AutoGenerateColumns="False" Canvas.Left="276" Canvas.Top="43" Width="240" Height="216" SelectionMode="Single" EnableRowVirtualization="False"
+          HorizontalGridLinesBrush="#FF4E4E4E" VerticalGridLinesBrush="#FF4E4E4E" AlternationCount="2" AlternatingRowBackground="#FFB1AFAF" BorderBrush="{x:Null}" Background="#9BF0F0F0">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Foreground" Value="#FFFFFF" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Background" Value="#FFA9884B" />
+                    </Style>
+                    <Style TargetType="Separator">
+                        <Setter Property="Background" Value="#FFA9884B" />
+                        <Setter Property="Margin" Value="0" />
+                    </Style>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Background" Value="#107D6A31" />
+                        <Setter Property="Foreground" Value="#FFA9884B" />
+                        <Setter Property="BorderBrush" Value="{x:Null}" />
+                        <Setter Property="Padding" Value="5" />
+                    </Style>
+                    <Style TargetType="Button" x:Key="BuyButtonStyle">
+                        <Setter Property="Background" Value="#107D6A31" />
+                        <Setter Property="Foreground" Value="#FFA9884B" />
+                        <Setter Property="BorderBrush" Value="#00688CAF" />
+                        <Setter Property="Padding" Value="5" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="  Name" Width="150" Binding="{Binding Description, Mode=OneWay}" />
+                    <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Price, Mode=OneWay}" ElementStyle="{StaticResource RightAlignStyle}" />
+                    <DataGridTemplateColumn Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Buy 1" Click="dgvVendorItems_CellClick" Tag="{Binding}" Style="{StaticResource BuyButtonStyle}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
 
 
 
-        <Button Content="Close" x:Name="btnClose" Canvas.Left="441" Canvas.Top="274" Width="75" Height="23" Click="btnClose_Click"/>
+
+            <Button Content="Close" x:Name="btnClose" Canvas.Left="441" Canvas.Top="274" HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Click="btnClose_Click" 
+                    BorderBrush="#00707070" Foreground="#FFDAD9D6" 
+                    UseLayoutRounding="False" FontFamily="Bookman Old Style" FontSize="16" Cursor="Hand" Background="#FFA38149"/>
     </Canvas>
 
 

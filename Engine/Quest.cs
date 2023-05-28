@@ -37,7 +37,8 @@ namespace Engine
         public Quest(Level details)
         {
             Details = details;
-            IsCompleted = false;
+            _details = details;
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

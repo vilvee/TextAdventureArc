@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowStyle="None"
         AllowsTransparency="True"
-        ResizeMode="CanResizeWithGrip"
         xmlns:local="clr-namespace:Arcane"
         Title="WorldMap" Height="387" Width="563">
 
@@ -19,19 +18,22 @@
             <Setter Property="Cursor"
                     Value="{x:Null}" />
             <Setter Property="Foreground"
-                    Value="#000" />
+                    Value="White" />
         </Style>
     </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="/map.jpg" Stretch="UniformToFill"/>
+    </Window.Background>
 
     <DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <TextBlock DockPanel.Dock="Right"
-                       VerticalAlignment="Center" Margin="0,0,12,0">
+                       VerticalAlignment="Center" Margin="0,0,12,0" Foreground="White">
                 <Hyperlink Click="TriggerClose"
                            Style="{StaticResource WindowIconStyle}">r</Hyperlink>
             </TextBlock>
             <TextBlock DockPanel.Dock="Right"
-                       VerticalAlignment="Center" Margin="0,0,29,0">
+                       VerticalAlignment="Center" Margin="0,0,29,0" Foreground="White">
                 <Hyperlink Click="TriggerMinimize"
                            Style="{StaticResource WindowIconStyle}">0</Hyperlink>
             </TextBlock>
@@ -40,7 +42,7 @@
                        MouseMove="TriggerMoveWindow">
                 <TextBlock DockPanel.Dock="Left"
                            Text="World Map"
-                           FontSize="16" Margin="9,0,0,0"/>
+                           FontSize="16" Margin="9,0,0,0" Foreground="White" FontFamily="Book Antiqua"/>
             </StatusBar>
 
         </DockPanel>

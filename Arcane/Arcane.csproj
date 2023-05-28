@@ -8,7 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="artwork %281%29.png" />
+    <None Remove="artwork %285%29.png" />
+    <None Remove="Background.png" />
+    <None Remove="Button2.png" />
+    <None Remove="DarkCorridorr.jpg" />
+    <None Remove="LargeFrame.png" />
     <None Remove="MainBackground.jpg" />
+    <None Remove="map.jpg" />
+    <None Remove="PlayerFrameEmptypng.png" />
+    <None Remove="shopjpg.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +29,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="artwork (1).png" />
+    <Resource Include="artwork (5).png" />
+    <Resource Include="Background.png" />
+    <Resource Include="Button2.png" />
+    <Resource Include="DarkCorridorr.jpg" />
+    <Resource Include="LargeFrame.png" />
     <Resource Include="MainBackground.jpg" />
+    <Resource Include="map.jpg" />
+    <Resource Include="PlayerFrameEmptypng.png" />
+    <Resource Include="shopjpg.jpg" />
   </ItemGroup>
 
 </Project>
