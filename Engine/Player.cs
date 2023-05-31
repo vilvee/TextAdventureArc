@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading;
 using System.Xml;
+
 namespace Engine
+
 {
     public class Player : Entity
     {
@@ -12,6 +15,8 @@ namespace Engine
         private int _experiencePoints;
         private Location _currentLocation;
         public event EventHandler<MessageEventArgs> OnMessage;
+      
+
         public int Gold
         {
             get { return _gold; }

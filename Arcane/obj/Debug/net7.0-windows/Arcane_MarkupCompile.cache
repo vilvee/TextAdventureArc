@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 C:\Users\vvile\Documents\Arcane\Arcane\App.xaml
-4138235365
+5-805581657
 
-6-1167816574
+71938358149
 214-758943264
-CharacterSelect.xaml;MainWindow.xaml;TradingScreen.xaml;WorldMap.xaml;
+CharacterSelect.xaml;MainWindow.xaml;PlayerInfo.xaml;TradingScreen.xaml;WorldMap.xaml;
 
-True
+False
 

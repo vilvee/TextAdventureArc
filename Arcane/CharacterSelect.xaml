@@ -5,8 +5,7 @@
         Height="562"
         Width="987"
         WindowStyle="None"
-        AllowsTransparency="True"
-        ResizeMode="CanResizeWithGrip">
+        AllowsTransparency="True">
     <Window.Resources>
         <Style x:Key="WindowIconStyle"
                TargetType="{x:Type Hyperlink}">

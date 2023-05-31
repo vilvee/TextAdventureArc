@@ -19,9 +19,9 @@ namespace Engine
         public Location LocationToSouth { get; set; }
         public Location LocationToWest { get; set; }
 
-        public bool HasAEnemy { get { return _monstersAtLocation.Count > 0; } }
-        public bool HasAQuest { get { return QuestAvailableHere != null; } }
-        public bool DoesNotHaveAnItemRequiredToEnter { get { return ItemRequiredToEnter == null; } }
+        public bool HasAEnemy => _monstersAtLocation.Count > 0;
+        public bool HasAQuest => QuestAvailableHere != null;
+        public bool DoesNotHaveAnItemRequiredToEnter => ItemRequiredToEnter == null;
 
         public Location(int id, string name, string description,
             Item itemRequiredToEnter = null, Level questAvailableHere = null)

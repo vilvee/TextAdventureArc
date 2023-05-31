@@ -45,11 +45,7 @@ namespace Arcane
             lbExperience.SetBinding(ContentProperty, new Binding("ExperiencePoints") { Source = _player });
             lbLevel.SetBinding(ContentProperty, new Binding("Level") { Source = _player });
 
-            dgvInventory.AutoGenerateColumns = false;
-            dgvInventory.ItemsSource = _player.Inventory;
-            dgvQuests.AutoGenerateColumns = false;
-            dgvQuests.ItemsSource = _player.Quests;
-
+          
 
 
             cboWeapons.ItemsSource = _player.Weapons;
@@ -131,8 +127,13 @@ namespace Arcane
                 cboWeapons.ItemsSource = _player.Weapons;
                 if (!_player.Weapons.Any())
                 {
-                    cboWeapons.Visibility = Visibility.Collapsed;
-                    btnUseWeapon.Visibility = Visibility.Collapsed;
+                    cboWeapons.IsEnabled = false;
+                    btnUseWeapon.IsEnabled = false;
+                }
+                else
+                {
+                    cboWeapons.IsEnabled = true;
+                    btnUseWeapon.IsEnabled = true;
                 }
             }
             if (propertyChangedEventArgs.PropertyName == "Potions")
@@ -140,18 +141,25 @@ namespace Arcane
                 cboPotions.ItemsSource = _player.Potions;
                 if (!_player.Potions.Any())
                 {
-                    cboPotions.Visibility = Visibility.Collapsed;
-                    btnUsePotion.Visibility = Visibility.Collapsed;
+                    cboPotions.IsEnabled = false;
+                    btnUsePotion.IsEnabled = false;
                 }
-            }
+                else
+                {
+                    cboPotions.IsEnabled = true;
+                    btnUsePotion.IsEnabled = true;
+                }
+            
+
+        }
             if (propertyChangedEventArgs.PropertyName == "CurrentLocation")
             {
                 // Show/hide available movement buttons
-                btnNorth.Visibility = (_player.CurrentLocation.LocationToNorth != null) ? Visibility.Visible : Visibility.Collapsed;
-                btnEast.Visibility = (_player.CurrentLocation.LocationToEast != null) ? Visibility.Visible : Visibility.Collapsed;
-                btnSouth.Visibility = (_player.CurrentLocation.LocationToSouth != null) ? Visibility.Visible : Visibility.Collapsed;
-                btnWest.Visibility = (_player.CurrentLocation.LocationToWest != null) ? Visibility.Visible : Visibility.Collapsed;
-                btnTrade.Visibility = (_player.CurrentLocation.VendorWorkingHere != null)? Visibility.Visible : Visibility.Collapsed;
+                btnNorth.Visibility = (_player.CurrentLocation.LocationToNorth != null) ? Visibility.Visible : Visibility.Hidden;
+                btnEast.Visibility = (_player.CurrentLocation.LocationToEast != null) ? Visibility.Visible : Visibility.Hidden;
+                btnSouth.Visibility = (_player.CurrentLocation.LocationToSouth != null) ? Visibility.Visible : Visibility.Hidden;
+                btnWest.Visibility = (_player.CurrentLocation.LocationToWest != null) ? Visibility.Visible : Visibility.Hidden;
+                btnTradeBorder.Visibility = (_player.CurrentLocation.VendorWorkingHere != null)? Visibility.Visible : Visibility.Hidden;
                 // Display current location name and description
                 FlowDocument flowDocument = new FlowDocument();
 
@@ -168,18 +176,19 @@ namespace Arcane
 
                 if (_player.CurrentLocation.NewInstanceOfEnemyLivingHere() == null)
                 {
-                    cboWeapons.Visibility = Visibility.Collapsed;
-                    cboPotions.Visibility = Visibility.Collapsed;
-                    btnUseWeapon.Visibility = Visibility.Collapsed;
-                    btnUsePotion.Visibility = Visibility.Collapsed;
+                    cboWeapons.IsEnabled = false;
+                    cboPotions.IsEnabled = false;
+                    btnUseWeapon.IsEnabled = false;
+                    btnUsePotion.IsEnabled = false;
                 }
                 else
                 {
-                    cboWeapons.Visibility = _player.Weapons.Any() ? Visibility.Visible : Visibility.Collapsed;
-                    cboPotions.Visibility = _player.Potions.Any() ? Visibility.Visible : Visibility.Collapsed;
-                    btnUseWeapon.Visibility = _player.Weapons.Any() ? Visibility.Visible : Visibility.Collapsed;
-                    btnUsePotion.Visibility = _player.Potions.Any() ? Visibility.Visible : Visibility.Collapsed;
+                    cboWeapons.IsEnabled = _player.Weapons.Any();
+                    cboPotions.IsEnabled = _player.Potions.Any();
+                    btnUseWeapon.IsEnabled = _player.Weapons.Any();
+                    btnUsePotion.IsEnabled = _player.Potions.Any();
                 }
+
             }
 
         }
@@ -248,54 +257,11 @@ namespace Arcane
 
         #endregion
 
-        private ListSortDirection dgvInventorySortDirection = ListSortDirection.Ascending;
-        private ListSortDirection dgvQuestsSortDirection = ListSortDirection.Ascending;
-
-        private void dgvInventory_Sorting(object sender, DataGridSortingEventArgs e)
+        private void btnInfo_Checked(object sender, RoutedEventArgs e)
         {
-            e.Handled = true;
-
-            string propertyName = e.Column.SortMemberPath;
-            BindingList<InventoryItem> inventory = _player.Inventory;
-
-            if (inventory != null)
-            {
-                List<InventoryItem> sortedInventory = dgvInventorySortDirection == ListSortDirection.Ascending ?
-                    inventory.OrderBy(x => GetPropertyValue(x, propertyName)).ToList() :
-                    inventory.OrderByDescending(x => GetPropertyValue(x, propertyName)).ToList();
-
-                dgvInventory.ItemsSource = null;
-                dgvInventory.ItemsSource = sortedInventory;
-                dgvInventorySortDirection = dgvInventorySortDirection == ListSortDirection.Ascending ?
-                    ListSortDirection.Descending : ListSortDirection.Ascending;
-            }
+            PlayerInfo playerInfoScreen = new PlayerInfo(_player);
+            playerInfoScreen.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            playerInfoScreen.Show();
         }
-
-        private void dgvQuests_Sorting(object sender, DataGridSortingEventArgs e)
-        {
-            e.Handled = true;
-
-            string propertyName = e.Column.SortMemberPath;
-            BindingList<Quest> quests = _player.Quests;
-
-            if (quests != null)
-            {
-                List<Quest> sortedQuests = dgvQuestsSortDirection == ListSortDirection.Ascending ?
-                    quests.OrderBy(x => GetPropertyValue(x, propertyName)).ToList() :
-                    quests.OrderByDescending(x => GetPropertyValue(x, propertyName)).ToList();
-
-                dgvQuests.ItemsSource = null;
-                dgvQuests.ItemsSource = sortedQuests;
-                dgvQuestsSortDirection = dgvQuestsSortDirection == ListSortDirection.Ascending ?
-                    ListSortDirection.Descending : ListSortDirection.Ascending;
-            }
-        }
-
-        private object GetPropertyValue(object obj, string propertyName)
-        {
-            PropertyInfo property = obj.GetType().GetProperty(propertyName);
-            return property.GetValue(obj);
-        }
-
     }
 }
