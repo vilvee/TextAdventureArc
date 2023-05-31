@@ -253,7 +253,7 @@ namespace Arcane {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Arcane;component/worldmap.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Arcane;V1.0.0.0;component/worldmap.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\WorldMap.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

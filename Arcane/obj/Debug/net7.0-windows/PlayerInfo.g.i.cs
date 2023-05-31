@@ -108,7 +108,7 @@ namespace Arcane {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Arcane;component/playerinfo.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Arcane;V1.0.0.0;component/playerinfo.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\PlayerInfo.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
