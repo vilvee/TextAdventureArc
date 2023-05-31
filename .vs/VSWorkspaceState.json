@@ -1,8 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Arcane"
+    "\\Arcane",
+    "\\Engine"
   ],
-  "SelectedNode": "\\Arcane\\Arcane.csproj.user",
   "PreviewInSolutionExplorer": false
 }

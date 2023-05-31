@@ -7,49 +7,68 @@ using System.Threading.Tasks;
 
 namespace Engine
 {
+    /// <summary>
+    /// Represents a quest in the game.
+    /// </summary>
     public class Quest
     {
-        private Level _details;
-        private bool _isCompleted;
+        private Level _details; // Holds the details of the quest.
+        private bool _isCompleted; // Indicates whether the quest is completed or not.
+
+        /// <summary>
+        /// Gets or sets the details of the quest.
+        /// </summary>
         public Level Details
         {
             get => _details;
             set
             {
                 _details = value;
-                OnPropertyChanged("Details");
+                OnPropertyChanged("Details"); // Notify that the 'Details' property has changed.
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the quest is completed.
+        /// </summary>
         public bool IsCompleted
         {
             get => _isCompleted;
             set
             {
                 _isCompleted = value;
-                OnPropertyChanged("IsCompleted");
-                OnPropertyChanged("Name");
+                OnPropertyChanged("IsCompleted"); // Notify that the 'IsCompleted' property has changed.
+                OnPropertyChanged("Name"); // Notify that the 'Name' property has changed.
             }
         }
 
+        /// <summary>
+        /// Gets the name of the quest.
+        /// </summary>
         public string Name => Details.Name;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Quest"/> class with the specified details.
+        /// </summary>
+        /// <param name="details">The details of the quest.</param>
         public Quest(Level details)
         {
             Details = details;
             _details = details;
-            
         }
 
+        /// <summary>
+        /// Event that is raised when a property value changes.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Raises the PropertyChanged event with the specified property name.
+        /// </summary>
+        /// <param name="name">The name of the property that changed.</param>
         protected void OnPropertyChanged(string name)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }
-

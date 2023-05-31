@@ -4,25 +4,86 @@ using System.Threading;
 
 namespace Engine
 {
+    /// <summary>
+    /// Represents a location in the game.
+    /// </summary>
     public class Location
     {
         private readonly SortedList<int, int> _monstersAtLocation = new SortedList<int, int>();
 
+        /// <summary>
+        /// Gets or sets the ID of the location.
+        /// </summary>
         public int ID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the location.
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description of the location.
+        /// </summary>
         public string Description { get; set; }
-        public Item ItemRequiredToEnter { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item required to enter the location.
+        /// </summary>
+        public Item? ItemRequiredToEnter { get; set; }
+
+        /// <summary>
+        /// Gets or sets the quest available at the location.
+        /// </summary>
         public Level QuestAvailableHere { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vendor working at the location.
+        /// </summary>
         public Vendor VendorWorkingHere { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location to the north of this location.
+        /// </summary>
         public Location LocationToNorth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location to the east of this location.
+        /// </summary>
         public Location LocationToEast { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location to the south of this location.
+        /// </summary>
         public Location LocationToSouth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location to the west of this location.
+        /// </summary>
         public Location LocationToWest { get; set; }
 
+        /// <summary>
+        /// Determines if the location has an enemy.
+        /// </summary>
         public bool HasAEnemy => _monstersAtLocation.Count > 0;
+
+        /// <summary>
+        /// Determines if the location has a quest.
+        /// </summary>
         public bool HasAQuest => QuestAvailableHere != null;
+
+        /// <summary>
+        /// Determines if the location does not have an item required to enter.
+        /// </summary>
         public bool DoesNotHaveAnItemRequiredToEnter => ItemRequiredToEnter == null;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Location"/> class with the specified values.
+        /// </summary>
+        /// <param name="id">The ID of the location.</param>
+        /// <param name="name">The name of the location.</param>
+        /// <param name="description">The description of the location.</param>
+        /// <param name="itemRequiredToEnter">The item required to enter the location.</param>
+        /// <param name="questAvailableHere">The quest available at the location.</param>
         public Location(int id, string name, string description,
             Item itemRequiredToEnter = null, Level questAvailableHere = null)
         {
@@ -33,6 +94,11 @@ namespace Engine
             QuestAvailableHere = questAvailableHere;
         }
 
+        /// <summary>
+        /// Adds an enemy to the location with a specified percentage of appearance.
+        /// </summary>
+        /// <param name="monsterID">The ID of the enemy.</param>
+        /// <param name="percentageOfAppearance">The percentage chance of the enemy appearing.</param>
         public void AddEnemy(int monsterID, int percentageOfAppearance)
         {
             if (_monstersAtLocation.ContainsKey(monsterID))
@@ -45,6 +111,10 @@ namespace Engine
             }
         }
 
+        /// <summary>
+        /// Creates a new instance of an enemy living in this location.
+        /// </summary>
+        /// <returns>A new instance of the enemy.</returns>
         public Enemy NewInstanceOfEnemyLivingHere()
         {
             if (!HasAEnemy)

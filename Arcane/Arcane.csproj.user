@@ -10,9 +10,6 @@
     <Compile Update="CharacterSelect.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="PlayerInfo.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="TradingScreen.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -8,8 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "Engine/1.0.0": {
         "dependencies": {
-          "Microsoft.Data.SqlClient": "5.1.1",
-          "Microsoft.NETFramework.ReferenceAssemblies": "1.0.3"
+          "Microsoft.Data.SqlClient": "5.1.1"
         },
         "runtime": {
           "Engine.dll": {}
@@ -213,12 +212,6 @@
       },
       "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
-      "Microsoft.NETFramework.ReferenceAssemblies/1.0.3": {
-        "dependencies": {
-          "Microsoft.NETFramework.ReferenceAssemblies.net461": "1.0.3"
-        }
-      },
-      "Microsoft.NETFramework.ReferenceAssemblies.net461/1.0.3": {},
       "Microsoft.SqlServer.Server/1.0.0": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.SqlServer.Server.dll": {
@@ -530,20 +523,6 @@
       "sha512": "sha512-aOZA3BWfz9RXjpzt0sRJJMjAscAUm3Hoa4UWAfceV9UTYxgwZ1lZt5nO2myFf+/jetYQo4uTP7zS8sJY67BBxg==",
       "path": "microsoft.netcore.targets/1.1.0",
       "hashPath": "microsoft.netcore.targets.1.1.0.nupkg.sha512"
-    },
-    "Microsoft.NETFramework.ReferenceAssemblies/1.0.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-vUc9Npcs14QsyOD01tnv/m8sQUnGTGOw1BCmKcv77LBJY7OxhJ+zJF7UD/sCL3lYNFuqmQEVlkfS4Quif6FyYg==",
-      "path": "microsoft.netframework.referenceassemblies/1.0.3",
-      "hashPath": "microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512"
-    },
-    "Microsoft.NETFramework.ReferenceAssemblies.net461/1.0.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-AmOJZwCqnOCNp6PPcf9joyogScWLtwy0M1WkqfEQ0M9nYwyDD7EX9ZjscKS5iYnyvteX7kzSKFCKt9I9dXA6mA==",
-      "path": "microsoft.netframework.referenceassemblies.net461/1.0.3",
-      "hashPath": "microsoft.netframework.referenceassemblies.net461.1.0.3.nupkg.sha512"
     },
     "Microsoft.SqlServer.Server/1.0.0": {
       "type": "package",

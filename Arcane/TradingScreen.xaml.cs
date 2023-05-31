@@ -28,13 +28,18 @@ namespace Arcane
             _currentPlayer = player;
             InitializeComponent();
 
-            // Bind the player's inventory to the datagridview 
+            // Bind the player's inventory to the My Items data grid view.
             dgvMyItems.ItemsSource = _currentPlayer.Inventory;
 
-            // Bind the vendor's inventory to the datagridview 
+            // Bind the vendor's inventory to the Vendor Items data grid view.
             dgvVendorItems.ItemsSource = _currentPlayer.CurrentLocation.VendorWorkingHere.Inventory;
-
         }
+
+        /// <summary>
+        /// Event handler for the cell click event in the My Items data grid view.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void dgvMyItems_CellClick(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
@@ -48,11 +53,17 @@ namespace Arcane
             }
             else
             {
+                // Remove the item from the player's inventory and add its price to the player's gold.
                 _currentPlayer.RemoveItemFromInventory(itemBeingSold);
                 _currentPlayer.Gold += itemBeingSold.Price;
             }
         }
 
+        /// <summary>
+        /// Event handler for the cell click event in the Vendor Items data grid view.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void dgvVendorItems_CellClick(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
@@ -62,6 +73,7 @@ namespace Arcane
 
             if (_currentPlayer.Gold >= itemBeingSold.Price)
             {
+                // Add the item to the player's inventory and deduct its price from the player's gold.
                 _currentPlayer.AddItemToInventory(itemBeingSold);
                 _currentPlayer.Gold -= itemBeingSold.Price;
             }
@@ -71,24 +83,37 @@ namespace Arcane
             }
         }
 
-
+        /// <summary>
+        /// Event handler for the Close button click event.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+            // Close the trading screen.
             Close();
         }
 
-       private void dgvVendorItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Event handler for the selection changed event in the Vendor Items data grid view.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void dgvVendorItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataGridCellInfo selectedCell = dgvVendorItems.SelectedCells.FirstOrDefault();
             if (selectedCell != null)
             {
+                // Check if the selected cell is in the "Buy" button column.
                 if (selectedCell.Column.DisplayIndex == 3)
                 {
+                    // Get the selected row item as an Item object.
                     Item selectedRowItem = selectedCell.Item as Item;
                     if (selectedRowItem != null)
                     {
                         if (_currentPlayer.Gold >= selectedRowItem.Price)
                         {
+                            // Add the item to the player's inventory and deduct its price from the player's gold.
                             _currentPlayer.AddItemToInventory(selectedRowItem);
                             _currentPlayer.Gold -= selectedRowItem.Price;
                         }
@@ -101,13 +126,20 @@ namespace Arcane
             }
         }
 
+        /// <summary>
+        /// Event handler for the selection changed event in the My Items data grid view.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void dgvMyItems_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
             DataGridCellInfo selectedCell = dgvMyItems.SelectedCells.FirstOrDefault();
             if (selectedCell != null)
             {
+                // Check if the selected cell is in the "Sell" button column.
                 if (selectedCell.Column.DisplayIndex == 4)
                 {
+                    // Get the selected row item as an Item object.
                     Item selectedRowItem = selectedCell.Item as Item;
                     if (selectedRowItem != null)
                     {
@@ -117,6 +149,7 @@ namespace Arcane
                         }
                         else
                         {
+                            // Remove the item from the player's inventory and add its price to the player's gold.
                             _currentPlayer.RemoveItemFromInventory(selectedRowItem);
                             _currentPlayer.Gold += selectedRowItem.Price;
                         }
@@ -124,14 +157,21 @@ namespace Arcane
                 }
             }
         }
+
         #region WindowControls
 
+        /// <summary>
+        /// Event handler for moving the window when the user clicks and drags it.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void TriggerMoveWindow(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 if (WindowState == System.Windows.WindowState.Maximized)
                 {
+                    // If the window is maximized, restore it to normal state and calculate the new position based on the mouse position.
                     WindowState = System.Windows.WindowState.Normal;
 
                     double pct = PointToScreen(e.GetPosition(this)).X / System.Windows.SystemParameters.PrimaryScreenWidth;
@@ -139,28 +179,53 @@ namespace Arcane
                     Left = e.GetPosition(this).X - (pct * Width);
                 }
 
+                // Move the window.
                 DragMove();
             }
         }
 
+        /// <summary>
+        /// Event handler for maximizing or restoring the window when the user clicks on it.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void TriggerMaximize(object sender, MouseButtonEventArgs e)
         {
             if (WindowState == System.Windows.WindowState.Maximized)
+            {
+                // If the window is already maximized, restore it to normal state.
                 WindowState = System.Windows.WindowState.Normal;
+            }
             else if (WindowState == System.Windows.WindowState.Normal)
+            {
+                // If the window is in normal state, maximize it.
                 WindowState = System.Windows.WindowState.Maximized;
+            }
         }
 
+        /// <summary>
+        /// Event handler for closing the window.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void TriggerClose(object sender, RoutedEventArgs e)
         {
+            // Close the window.
             Close();
         }
 
+        /// <summary>
+        /// Event handler for minimizing the window.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void TriggerMinimize(object sender, RoutedEventArgs e)
         {
+            // Minimize the window.
             WindowState = System.Windows.WindowState.Minimized;
         }
 
         #endregion
+
     }
 }
