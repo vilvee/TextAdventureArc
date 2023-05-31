@@ -1,7 +1,7 @@
 ﻿<Window x:Name="MyGame" x:Class="Arcane.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        WindowStyle="None" Height="664" Width=" 800"
+        WindowStyle="None" Height="670" Width=" 800"
         AllowsTransparency="True" 
         ResizeMode="CanResizeWithGrip" 
         Background="Transparent">
@@ -49,29 +49,32 @@
                     </StatusBar>
                 </DockPanel>
                 <!-- main content -->
-                <Grid Margin="15,15,15, 15">
+                <Grid Margin="15,0,15,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="35*"/>
-                        <RowDefinition Height="35*" />
-                        <RowDefinition Height="35*" />
-                        <RowDefinition Height="35*" />
-                        <RowDefinition Height="35*" />
-                        <RowDefinition Height="35*"/>
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="25*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="70*"/>
+                        <RowDefinition Height="93*" />
+                        <RowDefinition Height="93*" />
+                        <RowDefinition Height="93*" />
+                        <RowDefinition Height="35*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120*"/>
-                        <ColumnDefinition Width="120*"/>
-                        <ColumnDefinition Width="120*"/>
+                        <ColumnDefinition Width="119*"/>
+                        <ColumnDefinition Width="119*"/>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="95*"/>
                         <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="200*"/>
-                        <ColumnDefinition Width="200*"/>
+                        <ColumnDefinition Width="198*"/>
+                        <ColumnDefinition Width="198*"/>
                     </Grid.ColumnDefinitions>
 
                     <!-- PlayerInfo -->
@@ -82,7 +85,7 @@
                             Width="Auto"
                             Height="Auto" 
                             Margin="10,15,0,15"
-                            Grid.ColumnSpan="3"
+                            Grid.ColumnSpan="4"
                             Grid.RowSpan="5">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -99,11 +102,11 @@
                                 <ColumnDefinition Width="60*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Border  Grid.RowSpan="6" Grid.Column="0"  Grid.Row="1"
+                            <Border  Grid.RowSpan="6" Grid.Column="0"  Grid.Row="0"
                                      BorderBrush="#fffefc" BorderThickness="2"  
-                                     CornerRadius="8" Margin="15,1,8,10"
-                                     HorizontalAlignment="Left" VerticalAlignment="Top"
-                                     Height="100"  Width="100">
+                                     CornerRadius="8" Margin="15,10,8,10"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                     MinHeight="100"  MinWidth="100" Width="Auto" Height="Auto">
                                 <Image   OpacityMask="Black"/>
                             </Border>
                             <Label Grid.Row="1" Grid.Column="1" Content="Level:" HorizontalAlignment="Left" 
@@ -127,33 +130,34 @@
                             <Label Grid.Row="1" Grid.Column="2" x:Name="lbLevel" Content="" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" 
                            Foreground="#fffefc" FontFamily="Bookman Old Style" 
-                           FontSize="16" Height="20" Width="66"/>
+                           FontSize="16" Height="25" Width="66"/>
                             <Label Grid.Row="2" Grid.Column="2" x:Name="lbExperience" 
                            Content="" HorizontalAlignment="Left" VerticalAlignment="Center" 
                            Foreground="#fffefc" FontFamily="Bookman Old Style" 
-                           FontSize="16" Height="20" Width="66"  />
+                           FontSize="16" Height="25" Width="66"  />
                             <Label Grid.Row="4" Grid.Column="2" x:Name="lbGold" Content="" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" 
                            Foreground="#fffefc" FontFamily="Bookman Old Style" FontSize="16"
-                           Height="20" Width="66"  />
+                           Height="25" Width="66"  />
                             <Label Grid.Row="3" Grid.Column="2" x:Name="lbHitPoints" 
-                           HorizontalAlignment="Left" VerticalAlignment="Center" 
+                           HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16"
                            Foreground="#fffefc" FontFamily="Bookman Old Style" 
-                           Height="20" Width="66" />
+                           Height="25" Width="66" />
                         </Grid>
                     </Border>
 
-                    <Border Grid.Row="5" Grid.Column="4"  Grid.ColumnSpan="2" Grid.RowSpan="2" 
+                    <Border Grid.Row="7" Grid.Column="6" 
                             BorderBrush="#58c8f1" 
                             BorderThickness="1" CornerRadius="8"
                             Background="#58c8f1" 
-                            Width="84" Height="25"
-                            HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="84,0,0,10">
+                            MinWidth="84" MinHeight="25"
+                            Height="Auto" Width="Auto"
+                            Margin="105,0,9,1">
                         <ToggleButton  x:Name="btnInfo" Content="Almanac" 
-                                       Background="{x:Null}" BorderBrush="{x:Null}" 
-                                       Foreground="White"
+                                   Background="{x:Null}" BorderBrush="{x:Null}" 
+                                   Foreground="White"
                                    UseLayoutRounding="False" 
-                                       FontFamily="Bookman Old Style" FontSize="16"
+                                   FontFamily="Bookman Old Style" FontSize="16"
                                    Cursor="Hand" Checked="btnInfo_Checked">
                             <ToggleButton.Template>
                                 <ControlTemplate TargetType="ToggleButton">
@@ -178,13 +182,13 @@
                         </ToggleButton>
                     </Border>
 
-                    <Border Grid.Row="5" Grid.Column="5"  Grid.RowSpan="2"
+                    <Border Grid.Row="5" Grid.Column="6"
                             BorderBrush="#58c8f1" 
                             BorderThickness="1" CornerRadius="8"
                             Background="#58c8f1" 
-                            Width="84" Height="25"
-                            HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                            Grid.ColumnSpan="2" Margin="5,0,13,10">
+                            MinWidth="84" MinHeight="25"
+                            Height="Auto" Width="Auto"
+                            Margin="105,0,9,0">
                         <ToggleButton  x:Name="btnMap" Content="Map" Click="btnMap_Click"
                                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White"
                                        UseLayoutRounding="False" FontFamily="Bookman Old Style" FontSize="16"
@@ -212,62 +216,64 @@
                         </ToggleButton>
                     </Border>
 
-                    <Border Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="5" 
+                    <Border Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="5" 
                             BorderBrush="#f96b88" 
                             BorderThickness="1" CornerRadius="8"
                             Background="#f96b88"  
                             Width="Auto"
-                            Height="Auto" 
+                            Height="Auto"
                             Margin="10,15,10,15">
                         <Grid >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" x:Name="btnNorth" 
+                            <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" x:Name="btnNorth" 
                                 Content="North" 
                                 Click="btnNorth_Click" Background="{x:Null}" 
                                 BorderBrush="{x:Null}" Foreground="#FFDAD9D6" 
                                 FontFamily="Bookman Old Style" FontSize="16" Cursor="Hand" 
                                 Margin="0" Width="374" Height="22" />
 
-                        <Button Grid.Row="1" Grid.Column="0" x:Name="btnWest" 
+                            <Button Grid.Row="1" Grid.Column="0" x:Name="btnWest" 
                                 Content="West" 
                                 Click="btnbtnWest_Click" Background="{x:Null}" 
                                 BorderBrush="{x:Null}" Foreground="#FFDAD9D6" 
                                 FontFamily="Bookman Old Style" FontSize="16" Cursor="Hand" 
                                 Margin="0" Width="118" Height="22">
-                            <Button.LayoutTransform>
-                                <RotateTransform Angle="90"/>
-                            </Button.LayoutTransform>
-                        </Button>
+                                <Button.LayoutTransform>
+                                    <RotateTransform Angle="90"/>
+                                </Button.LayoutTransform>
+                            </Button>
 
-                        <Button Grid.Row="1" Grid.Column="2" x:Name="btnEast" 
+                            <Button Grid.Row="1" Grid.Column="2" x:Name="btnEast" 
                                 Content="East" Click="btnEast_Click" Background="{x:Null}" 
                                 BorderBrush="{x:Null}" Foreground="#FFDAD9D6" 
                                 FontFamily="Bookman Old Style" FontSize="16" Cursor="Hand"
                                 Margin="0" Width="118" Height="22">
-                            <Button.LayoutTransform>
-                                <RotateTransform Angle="-90"/>
-                            </Button.LayoutTransform>
-                        </Button>
+                                <Button.LayoutTransform>
+                                    <RotateTransform Angle="-90"/>
+                                </Button.LayoutTransform>
+                            </Button>
 
-                        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="btnSouth" 
+                            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="btnSouth" 
                                 Content="South" VerticalAlignment="Bottom"
                                 Click="btnSouth_Click" Background="{x:Null}" 
                                 BorderBrush="{x:Null}" Foreground="#FFDAD9D6" 
                                 FontFamily="Bookman Old Style" FontSize="16" Cursor="Hand"
                                 Margin="0,-5,0,0" Width="374" Height="22" />
 
-                        <RichTextBox Grid.Column="1" Grid.Row="1"  x:Name="rtbLocation" MinHeight="100"
-                                     Width="305" 
+                            <RichTextBox Grid.Column="1" Grid.Row="1"  x:Name="rtbLocation" MinHeight="100"
+                                     MinWidth="305" 
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch"
                                      IsReadOnly="True"
                                      Background="{x:Null}"
                                      BorderBrush="{x:Null}" 
@@ -276,30 +282,30 @@
                                      Foreground="White" 
                                      FontFamily="Book Antiqua" 
                                      FontSize="16">
-                            <RichTextBox.Style>
-                                <Style TargetType="RichTextBox">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="RichTextBox">
-                                                <Border Background="{TemplateBinding Background}"
+                                <RichTextBox.Style>
+                                    <Style TargetType="RichTextBox">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="RichTextBox">
+                                                    <Border Background="{TemplateBinding Background}"
                                                         BorderBrush="{TemplateBinding BorderBrush}"
                                                         BorderThickness="{TemplateBinding BorderThickness}">
-                                                    <ScrollViewer x:Name="PART_ContentHost"
+                                                        <ScrollViewer x:Name="PART_ContentHost"
                                                                   Background="{TemplateBinding Background}"
                                                                   HorizontalScrollBarVisibility="Auto"
                                                                   VerticalScrollBarVisibility="Auto" />
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </RichTextBox.Style>
-                            <FlowDocument>
-                                <Paragraph>
-                                    <Run Text="" />
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </RichTextBox.Style>
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run Text="" />
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
 
                             <Border x:Name="btnTradeBorder" Grid.Column="1" Grid.Row="1"  
                                     BorderBrush="#58c8f1" 
@@ -309,7 +315,7 @@
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Bottom"
                                     Margin="0,0,7,7">
-                            <ToggleButton x:Name="btnTrade" Content="Trade"
+                                <ToggleButton x:Name="btnTrade" Content="Trade"
                                           Click="btnTrade_Click" 
                                       Background="{x:Null}" 
                                       BorderBrush="{x:Null}" Foreground="White"
@@ -317,41 +323,39 @@
                                       FontFamily="Bookman Old Style" 
                                       FontSize="16"
                                       Cursor="Hand" >
-                                <ToggleButton.Template>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border Background="{TemplateBinding Background}"
+                                    <ToggleButton.Template>
+                                        <ControlTemplate TargetType="ToggleButton">
+                                            <Border Background="{TemplateBinding Background}"
                                             BorderBrush="{TemplateBinding BorderBrush}"
                                             BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
                                                           Margin="{TemplateBinding Padding}" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </ToggleButton.Template>
-                                <ToggleButton.Style>
-                                    <Style TargetType="ToggleButton">
-                                        <Setter Property="Foreground" Value="#FFDAD9D6" />
-                                        <Style.Triggers>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Foreground" Value="Gray" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ToggleButton.Style>
-                            </ToggleButton>
-                        </Border>
-                    </Grid>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton">
+                                            <Setter Property="Foreground" Value="#FFDAD9D6" />
+                                            <Style.Triggers>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter Property="Foreground" Value="Gray" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
+                            </Border>
+                        </Grid>
+                    </Border>
 
-</Border>
-                    <ComboBox Grid.Row="5"  x:Name="cboWeapons" DisplayMemberPath="Name" 
+                    <ComboBox Grid.Row="5" x:Name="cboWeapons" DisplayMemberPath="Name" Grid.ColumnSpan="3"
                               SelectedValuePath="ID" 
-                              Width="235" 
-                              IsDropDownOpen="False" 
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center" 
+                              IsDropDownOpen="False"
                               SelectionChanged="cboWeapons_SelectionChanged"
                               Background="{x:Null}" BorderBrush="#3cdcc5"
-                              Foreground="#fffefc"
-                              Grid.ColumnSpan="3" Height="25" Margin="10,0,0,0">
+                              Foreground="#fffefc" 
+                              Height="Auto"  MinHeight="25" Width="Auto" MinWidth="235"  
+                              Margin="11,0,15,0">
                         <ComboBox.Resources>
                             <Style TargetType="ToggleButton">
                                 <Setter Property="Background" Value="#fffefc" />
@@ -441,36 +445,56 @@
                         </ComboBox.Style>
                     </ComboBox>
 
-                    <Border Grid.Row="5" Grid.Column="2"  
-                            BorderBrush="#58c8f1" 
-                            Background="#58c8f1"
-                            BorderThickness="1" CornerRadius="8"
-                            Width="84"
-                            Height="25" 
-                            Margin="33,0,0,0">
+                    <Border Grid.Row="5" Grid.Column="3"  
+        BorderBrush="#58c8f1" 
+        BorderThickness="1" CornerRadius="8"
+        MinWidth="84"
+        MinHeight="25" 
+        Margin="10,0,0,0">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="#58c8f1"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=btnUseWeapon, Path=IsEnabled}" Value="False">
+                                        <Setter Property="Background" Value="Gray"/>
+                                        <Setter Property="BorderBrush" Value="Gray"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Button   x:Name="btnUseWeapon" Content="Attack" 
-                                  HorizontalAlignment="Left" VerticalAlignment="Center" Width="78"
-                                  Click="btnUseWeapon_Click" BorderBrush="#00707070" 
-                                  Foreground="White"
-                                  UseLayoutRounding="False"
-                                  FontFamily="Bookman Old Style" 
-                                  FontSize="16" Cursor="Hand"
-                                  Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=IsEnabled, Converter={StaticResource BoolToBrushConverter}, Mode=OneWay}"  
-                                  Height="23"
-                                  RenderTransformOrigin="0.129,0.419" />
+                                  Click="btnUseWeapon_Click" BorderBrush="{x:Null}" 
+              Foreground="White"
+              UseLayoutRounding="False"
+              FontFamily="Bookman Old Style" 
+              FontSize="16" Cursor="Hand"
+              Background="{x:Null}"  >
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        BorderThickness="1">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Background" Value="{x:Null}"/>
+                                            <Setter Property="BorderBrush" Value="{x:Null}"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
                     </Border>
 
-
-
-                    <ComboBox Grid.Row="6"  x:Name="cboPotions" DisplayMemberPath="Name" 
-                              SelectedValuePath="ID" 
-                              Width="235" 
+                    <ComboBox Grid.Row="7"  x:Name="cboPotions" DisplayMemberPath="Name" Grid.ColumnSpan="3" 
+                              SelectedValuePath="ID"  
                               IsDropDownOpen="False" 
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center " 
                               Background="{x:Null}" BorderBrush="#3cdcc5"
                               Foreground="#fffefc" 
-                              Grid.ColumnSpan="3"  Height="25" Margin="10,0,0,10">
+                              Height="Auto"  MinHeight="25" Width="Auto" MinWidth="235"  
+                              Margin="10,0,16,0" >
                         <ComboBox.Resources>
                             <Style TargetType="ToggleButton">
                                 <Setter Property="Background" Value="#343661" />
@@ -539,6 +563,8 @@
                                                                 Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                                                     <Setter TargetName="PART_EditableTextBox" Property="Foreground"
                                                                 Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                                                    <Setter Property="Background"
+                                                            Value="{x:Null}" />
                                                 </Trigger>
                                                 <Trigger Property="IsGrouping" Value="True">
                                                     <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
@@ -562,35 +588,68 @@
                         </ComboBox.Style>
                     </ComboBox>
 
-                    <Border Grid.Row="6" Grid.Column="2"  
+
+                    <Border Grid.Row="7" Grid.Column="3" 
                             BorderBrush="#58c8f1" 
                             BorderThickness="1" CornerRadius="8"
-                            Background="#58c8f1"  
-                            Width="84"
-                            Height="25" 
-                            Margin="33,0,0,10">
-                        <Button  x:Name="btnUsePotion" Content="Drink" Width="78"
-                            HorizontalAlignment="Left" VerticalAlignment="Center" 
-                            Click="btnUsePotion_Click"
-                            BorderBrush="{x:Null}" Foreground="White"
-                            UseLayoutRounding="False" FontFamily="Bookman Old Style" FontSize="16" Cursor="Hand"
-                            Background="{x:Null}"  />
+                            MinWidth="84"
+                            MinHeight="25"
+                            Margin="10,0,0,1">
+
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="#58c8f1"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=btnUsePotion, Path=IsEnabled}" Value="False">
+                                        <Setter Property="Background" Value="Gray"/>
+                                        <Setter Property="BorderBrush" Value="Gray"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Button  x:Name="btnUsePotion" Content="Drink" 
+                                 Click="btnUsePotion_Click" 
+                                 BorderBrush="{x:Null}" 
+                                 Foreground="White"
+                                 UseLayoutRounding="False" FontFamily="Bookman Old Style"
+                                 FontSize="16" Cursor="Hand"
+                                 Background="{x:Null}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{x:Null}"
+                                            BorderBrush="{x:Null}"
+                                            BorderThickness="1">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Background" Value="{x:Null}"/>
+                                            <Setter Property="BorderBrush" Value="{x:Null}"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
                     </Border>
+
+
                     <!--MessageBox-->
-                    <Border  Grid.Row="7"  Grid.Column="0" Grid.ColumnSpan="6" Grid.RowSpan="3" 
-                             BorderBrush="#343661" Background="#343661"
-                             BorderThickness="1" CornerRadius="8" 
-                             Margin="0,10,0,15" Padding="5,5,5,9"
-                             Height="313" Width="750" 
-                             HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <RichTextBox x:Name="rtbMessages" 
-                                     IsReadOnly="True" 
-                                     TextChanged="rtbMessages_TextChanged" 
+                    <Border Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="7" Grid.RowSpan="5"
+                            BorderBrush="#343661" Background="#343661"
+                            BorderThickness="1" CornerRadius="8" Padding="5,5,5,9"
+                            Width="Auto" Height="Auto" MinHeight="277" MinWidth="300" Margin="10,0,10,0">
+                        <RichTextBox x:Name="rtbMessages"
+                                     IsReadOnly="True"
+                                     TextChanged="rtbMessages_TextChanged"
                                      Background="{x:Null}"
-                                   BorderBrush="{x:Null}"
-                                     SelectionTextBrush="{x:Null}" 
+                                     BorderBrush="{x:Null}"
+                                     SelectionTextBrush="{x:Null}"
                                      SelectionBrush="{x:Null}"
-                                  Foreground="#fffefc" FontFamily="Book Antiqua" FontSize="22" Height="277" Width="687" >
+                                     Foreground="#fffefc" FontFamily="Book Antiqua" FontSize="22"
+                                     Width="Auto" Height="Auto"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                     Margin="30,30,30,30">
                             <RichTextBox.Style>
                                 <Style TargetType="RichTextBox">
                                     <Setter Property="Template">
