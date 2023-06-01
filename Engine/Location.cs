@@ -9,7 +9,7 @@ namespace Engine
     /// </summary>
     public class Location
     {
-        private readonly SortedList<int, int> _monstersAtLocation = new SortedList<int, int>();
+        private readonly SortedList<int, int> _enemiesAtLocation = new SortedList<int, int>();
 
         /// <summary>
         /// Gets or sets the ID of the location.
@@ -29,7 +29,7 @@ namespace Engine
         /// <summary>
         /// Gets or sets the item required to enter the location.
         /// </summary>
-        public Item? ItemRequiredToEnter { get; set; }
+        public Item ItemRequiredToEnter { get; set; }
 
         /// <summary>
         /// Gets or sets the quest available at the location.
@@ -64,7 +64,7 @@ namespace Engine
         /// <summary>
         /// Determines if the location has an enemy.
         /// </summary>
-        public bool HasAEnemy => _monstersAtLocation.Count > 0;
+        public bool HasAEnemy => _enemiesAtLocation.Count > 0;
 
         /// <summary>
         /// Determines if the location has a quest.
@@ -101,13 +101,13 @@ namespace Engine
         /// <param name="percentageOfAppearance">The percentage chance of the enemy appearing.</param>
         public void AddEnemy(int monsterID, int percentageOfAppearance)
         {
-            if (_monstersAtLocation.ContainsKey(monsterID))
+            if (_enemiesAtLocation.ContainsKey(monsterID))
             {
-                _monstersAtLocation[monsterID] = percentageOfAppearance;
+                _enemiesAtLocation[monsterID] = percentageOfAppearance;
             }
             else
             {
-                _monstersAtLocation.Add(monsterID, percentageOfAppearance);
+                _enemiesAtLocation.Add(monsterID, percentageOfAppearance);
             }
         }
 
@@ -123,7 +123,7 @@ namespace Engine
             }
 
             // Total the percentages of all monsters at this location.
-            int totalPercentages = _monstersAtLocation.Values.Sum();
+            int totalPercentages = _enemiesAtLocation.Values.Sum();
 
             // Select a random number between 1 and the total (in case the total of percentages is not 100).
             int randomNumber = RandomNumberGenerator.NumberBetween(1, totalPercentages);
@@ -134,7 +134,7 @@ namespace Engine
             // that is the monster to return.
             int runningTotal = 0;
 
-            foreach (KeyValuePair<int, int> monsterKeyValuePair in _monstersAtLocation)
+            foreach (KeyValuePair<int, int> monsterKeyValuePair in _enemiesAtLocation)
             {
                 runningTotal += monsterKeyValuePair.Value;
 
@@ -145,7 +145,7 @@ namespace Engine
             }
 
             // In case there was a problem, return the last monster in the list.
-            return World.EnemyByID(_monstersAtLocation.Keys.Last()).NewInstanceOfEnemy();
+            return World.EnemyByID(_enemiesAtLocation.Keys.Last()).NewInstanceOfEnemy();
         }
     }
 }

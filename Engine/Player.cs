@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading;
@@ -9,6 +10,8 @@ using System.Xml;
 
 namespace Engine
 {
+    
+
     /// <summary>
     /// Represents the player in the game.
     /// </summary>
@@ -19,6 +22,9 @@ namespace Engine
         private Location _currentLocation;
         private Potion _currentPotion;
         private bool usedMight = false;
+
+        Bitmap image =new Bitmap();
+
 
         /// <summary>
         /// Event that is raised when a message needs to be displayed.
@@ -549,6 +555,7 @@ namespace Engine
             if (CurrentEnemy != null)
             {
                 RaiseMessage("You see a " + location.Name);
+                RaiseMessage("You see a " + CurrentEnemy.Name);
             }
         }
 
@@ -726,6 +733,8 @@ namespace Engine
             MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
         }
 
+	// SERIALIZATION?
+
         /// <summary>
         /// Creates a new child XML node with the specified element name and value, and appends it to the parent node.
         /// </summary>
@@ -753,6 +762,8 @@ namespace Engine
             attribute.Value = value.ToString();
             node.Attributes.Append(attribute);
         }
+
+	// END SERIALIZATION?
 
         /// <summary>
         /// Raises the inventory changed event for a specific item type.

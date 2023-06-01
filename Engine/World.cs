@@ -18,6 +18,7 @@ namespace Engine
         
 
         public const int UNSELLABLE_ITEM_PRICE = -1;
+
         public const int ITEM_ID_RUSTY_SWORD = 1;
         public const int ITEM_ID_RAT_TAIL = 2;
         public const int ITEM_ID_PIECE_OF_FUR = 3;
@@ -233,72 +234,28 @@ namespace Engine
         /// </summary>
         /// <param name="id">The ID of the item.</param>
         /// <returns>The item with the specified ID, or null if not found.</returns>
-        public static Item ItemByID(int id)
-        {
-            foreach (Item item in Items)
-            {
-                if (item.ID == id)
-                {
-                    return item;
-                }
-            }
-
-            return null;
-        }
+        public static Item ItemByID(int id) => Items.SingleOrDefault(x => x.ID == id);
 
         /// <summary>
         /// Retrieves an enemy by its ID.
         /// </summary>
         /// <param name="id">The ID of the enemy.</param>
         /// <returns>The enemy with the specified ID, or null if not found.</returns>
-        public static Enemy EnemyByID(int id)
-        {
-            foreach (Enemy enemy in Enemies)
-            {
-                if (enemy.ID == id)
-                {
-                    return enemy;
-                }
-            }
-
-            return null;
-        }
+        public static Enemy EnemyByID(int id) => Enemies.SingleOrDefault(x => x.ID == id);
 
         /// <summary>
         /// Retrieves a level by its ID.
         /// </summary>
         /// <param name="id">The ID of the level.</param>
         /// <returns>The level with the specified ID, or null if not found.</returns>
-        public static Level LevelByID(int id)
-        {
-            foreach (Level level in Levels)
-            {
-                if (level.ID == id)
-                {
-                    return level;
-                }
-            }
-
-            return null;
-        }
+        public static Level LevelByID(int id) => Levels.SingleOrDefault(x => x.ID == id);
 
         /// <summary>
         /// Retrieves a location by its ID.
         /// </summary>
         /// <param name="id">The ID of the location.</param>
         /// <returns>The location with the specified ID, or null if not found.</returns>
-        public static Location LocationByID(int id)
-        {
-            foreach (Location location in Locations)
-            {
-                if (location.ID == id)
-                {
-                    return location;
-                }
-            }
-
-            return null;
-        }
+        public static Location LocationByID(int id) => Locations.SingleOrDefault(x => x.ID == id);
 
     }
 }

@@ -1,59 +1,148 @@
-﻿<Window x:Name="MyGame" x:Class="Arcane.CharacterSelect"
+﻿<Window x:Class="Arcane.CharacterSelect"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow"
-        Height="562"
-        Width="987"
-        WindowStyle="None"
-        AllowsTransparency="True">
+        WindowStyle="None" Height="500" Width="500" MinHeight="501" MinWidth="700"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        Background="Transparent" >
+
+    <!-- Define window resources -->
     <Window.Resources>
-        <Style x:Key="WindowIconStyle"
-               TargetType="{x:Type Hyperlink}">
-            <Setter Property="FontFamily"
-                    Value="Webdings" />
-            <Setter Property="FontSize"
-                    Value="16" />
-            <Setter Property="Foreground"
-                    Value="White" />
-            <Setter Property="TextBlock.TextDecorations"
-                    Value="{x:Null}" />
-            <Setter Property="Cursor"
-                    Value="{x:Null}" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver"
-                         Value="True">
-                    <Setter Property="Foreground"
-                            Value="#ED5326" />
-                </Trigger>
-            </Style.Triggers>
+        <!-- Define a style for the WindowIconStyle -->
+        <Style x:Key="WindowIconStyle" TargetType="{x:Type Hyperlink}">
+            <Setter Property="FontFamily" Value="Webdings" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextBlock.TextDecorations" Value="{x:Null}" />
+            <Setter Property="Cursor" Value="{x:Null}" />
+            <Setter Property="Foreground" Value="#ffff" />
         </Style>
     </Window.Resources>
-    <DockPanel>
-        <DockPanel DockPanel.Dock="Top">
-            <TextBlock DockPanel.Dock="Right"
-                       VerticalAlignment="Center">
-                <Hyperlink Click="TriggerClose"
-                           Style="{StaticResource WindowIconStyle}">r</Hyperlink>
-            </TextBlock>
-            <TextBlock DockPanel.Dock="Right"
-                       VerticalAlignment="Center">
-                <Hyperlink Click="TriggerMinimize"
-                           Style="{StaticResource WindowIconStyle}">0</Hyperlink>
-            </TextBlock>
-            <StatusBar Background="Transparent"
-                       MouseDoubleClick="TriggerMaximize"
-                       MouseMove="TriggerMoveWindow">
-                <TextBlock DockPanel.Dock="Left"
-                           Text="SimpleBorderlessWindow"
-                           FontSize="16"/>
-            </StatusBar>
 
-        </DockPanel>
+    <!-- Define the main grid -->
+    <Grid>
+        <!-- Create a border with specific properties -->
+        <Border Background="#14213d" BorderBrush="Black" BorderThickness="1" 
+                CornerRadius="20" Margin="-10,0,10,0">
+            <DockPanel>
+                <!-- Create a dock panel for the top section -->
+                <DockPanel DockPanel.Dock="Top">
+                    <!-- Create a text block with a hyperlink for closing the window -->
+                    <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" 
+                               Margin="0,0,21,0" Foreground="#FFE5DCDC" 
+                               RenderTransformOrigin="0.5,0.585">
+                        <Hyperlink Click="TriggerClose" 
+                                   Style="{StaticResource WindowIconStyle}">r</Hyperlink>
+                    </TextBlock>
+                    <!-- Create a text block with a hyperlink for minimizing the window -->
+                    <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" 
+                               Margin="0,0,17,0" Foreground="#FFE5DCDC">
+                        <Hyperlink Click="TriggerMinimize" 
+                                   Style="{StaticResource WindowIconStyle}">0</Hyperlink>
+                    </TextBlock>
+                    <!-- Create a status bar with specific properties -->
+                    <StatusBar Background="Transparent" MouseDoubleClick="TriggerMaximize" 
+                               MouseMove="TriggerMoveWindow">
+                        <!-- Create a text block inside the status bar -->
+                        <TextBlock DockPanel.Dock="Left" Text="Arcane" FontSize="16" 
+                                   Margin="14,0,0,0" Foreground="#FFE5DBDB"/>
+                    </StatusBar>
+                </DockPanel>
+                <!-- main content -->
+                <Grid Margin="15,15,15, 15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15* "/>
+                        <RowDefinition Height="25*"/>
+                        <RowDefinition Height="25*"/>
+                        <RowDefinition Height="25*"/>
+                        <RowDefinition Height="25*" />
+                        <RowDefinition Height="15*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="15*"/>
+                    </Grid.ColumnDefinitions>
 
-        <Grid>
-            <TextBlock Text="Window Content Here"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
-        </Grid>
-    </DockPanel>
+
+
+                    <Label Grid.Row="0" Grid.Column="2"  Content="Character Name"  Grid.ColumnSpan="2"
+                           FontSize="20" Foreground="#FFE5DBDB"
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Bottom"/>
+
+                    <Border 
+                        Grid.Row ="1" Grid.Column="1" Grid.ColumnSpan="4"
+                        Background="#343661" BorderThickness="1" 
+                            CornerRadius="8" >
+                        <TextBox Background="{x:Null}" BorderBrush="{x:Null}"
+                                 >
+
+                        </TextBox>
+                    </Border>
+
+                    <Grid Margin="15,0,15, 15"
+                          Grid.Row="2" Grid.ColumnSpan="6"
+                          Grid.RowSpan="4" Grid.Column="0"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10* "/>
+                            <RowDefinition Height="25*"/>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="25*"/>
+                            <RowDefinition Height="10*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="10*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Row ="1" Grid.Column="1" 
+        BorderBrush="#343661" BorderThickness="5" 
+        CornerRadius="8" >
+
+
+                        </Border>
+                        <Border Grid.Row ="1" Grid.Column="3" 
+                                BorderBrush="#343661" BorderThickness="5" 
+                                CornerRadius="8" >
+
+
+                        </Border>
+                        <Border Grid.Row ="1" Grid.Column="5" 
+                                BorderBrush="#343661" BorderThickness="5" 
+                                CornerRadius="8" >
+
+
+                        </Border>
+                        <Border Grid.Row ="3" Grid.Column="1" 
+                                BorderBrush="#343661" BorderThickness="5" 
+                                CornerRadius="8" >
+
+
+                        </Border>
+                        <Border Grid.Row ="3" Grid.Column="3" 
+                                BorderBrush="#343661" BorderThickness="5" 
+                                CornerRadius="8" >
+
+
+                        </Border>
+                        <Border Grid.Row ="3" Grid.Column="5" 
+                                BorderBrush="#343661" BorderThickness="5" 
+                                CornerRadius="8" >
+
+
+                        </Border>
+                    </Grid>
+                </Grid>
+            </DockPanel>
+        </Border>
+    </Grid>
 </Window>

@@ -54,7 +54,7 @@ namespace Engine
         public Quest(Level details)
         {
             Details = details;
-            _details = details;
+            IsCompleted = false;
         }
 
         /// <summary>

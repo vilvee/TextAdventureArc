@@ -640,7 +640,6 @@
                             Width="Auto" Height="Auto" MinHeight="277" MinWidth="300" Margin="10,0,10,0">
                         <RichTextBox x:Name="rtbMessages"
                                      IsReadOnly="True"
-                                     TextChanged="rtbMessages_TextChanged"
                                      Background="{x:Null}"
                                      BorderBrush="{x:Null}"
                                      SelectionTextBrush="{x:Null}"

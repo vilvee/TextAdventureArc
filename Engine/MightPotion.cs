@@ -28,9 +28,7 @@ namespace Engine
         public MightPotion(int id, string name, string namePlural, int bonusHit, int price )
             : base(id, name, namePlural, price)
         {
-            BonusHit = bonusHit;
+            BonusHit = bonusHit; 
         }
-
-      
     }
 }

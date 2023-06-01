@@ -33,7 +33,7 @@ namespace Engine
         /// If no items are randomly selected, it adds the default loot item(s) to the list.
         /// </summary>
         /// <returns>NewEnemy</returns>
-        internal Enemy? NewInstanceOfEnemy()
+        internal Enemy NewInstanceOfEnemy()
         {
             Enemy? newEnemy = new Enemy(ID, Name, MaximumDamage, RewardExperiencePoints, RewardGold, CurrentHitPoints, MaximumHitPoints);
 

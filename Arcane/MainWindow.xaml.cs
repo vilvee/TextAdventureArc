@@ -117,6 +117,7 @@ namespace Arcane
         }
         #endregion
 
+#region Buttons and Drop Menus
         /// <summary>
         /// Handles the click event for the Use Weapon button and uses the currently selected weapon.
         /// </summary>
@@ -154,16 +155,6 @@ namespace Arcane
             }
         }
 
-
-
-        /// <summary>
-        /// Scrolls the messages text box to the end when the text changes.
-        /// </summary>
-        private void rtbMessages_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // Scroll to the end of the messages text box
-            rtbMessages.ScrollToEnd();
-        }
         /// <summary>
         /// Handles the selection changed event for the cboWeapons ComboBox and updates the player's current weapon.
         /// </summary>
@@ -204,6 +195,41 @@ namespace Arcane
             }
         }
 
+        /// <summary>
+        /// Event handler for the "Info" button click event.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void btnInfo_Checked(object sender, RoutedEventArgs e)
+        {
+            // Create a new instance of the PlayerInfo screen.
+            PlayerInfo playerInfoScreen = new PlayerInfo(_player);
+            // Set the startup location of the PlayerInfo screen to the center of the window.
+            playerInfoScreen.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            // Show the PlayerInfo screen.
+            playerInfoScreen.Show();
+        }
+
+        /// <summary>
+        /// Handles the click event for the Trade button and opens the trading screen.
+        /// </summary>
+        private void btnTrade_Click(object sender, RoutedEventArgs e)
+        {
+            TradingScreen tradingScreen = new TradingScreen(_player);
+            tradingScreen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            tradingScreen.ShowDialog();
+        }
+
+        /// <summary>
+        /// Handles the click event for the Map button and opens the world map screen.
+        /// </summary>
+        private void btnMap_Click(object sender, RoutedEventArgs e)
+        {
+            WorldMap mapScreen = new WorldMap(_player);
+            mapScreen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            mapScreen.ShowDialog();
+        }
+#endregion
 
         /// <summary>
         /// Handles the PropertyChanged event of the player and updates UI elements based on the changed property.
@@ -212,7 +238,15 @@ namespace Arcane
         {
             if (propertyChangedEventArgs.PropertyName == "Weapons")
             {
+                Weapon previouslySelectedWeapon = _player.CurrentWeapon;
+
                 cboWeapons.ItemsSource = _player.Weapons;
+
+                if (previouslySelectedWeapon != null && _player.Weapons.Exists(w => w.ID == previouslySelectedWeapon.ID))
+                {
+                    cboWeapons.SelectedItem = previouslySelectedWeapon;
+                }
+
                 if (!_player.Weapons.Any())
                 {
                     cboWeapons.IsEnabled = false;
@@ -226,7 +260,15 @@ namespace Arcane
             }
             if (propertyChangedEventArgs.PropertyName == "Potions")
             {
+                Potion previouslySelectedPotion = _player.CurrentPotion;
+
                 cboPotions.ItemsSource = _player.Potions;
+
+                if (previouslySelectedPotion != null && _player.Potions.Exists(w => w.ID == previouslySelectedPotion.ID))
+                {
+                    cboWeapons.SelectedItem = previouslySelectedPotion;
+                }
+
                 if (!_player.Potions.Any())
                 {
                     cboPotions.IsEnabled = false;
@@ -277,6 +319,15 @@ namespace Arcane
             }
         }
 
+ /*       /// <summary>
+        /// Scrolls the messages text box to the end when the text changes.
+        /// </summary>
+        private void rtbMessages_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Scroll to the end of the messages text box
+            rtbMessages.ScrollToEnd();
+        }*/ 
+
         /// <summary>
         /// Displays a message in the messages text box.
         /// </summary>
@@ -290,26 +341,6 @@ namespace Arcane
                 rtbMessages.AppendText(Environment.NewLine);
             }
             rtbMessages.ScrollToEnd();
-        }
-
-        /// <summary>
-        /// Handles the click event for the Trade button and opens the trading screen.
-        /// </summary>
-        private void btnTrade_Click(object sender, RoutedEventArgs e)
-        {
-            TradingScreen tradingScreen = new TradingScreen(_player);
-            tradingScreen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            tradingScreen.ShowDialog();
-        }
-
-        /// <summary>
-        /// Handles the click event for the Map button and opens the world map screen.
-        /// </summary>
-        private void btnMap_Click(object sender, RoutedEventArgs e)
-        {
-            WorldMap mapScreen = new WorldMap(_player);
-            mapScreen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            mapScreen.ShowDialog();
         }
 
         #region WindowControls
@@ -383,19 +414,5 @@ namespace Arcane
 
         #endregion
 
-        /// <summary>
-        /// Event handler for the "Info" button click event.
-        /// </summary>
-        /// <param name="sender">The object that triggered the event.</param>
-        /// <param name="e">The event arguments.</param>
-        private void btnInfo_Checked(object sender, RoutedEventArgs e)
-        {
-            // Create a new instance of the PlayerInfo screen.
-            PlayerInfo playerInfoScreen = new PlayerInfo(_player);
-            // Set the startup location of the PlayerInfo screen to the center of the window.
-            playerInfoScreen.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            // Show the PlayerInfo screen.
-            playerInfoScreen.Show();
-        }
     }
 }

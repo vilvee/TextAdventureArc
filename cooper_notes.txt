@@ -1,0 +1,46 @@
+- Move HealPlayer from player class into entity, rename as Heal
+add Damage function
+CompletelyHeal can also go into entity
+
+MarkPlayerQuestCompleted
+Does quest functionality have to be related to the player? It's sort of a "world state" type thing.
+
+LetTheEnemyAttack
+Inside the player class, but the battle mechanics should control the player, the player shouldn't control the battle mechanics
+
+RaiseInventoryChangedEvent
+belongs to an inventory class?
+
+LootTheCurrentEnemy
+This deals with:
+- the final stage of a fight where
+- the player collecs experience points and gold
+- transfering the loot from the monster to the player
+  so it may belong in a Battle class or something
+*At the end of a battle, what happens?*
+
+HasRequiredItemToEnterThisLocation
+PlayerDoesNotHaveTheRequiredItemToEnter
+Might be better to put this in some sort of Location class, i.e.
+
+class Location
+{
+  public player_can_enter(player) -> bool
+}
+
+SetTheCurrentEnemyForTheCurrentLocation
+Not related to player
+
+PlayerDoesNotHaveThisQuest
+Quests are sort of implied to only be related to player, so they can be thought of as a distinct entity. This would be different in a multiplayer game, but quests can safely be completely separated here.
+
+PlayerHasNotCompleted -> quest.is_completed
+PlayerDoesNotHaveThisQuest -> quest.has_started
+or quest.is_active, but active could also be false if the quest is completed
+GiveQuestToPlayer -> quest.activate
+PlayerHasAllQuestCompletionItemsFor -> quest.has_all_required_items(player)
+
+PlayerHasAllQuestCompletionItemsFor
+A method on player
+examining items
+related to a quest
