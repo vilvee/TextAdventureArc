@@ -60,11 +60,11 @@ namespace Engine
                         reader.Close();
                     }
 
-                    // Read the rows/records from the Quest table, and add them to the player
+                    // Read the rows/records from the ActiveQuest table, and add them to the player
                     using (SqlCommand questCommand = connection.CreateCommand())
                     {
                         questCommand.CommandType = CommandType.Text;
-                        questCommand.CommandText = "SELECT * FROM Quest";
+                        questCommand.CommandText = "SELECT * FROM ActiveQuest";
 
                         SqlDataReader reader = questCommand.ExecuteReader();
 
@@ -76,11 +76,11 @@ namespace Engine
                                 bool isCompleted = (bool)reader["IsCompleted"];
 
                                 // Build the PlayerQuest item, for this row
-                                Quest playerQuest = new Quest(World.LevelByID(questID));
-                                playerQuest.IsCompleted = isCompleted;
+                                ActiveQuest playerActiveQuest = new ActiveQuest(World.QuestByID(questID));
+                                playerActiveQuest.IsCompleted = isCompleted;
 
                                 // Add the PlayerQuest to the player's property
-                                player.Quests.Add(playerQuest);
+                                player.Quests.Add(playerActiveQuest);
                             }
                         }
 
@@ -228,28 +228,28 @@ namespace Engine
                         }
                     }
 
-                    // The Quest and Inventory tables might have more, or less, rows in the database
+                    // The ActiveQuest and Inventory tables might have more, or less, rows in the database
                     // than what the player has in their properties.
                     // So, when we save the player's game, we will delete all the old rows
                     // and add in all new rows.
                     // This is easier than trying to add/delete/update each individual rows
 
-                    // Delete existing Quest rows
+                    // Delete existing ActiveQuest rows
                     using (SqlCommand deleteQuestsCommand = connection.CreateCommand())
                     {
                         deleteQuestsCommand.CommandType = CommandType.Text;
-                        deleteQuestsCommand.CommandText = "DELETE FROM Quest";
+                        deleteQuestsCommand.CommandText = "DELETE FROM ActiveQuest";
 
                         deleteQuestsCommand.ExecuteNonQuery();
                     }
 
-                    // Insert Quest rows, from the player object
-                    foreach (Quest playerQuest in player.Quests)
+                    // Insert ActiveQuest rows, from the player object
+                    foreach (ActiveQuest playerQuest in player.Quests)
                     {
                         using (SqlCommand insertQuestCommand = connection.CreateCommand())
                         {
                             insertQuestCommand.CommandType = CommandType.Text;
-                            insertQuestCommand.CommandText = "INSERT INTO Quest (QuestID, IsCompleted) VALUES (@QuestID, @IsCompleted)";
+                            insertQuestCommand.CommandText = "INSERT INTO ActiveQuest (QuestID, IsCompleted) VALUES (@QuestID, @IsCompleted)";
 
                             insertQuestCommand.Parameters.Add("@QuestID", SqlDbType.Int);
                             insertQuestCommand.Parameters["@QuestID"].Value = playerQuest.Details.ID;

@@ -48,7 +48,7 @@ namespace Arcane
             lbHitPoints.SetBinding(ContentProperty, new Binding("CurrentHitPoints") { Source = _player });
             lbGold.SetBinding(ContentProperty, new Binding("Gold") { Source = _player });
             lbExperience.SetBinding(ContentProperty, new Binding("ExperiencePoints") { Source = _player });
-            lbLevel.SetBinding(ContentProperty, new Binding("Level") { Source = _player });
+            lbQuest.SetBinding(ContentProperty, new Binding("Quest") { Source = _player });
 
             // Set up combo box for weapons
             cboWeapons.ItemsSource = _player.Weapons;

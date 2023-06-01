@@ -109,7 +109,7 @@
                                      MinHeight="100"  MinWidth="100" Width="Auto" Height="Auto">
                                 <Image   OpacityMask="Black"/>
                             </Border>
-                            <Label Grid.Row="1" Grid.Column="1" Content="Level:" HorizontalAlignment="Left" 
+                            <Label Grid.Row="1" Grid.Column="1" Content="Quest:" HorizontalAlignment="Left" 
                            VerticalAlignment="Top" TextBlock.Foreground="#fffefc" 
                            FontFamily="Bookman Old Style" FontSize="14" Foreground="#fffefc" 
                            Height="26" Width="49" />
@@ -127,7 +127,7 @@
                                    FontFamily="Bookman Old Style" FontSize="14" Foreground="#fffefc" 
                                    Height="26" Width="46" />
 
-                            <Label Grid.Row="1" Grid.Column="2" x:Name="lbLevel" Content="" 
+                            <Label Grid.Row="1" Grid.Column="2" x:Name="lbQuest" Content="" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" 
                            Foreground="#fffefc" FontFamily="Bookman Old Style" 
                            FontSize="16" Height="25" Width="66"/>

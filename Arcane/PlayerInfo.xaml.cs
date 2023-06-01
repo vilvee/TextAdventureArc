@@ -34,7 +34,7 @@ namespace Arcane
             lbHitPoints.SetBinding(ContentProperty, new Binding("CurrentHitPoints") { Source = _CurrentPlayer });
             lbGold.SetBinding(ContentProperty, new Binding("Gold") { Source = _CurrentPlayer });
             lbExperience.SetBinding(ContentProperty, new Binding("ExperiencePoints") { Source = _CurrentPlayer });
-            lbLevel.SetBinding(ContentProperty, new Binding("Level") { Source = _CurrentPlayer });
+            lbQuest.SetBinding(ContentProperty, new Binding("Quest") { Source = _CurrentPlayer });
 
             // Set the item source of the inventory and quests data grids.
             dgvInventory.ItemsSource = _CurrentPlayer.Inventory;
@@ -159,12 +159,12 @@ namespace Arcane
             string propertyName = e.Column.SortMemberPath;
 
             // Get the quests of the current player.
-            BindingList<Quest> quests = _CurrentPlayer.Quests;
+            BindingList<ActiveQuest> quests = _CurrentPlayer.Quests;
 
             if (quests != null)
             {
                 // Sort the quests based on the sort direction.
-                List<Quest> sortedQuests = dgvQuestsSortDirection == ListSortDirection.Ascending ?
+                List<ActiveQuest> sortedQuests = dgvQuestsSortDirection == ListSortDirection.Ascending ?
                     quests.OrderBy(x => GetPropertyValue(x, propertyName)).ToList() :
                     quests.OrderByDescending(x => GetPropertyValue(x, propertyName)).ToList();
 

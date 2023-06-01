@@ -52,7 +52,7 @@ namespace Engine
         /// Raises the PropertyChanged event for the specified property name.
         /// </summary>
         /// <param name="name">The name of the property that changed.</param>
-        protected void OnPropertyChanged(string name)
+        public void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
@@ -61,7 +61,7 @@ namespace Engine
         /// Heals the player by a specified amount of hit points.
         /// </summary>
         /// <param name="hitPointsToHeal">The number of hit points to heal.</param>
-        protected void Heal(int hitPointsToHeal)
+        public void Heal(int hitPointsToHeal)
         {
             CurrentHitPoints = Math.Min(CurrentHitPoints + hitPointsToHeal, MaximumHitPoints);
         }
@@ -70,7 +70,7 @@ namespace Engine
         /// <summary>
         /// Completely heals the player to maximum hit points.
         /// </summary>
-        protected void CompletelyHeal()
+        public void CompletelyHeal()
         {
             CurrentHitPoints = MaximumHitPoints;
         }

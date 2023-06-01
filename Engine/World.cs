@@ -13,7 +13,7 @@ namespace Engine
     {
         public static readonly List<Item> Items = new List<Item>();
         public static readonly List<Enemy> Enemies = new List<Enemy>();
-        public static readonly List<Level> Levels = new List<Level>();
+        public static readonly List<Quest> Quests = new List<Quest>();
         public static readonly List<Location> Locations = new List<Location>();
         
 
@@ -35,8 +35,8 @@ namespace Engine
         public const int Enemy_ID_SNAKE = 2;
         public const int Enemy_ID_GIANT_SPIDER = 3;
 
-        public const int Level_ID_CLEAR_ALCHEMIST_GARDEN = 1;
-        public const int Level_ID_CLEAR_FARMERS_FIELD = 2;
+        public const int Quest_ID_CLEAR_ALCHEMIST_GARDEN = 1;
+        public const int Quest_ID_CLEAR_FARMERS_FIELD = 2;
 
         public const int LOCATION_ID_HOME = 1;
         public const int LOCATION_ID_TOWN_SQUARE = 2;
@@ -52,7 +52,7 @@ namespace Engine
         {
             PopulateItems(); // Populates the list of items.
             PopulateEnemies(); // Populates the list of enemies.
-            PopulateLevels(); // Populates the list of levels.
+            PopulateQuests(); // Populates the list of levels.
             PopulateLocations(); // Populates the list of locations.
         }
 
@@ -112,12 +112,12 @@ namespace Engine
         /// <summary>
         /// Populates the list of levels.
         /// </summary>
-        private static void PopulateLevels()
+        private static void PopulateQuests()
         {
             // Create a level instance for clearing the alchemist's garden
-            Level clearAlchemistGarden =
-                new Level(
-                    Level_ID_CLEAR_ALCHEMIST_GARDEN,
+            Quest clearAlchemistGarden =
+                new Quest(
+                    Quest_ID_CLEAR_ALCHEMIST_GARDEN,
                     "Clear the alchemist's garden",
                     "Kill rats in the alchemist's garden and bring back 3 rat tails. You will receive a healing potion and 10 gold pieces.", 20, 10);
 
@@ -128,9 +128,9 @@ namespace Engine
             clearAlchemistGarden.RewardItem = ItemByID(ITEM_ID_HEALING_POTION);
 
             // Create a level instance for clearing the farmer's field
-            Level clearFarmersField =
-                new Level(
-                    Level_ID_CLEAR_FARMERS_FIELD,
+            Quest clearFarmersField =
+                new Quest(
+                    Quest_ID_CLEAR_FARMERS_FIELD,
                     "Clear the farmer's field",
                     "Kill snakes in the farmer's field and bring back 3 snake fangs. You will receive an adventurer's pass and 20 gold pieces.", 20, 20);
 
@@ -140,9 +140,9 @@ namespace Engine
             // Set the reward item for clearing the farmer's field
             clearFarmersField.RewardItem = ItemByID(ITEM_ID_ADVENTURER_PASS);
 
-            // Add the levels to the Levels list
-            Levels.Add(clearAlchemistGarden);
-            Levels.Add(clearFarmersField);
+            // Add the levels to the Quests list
+            Quests.Add(clearAlchemistGarden);
+            Quests.Add(clearFarmersField);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Engine
 
             // Alchemist's Hut
             Location alchemistHut = new Location(LOCATION_ID_ALCHEMIST_HUT, "Alchemist's hut", "There are many strange plants on the shelves.");
-            alchemistHut.QuestAvailableHere = LevelByID(Level_ID_CLEAR_ALCHEMIST_GARDEN);
+            alchemistHut.QuestAvailableHere = QuestByID(Quest_ID_CLEAR_ALCHEMIST_GARDEN);
 
             // Alchemist's Garden
             Location alchemistsGarden = new Location(LOCATION_ID_ALCHEMISTS_GARDEN, "Alchemist's garden", "Many plants are growing here.");
@@ -172,7 +172,7 @@ namespace Engine
 
             // Farmhouse
             Location farmhouse = new Location(LOCATION_ID_FARMHOUSE, "Farmhouse", "There is a small farmhouse, with a farmer in front.");
-            farmhouse.QuestAvailableHere = LevelByID(Level_ID_CLEAR_FARMERS_FIELD);
+            farmhouse.QuestAvailableHere = QuestByID(Quest_ID_CLEAR_FARMERS_FIELD);
 
             // Farmer's Field
             Location farmersField = new Location(LOCATION_ID_FARM_FIELD, "Farmer's field", "You see rows of vegetables growing here.");
@@ -248,7 +248,7 @@ namespace Engine
         /// </summary>
         /// <param name="id">The ID of the level.</param>
         /// <returns>The level with the specified ID, or null if not found.</returns>
-        public static Level LevelByID(int id) => Levels.SingleOrDefault(x => x.ID == id);
+        public static Quest QuestByID(int id) => Quests.SingleOrDefault(x => x.ID == id);
 
         /// <summary>
         /// Retrieves a location by its ID.

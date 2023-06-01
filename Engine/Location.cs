@@ -11,6 +11,9 @@ namespace Engine
     {
         private readonly SortedList<int, int> _enemiesAtLocation = new SortedList<int, int>();
 
+
+
+
         /// <summary>
         /// Gets or sets the ID of the location.
         /// </summary>
@@ -34,7 +37,7 @@ namespace Engine
         /// <summary>
         /// Gets or sets the quest available at the location.
         /// </summary>
-        public Level QuestAvailableHere { get; set; }
+        public Quest QuestAvailableHere { get; set; }
 
         /// <summary>
         /// Gets or sets the vendor working at the location.
@@ -85,7 +88,7 @@ namespace Engine
         /// <param name="itemRequiredToEnter">The item required to enter the location.</param>
         /// <param name="questAvailableHere">The quest available at the location.</param>
         public Location(int id, string name, string description,
-            Item itemRequiredToEnter = null, Level questAvailableHere = null)
+            Item itemRequiredToEnter = null, Quest questAvailableHere = null)
         {
             ID = id;
             Name = name;
@@ -147,5 +150,56 @@ namespace Engine
             // In case there was a problem, return the last monster in the list.
             return World.EnemyByID(_enemiesAtLocation.Keys.Last()).NewInstanceOfEnemy();
         }
+
+
+        /// <summary>
+        /// Checks if the player has the required item to enter a specific location.
+        /// </summary>
+        /// <param name="location">The location to check.</param>
+        /// <returns>True if the player has the required item to enter the location, false otherwise.</returns>
+        public bool HasRequiredItemToEnterThisLocation(Player player)
+        {
+            if (DoesNotHaveAnItemRequiredToEnter)
+            {
+                return true;
+            }
+
+            // See if the player has the required item in their inventory
+            return player.Inventory.Any(ii => ii.Detail.ID == ItemRequiredToEnter.ID);
+        }
+        /// <summary>
+        /// Checks if the player does not have the required item to enter a location.
+        /// </summary>
+        /// <param name="location">The location to check.</param>
+        /// <returns>True if the player does not have the required item to enter the location, false otherwise.</returns>
+        public bool PlayerDoesNotHaveTheRequiredItemToEnter(Player player)
+        {
+            return !HasRequiredItemToEnterThisLocation(player);
+        }
+
+
+        /// <summary>
+        /// Sets the current enemy for the current location.
+        /// </summary>
+        /// <param name="location">The current location.</param>
+        public void SetTheCurrentEnemyForTheCurrentLocation(Enemy enemy, Location location)
+        {
+            // Populate the current monster with this location's monster (or null, if there is no monster here)
+            enemy = location.NewInstanceOfEnemyLivingHere();
+
+            if (enemy != null)
+            {
+                MessageHandler.RaiseMessage("You see a " + location.Name);
+                MessageHandler.RaiseMessage("You see a " + enemy.Name);
+            }
+        }
+
+
+        private void HandleMessage(object sender, MessageEventArgs e)
+        {
+            // Handle the message event here
+            Console.WriteLine(e.Message);
+        }
+
     }
 }

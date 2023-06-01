@@ -27,5 +27,6 @@ namespace Engine
             Message = message;
             AddExtraNewLine = addExtraNewLine;
         }
+
     }
 }

@@ -28,10 +28,10 @@ namespace Engine
         /* Bitmap image =new Bitmap();*/
 
 
-        /// <summary>
+/*        /// <summary>
         /// Event that is raised when a message needs to be displayed.
         /// </summary>
-        public event EventHandler<MessageEventArgs> OnMessage;
+        public event EventHandler<MessageEventArgs> OnMessage;*/
 
         /// <summary>
         /// Gets or sets the amount of gold the player has.
@@ -56,14 +56,14 @@ namespace Engine
             {
                 _experiencePoints = value;
                 OnPropertyChanged("ExperiencePoints");
-                OnPropertyChanged("Level");
+                OnPropertyChanged("Quest");
             }
         }
 
         /// <summary>
         /// Gets the level of the player based on the experience points.
         /// </summary>
-        public int Level => ((ExperiencePoints / 100) + 1);
+        public int Quest => ((ExperiencePoints / 100) + 1);
 
         /// <summary>
         /// Gets or sets the current location of the player.
@@ -118,14 +118,10 @@ namespace Engine
             get { return Inventory.Where(x => x.Detail is Potion).Select(x => x.Detail as Potion).ToList(); }
         }
 
-
-
-
-
         /// <summary>
         /// Gets the quests of the player.
         /// </summary>
-        public BindingList<Quest> Quests { get; set; }
+        public BindingList<ActiveQuest> Quests { get; set; }
 
         /// <summary>
         /// Gets or sets the locations visited by the player.
@@ -139,7 +135,7 @@ namespace Engine
             Gold = gold;
             ExperiencePoints = experiencePoints;
             Inventory = new BindingList<Inventory>();
-            Quests = new BindingList<Quest>();
+            Quests = new BindingList<ActiveQuest>();
             LocationsVisited = new List<int>();
         }
 
@@ -153,177 +149,6 @@ namespace Engine
             player.Inventory.Add(new Inventory(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
             player.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
             return player;
-        }
-
-        /// <summary>
-        /// Creates a Player object from an XML string.
-        /// </summary>
-        /// <param name="xmlPlayerData">The XML string containing player data.</param>
-        /// <returns>The Player object created from the XML string, or a default player object if there was an error with the XML data.</returns>
-        public static Player CreatePlayerFromXmlString(string xmlPlayerData)
-        {
-            try
-            {
-                XmlDocument playerData = new XmlDocument();
-                playerData.LoadXml(xmlPlayerData);
-
-                int currentHitPoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentHitPoints").InnerText);
-                int maximumHitPoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/MaximumHitPoints").InnerText);
-                int gold = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/Gold").InnerText);
-                int experiencePoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/ExperiencePoints").InnerText);
-
-                Player player = new Player(currentHitPoints, maximumHitPoints, gold, experiencePoints);
-
-                int currentLocationID = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentLocation").InnerText);
-                player.CurrentLocation = World.LocationByID(currentLocationID);
-
-                if (playerData.SelectSingleNode("/Player/Stats/CurrentWeapon") != null)
-                {
-                    int currentWeaponID = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentWeapon").InnerText);
-                    player.CurrentWeapon = (Weapon)World.ItemByID(currentWeaponID);
-                }
-
-                if (playerData.SelectSingleNode("/Player/Stats/CurrentPotion") != null)
-                {
-                    int currentPotionID = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentPotion").InnerText);
-                    player.CurrentPotion = (Potion)World.ItemByID(currentPotionID);
-                }
-
-                foreach (XmlNode node in playerData.SelectNodes("/Player/LocationsVisited/LocationVisited"))
-                {
-                    int id = Convert.ToInt32(node.Attributes["ID"].Value);
-                    player.LocationsVisited.Add(id);
-                }
-
-                foreach (XmlNode node in playerData.SelectNodes("/Player/InventoryItems/Inventory"))
-                {
-                    int id = Convert.ToInt32(node.Attributes["ID"].Value);
-                    int quantity = Convert.ToInt32(node.Attributes["Quantity"].Value);
-
-                    for (int i = 0; i < quantity; i++)
-                    {
-                        player.AddItemToInventory(World.ItemByID(id));
-                    }
-                }
-
-                foreach (XmlNode node in playerData.SelectNodes("/Player/PlayerQuests/PlayerQuest"))
-                {
-                    int id = Convert.ToInt32(node.Attributes["ID"].Value);
-                    bool isCompleted = Convert.ToBoolean(node.Attributes["IsCompleted"].Value);
-
-                    Quest playerQuest = new Quest(World.LevelByID(id));
-                    playerQuest.IsCompleted = isCompleted;
-                    player.Quests.Add(playerQuest);
-                }
-
-                return player;
-            }
-            catch
-            {
-                // If there was an error with the XML data, return a default player object
-                return Player.CreateDefaultPlayer();
-            }
-        }
-
-        /// <summary>
-        /// Creates a Player object from database values.
-        /// </summary>
-        /// <param name="currentHitPoints">The current hit points of the player.</param>
-        /// <param name="maximumHitPoints">The maximum hit points of the player.</param>
-        /// <param name="gold">The amount of gold the player has.</param>
-        /// <param name="experiencePoints">The experience points of the player.</param>
-        /// <param name="currentLocationID">The ID of the current location of the player.</param>
-        /// <returns>The Player object created from the database values.</returns>
-        public static Player CreatePlayerFromDatabase(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int currentLocationID)
-        {
-            Player player = new Player(currentHitPoints, maximumHitPoints, gold, experiencePoints);
-            player.MoveTo(World.LocationByID(currentLocationID));
-            return player;
-        }
-
-        /// <summary>
-        /// Moves the player to a specified location.
-        /// </summary>
-        /// <param name="location">The location to move to.</param>
-        public void MoveTo(Location location)
-        {
-            if (PlayerDoesNotHaveTheRequiredItemToEnter(location))
-            {
-                RaiseMessage("You must have a " + location.ItemRequiredToEnter.Name + " to enter this location.");
-                return;
-            }
-
-            // The player can enter this location
-            CurrentLocation = location;
-
-            if (!LocationsVisited.Contains(CurrentLocation.ID))
-            {
-                LocationsVisited.Add(CurrentLocation.ID);
-            }
-
-            CompletelyHeal();
-
-            if (location.HasAQuest)
-            {
-                if (PlayerDoesNotHaveThisQuest(location.QuestAvailableHere))
-                {
-                    GiveQuestToPlayer(location.QuestAvailableHere);
-                }
-                else
-                {
-                    if (PlayerHasNotCompleted(location.QuestAvailableHere) &&
-                        PlayerHasAllQuestCompletionItemsFor(location.QuestAvailableHere))
-                    {
-                        GivePlayerQuestRewards(location.QuestAvailableHere);
-                    }
-                }
-            }
-
-            SetTheCurrentEnemyForTheCurrentLocation(location);
-        }
-
-        /// <summary>
-        /// Moves the player to the location to the north if it exists.
-        /// </summary>
-        public void MoveNorth()
-        {
-            if (CurrentLocation.LocationToNorth != null)
-            {
-                MoveTo(CurrentLocation.LocationToNorth);
-            }
-        }
-
-        /// <summary>
-        /// Moves the player to the location to the east if it exists.
-        /// </summary>
-        public void MoveEast()
-        {
-            if (CurrentLocation.LocationToEast != null)
-            {
-                MoveTo(CurrentLocation.LocationToEast);
-            }
-        }
-
-        /// <summary>
-        /// Moves the player to the location to the south if it exists.
-        /// </summary>
-        public void MoveSouth()
-        {
-            if (CurrentLocation.LocationToSouth != null)
-            {
-                MoveTo(CurrentLocation.LocationToSouth);
-            }
-        }
-
-        /// <summary>
-        /// Moves the player to the location to the west if it exists.
-        /// </summary>
-        public void MoveWest()
-        {
-            if (CurrentLocation.LocationToWest != null)
-            {
-                MoveTo(CurrentLocation.LocationToWest);
-            }
         }
 
         /// <summary>
@@ -341,12 +166,12 @@ namespace Engine
 
             if (damage == 0)
             {
-                RaiseMessage("You missed the " + CurrentEnemy.Name);
+                MessageHandler.RaiseMessage("You missed the " + CurrentEnemy.Name);
             }
             else
             {
                 CurrentEnemy.CurrentHitPoints -= damage;
-                RaiseMessage("You hit the " + CurrentEnemy.Name + " for " + damage + " points.");
+                MessageHandler.RaiseMessage("You hit the " + CurrentEnemy.Name + " for " + damage + " points.");
             }
 
             if (CurrentEnemy.IsDead)
@@ -354,7 +179,7 @@ namespace Engine
                 LootTheCurrentEnemy();
 
                 // "Move" to the current location, to refresh the current monster
-                MoveTo(CurrentLocation);
+                Navigation.MoveTo(this, CurrentLocation);
             }
             else
             {
@@ -367,10 +192,10 @@ namespace Engine
         /// </summary>
         private void LootTheCurrentEnemy()
         {
-            RaiseMessage("");
-            RaiseMessage("You defeated the " + CurrentEnemy.Name);
-            RaiseMessage("You receive " + CurrentEnemy.RewardExperiencePoints + " experience points");
-            RaiseMessage("You receive " + CurrentEnemy.RewardGold + " gold");
+            MessageHandler.RaiseMessage("");
+            MessageHandler.RaiseMessage("You defeated the " + CurrentEnemy.Name);
+            MessageHandler.RaiseMessage("You receive " + CurrentEnemy.RewardExperiencePoints + " experience points");
+            MessageHandler.RaiseMessage("You receive " + CurrentEnemy.RewardGold + " gold");
 
             AddExperiencePoints(CurrentEnemy.RewardExperiencePoints);
             Gold += CurrentEnemy.RewardGold;
@@ -379,10 +204,10 @@ namespace Engine
             foreach (Inventory inventoryItem in CurrentEnemy.LootItems)
             {
                 AddItemToInventory(inventoryItem.Detail);
-                RaiseMessage(string.Format("You loot {0} {1}", inventoryItem.Quantity, inventoryItem.Description));
+                MessageHandler.RaiseMessage(string.Format("You loot {0} {1}", inventoryItem.Quantity, inventoryItem.Description));
             }
 
-            RaiseMessage("");
+            MessageHandler.RaiseMessage("");
         }
 
         /// <summary>
@@ -393,13 +218,13 @@ namespace Engine
         {
             if (healPotion != null && mightPotion == null)
             {
-                RaiseMessage("You drink a " + healPotion.Name);
+                MessageHandler.RaiseMessage("You drink a " + healPotion.Name);
                 Heal(healPotion.AmountToHeal);
                 RemoveItemFromInventory(healPotion);
             }
             else if (mightPotion != null)
             {
-                RaiseMessage("You drink a " + mightPotion.Name);
+                MessageHandler.RaiseMessage("You drink a " + mightPotion.Name);
                 MightPlayer(mightPotion.BonusHit);
                 RemoveItemFromInventory(mightPotion);
             }
@@ -412,7 +237,7 @@ namespace Engine
         public void MightPlayer(int might)
         {
             usedMight = true;
-            RaiseMessage("You gain " + might + " might.");
+            MessageHandler.RaiseMessage("You gain " + might + " might.");
         }
 
         /// <summary>
@@ -475,7 +300,66 @@ namespace Engine
             }
         }
 
+    
+
         /// <summary>
+        /// Adds experience points to the player and updates the maximum hit points based on the player's level.
+        /// </summary>
+        /// <param name="experiencePointsToAdd">The amount of experience points to add.</param>
+        public void AddExperiencePoints(int experiencePointsToAdd)
+        {
+            ExperiencePoints += experiencePointsToAdd;
+            MaximumHitPoints = (Quest * 10);
+        }
+
+        /// <summary>
+        /// Lets the current enemy attack the player.
+        /// </summary>
+        private void LetTheEnemyAttack()
+        {
+            int damageToPlayer = RandomNumberGenerator.NumberBetween(0, CurrentEnemy.MaximumDamage);
+            MessageHandler.RaiseMessage("The " + CurrentEnemy.Name + " did " + damageToPlayer + " points of damage.");
+            CurrentHitPoints -= damageToPlayer;
+
+            if (IsDead)
+            {
+                MessageHandler.RaiseMessage("The " + CurrentEnemy.Name + " killed you.");
+                Navigation.MoveHome(this);
+            }
+        }
+
+
+        // SERIALIZATION?
+
+        /// <summary>
+        /// Creates a new child XML node with the specified element name and value, and appends it to the parent node.
+        /// </summary>
+        /// <param name="document">The XML document.</param>
+        /// <param name="parentNode">The parent XML node.</param>
+        /// <param name="elementName">The name of the new child element.</param>
+        /// <param name="value">The value of the new child element.</param>
+        private void CreateNewChildXmlNode(XmlDocument document, XmlNode parentNode, string elementName, object value)
+        {
+            XmlNode node = document.CreateElement(elementName);
+            node.AppendChild(document.CreateTextNode(value.ToString()));
+            parentNode.AppendChild(node);
+        }
+
+        /// <summary>
+        /// Adds an XML attribute with the specified attribute name and value to the XML node.
+        /// </summary>
+        /// <param name="document">The XML document.</param>
+        /// <param name="node">The XML node.</param>
+        /// <param name="attributeName">The name of the attribute.</param>
+        /// <param name="value">The value of the attribute.</param>
+        private void AddXmlAttributeToNode(XmlDocument document, XmlNode node, string attributeName, object value)
+        {
+            XmlAttribute attribute = document.CreateAttribute(attributeName);
+            attribute.Value = value.ToString();
+            node.Attributes.Append(attribute);
+        }
+
+            /// <summary>
         /// Converts the player data to an XML string.
         /// </summary>
         /// <returns>The player data represented as an XML string.</returns>
@@ -538,7 +422,7 @@ namespace Engine
             player.AppendChild(playerQuests);
 
             // Create a "PlayerQuest" node for each quest the player has acquired
-            foreach (Quest quest in Quests)
+            foreach (ActiveQuest quest in Quests)
             {
                 XmlNode playerQuest = playerData.CreateElement("PlayerQuest");
                 AddXmlAttributeToNode(playerData, playerQuest, "ID", quest.Details.ID);
@@ -549,241 +433,98 @@ namespace Engine
             return playerData.InnerXml; // The XML document, as a string, so we can save the data to disk
         }
 
+
         /// <summary>
-        /// Checks if the player has the required item to enter a specific location.
+        /// Creates a Player object from an XML string.
         /// </summary>
-        /// <param name="location">The location to check.</param>
-        /// <returns>True if the player has the required item to enter the location, false otherwise.</returns>
-        private bool HasRequiredItemToEnterThisLocation(Location location)
+        /// <param name="xmlPlayerData">The XML string containing player data.</param>
+        /// <returns>The Player object created from the XML string, or a default player object if there was an error with the XML data.</returns>
+        public static Player CreatePlayerFromXmlString(string xmlPlayerData)
         {
-            if (location.DoesNotHaveAnItemRequiredToEnter)
+            try
             {
-                return true;
-            }
+                XmlDocument playerData = new XmlDocument();
+                playerData.LoadXml(xmlPlayerData);
 
-            // See if the player has the required item in their inventory
-            return Inventory.Any(ii => ii.Detail.ID == location.ItemRequiredToEnter.ID);
-        }
+                int currentHitPoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentHitPoints").InnerText);
+                int maximumHitPoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/MaximumHitPoints").InnerText);
+                int gold = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/Gold").InnerText);
+                int experiencePoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/ExperiencePoints").InnerText);
 
-        /// <summary>
-        /// Sets the current enemy for the current location.
-        /// </summary>
-        /// <param name="location">The current location.</param>
-        private void SetTheCurrentEnemyForTheCurrentLocation(Location location)
-        {
-            // Populate the current monster with this location's monster (or null, if there is no monster here)
-            CurrentEnemy = location.NewInstanceOfEnemyLivingHere();
+                Player player = new Player(currentHitPoints, maximumHitPoints, gold, experiencePoints);
 
-            if (CurrentEnemy != null)
-            {
-                RaiseMessage("You see a " + location.Name);
-                RaiseMessage("You see a " + CurrentEnemy.Name);
-            }
-        }
+                int currentLocationID = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentLocation").InnerText);
+                player.CurrentLocation = World.LocationByID(currentLocationID);
 
-        /// <summary>
-        /// Checks if the player does not have the required item to enter a location.
-        /// </summary>
-        /// <param name="location">The location to check.</param>
-        /// <returns>True if the player does not have the required item to enter the location, false otherwise.</returns>
-        private bool PlayerDoesNotHaveTheRequiredItemToEnter(Location location)
-        {
-            return !HasRequiredItemToEnterThisLocation(location);
-        }
-
-        /// <summary>
-        /// Checks if the player does not have a specific quest.
-        /// </summary>
-        /// <param name="quest">The quest to check.</param>
-        /// <returns>True if the player does not have the quest, false otherwise.</returns>
-        private bool PlayerDoesNotHaveThisQuest(Level quest)
-        {
-            return Quests.All(pq => pq.Details.ID != quest.ID);
-        }
-
-        /// <summary>
-        /// Checks if the player has not completed a specific quest.
-        /// </summary>
-        /// <param name="quest">The quest to check.</param>
-        /// <returns>True if the player has not completed the quest, false otherwise.</returns>
-        private bool PlayerHasNotCompleted(Level quest)
-        {
-            return Quests.Any(pq => pq.Details.ID == quest.ID && !pq.IsCompleted);
-        }
-
-        /// <summary>
-        /// Gives a quest to the player.
-        /// </summary>
-        /// <param name="quest">The quest to give to the player.</param>
-        private void GiveQuestToPlayer(Level quest)
-        {
-            RaiseMessage("You receive the " + quest.Name + " quest.");
-            RaiseMessage(quest.Description);
-            RaiseMessage("To complete it, return with:");
-
-            foreach (QuestReward qci in quest.QuestReward)
-            {
-                RaiseMessage(string.Format("{0} {1}", qci.Quantity,
-                    qci.Quantity == 1 ? qci.Details.Name : qci.Details.NamePlural));
-            }
-
-            RaiseMessage("");
-
-            Quests.Add(new Quest(quest));
-        }
-
-        /// <summary>
-        /// Checks if the player has all the quest completion items for a specific quest.
-        /// </summary>
-        /// <param name="quest">The quest to check.</param>
-        /// <returns>True if the player has all the quest completion items, false otherwise.</returns>
-        private bool PlayerHasAllQuestCompletionItemsFor(Level quest)
-        {
-            // See if the player has all the items needed to complete the quest here
-            foreach (QuestReward qci in quest.QuestReward)
-            {
-                // Check each item in the player's inventory, to see if they have it, and enough of it
-                if (!Inventory.Any(ii => ii.Detail.ID == qci.Details.ID && ii.Quantity >= qci.Quantity))
+                if (playerData.SelectSingleNode("/Player/Stats/CurrentWeapon") != null)
                 {
-                    return false;
+                    int currentWeaponID = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentWeapon").InnerText);
+                    player.CurrentWeapon = (Weapon)World.ItemByID(currentWeaponID);
                 }
-            }
 
-            // If we got here, then the player must have all the required items, and enough of them, to complete the quest.
-            return true;
-        }
-
-        /// <summary>
-        /// Removes the quest completion items from the player's inventory for a specific quest.
-        /// </summary>
-        /// <param name="quest">The quest for which to remove the completion items.</param>
-        private void RemoveQuestCompletionItems(Level quest)
-        {
-            foreach (QuestReward qci in quest.QuestReward)
-            {
-                Inventory item = Inventory.SingleOrDefault(ii => ii.Detail.ID == qci.Details.ID);
-
-                if (item != null)
+                if (playerData.SelectSingleNode("/Player/Stats/CurrentPotion") != null)
                 {
-                    RemoveItemFromInventory(item.Detail, qci.Quantity);
+                    int currentPotionID = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentPotion").InnerText);
+                    player.CurrentPotion = (Potion)World.ItemByID(currentPotionID);
                 }
+
+                foreach (XmlNode node in playerData.SelectNodes("/Player/LocationsVisited/LocationVisited"))
+                {
+                    int id = Convert.ToInt32(node.Attributes["ID"].Value);
+                    player.LocationsVisited.Add(id);
+                }
+
+                foreach (XmlNode node in playerData.SelectNodes("/Player/InventoryItems/Inventory"))
+                {
+                    int id = Convert.ToInt32(node.Attributes["ID"].Value);
+                    int quantity = Convert.ToInt32(node.Attributes["Quantity"].Value);
+
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        player.AddItemToInventory(World.ItemByID(id));
+                    }
+                }
+
+                foreach (XmlNode node in playerData.SelectNodes("/Player/PlayerQuests/PlayerQuest"))
+                {
+                    int id = Convert.ToInt32(node.Attributes["ID"].Value);
+                    bool isCompleted = Convert.ToBoolean(node.Attributes["IsCompleted"].Value);
+
+                    ActiveQuest playerActiveQuest = new ActiveQuest(World.QuestByID(id));
+                    playerActiveQuest.IsCompleted = isCompleted;
+                    player.Quests.Add(playerActiveQuest);
+                }
+
+                return player;
             }
-        }
-
-        /// <summary>
-        /// Adds experience points to the player and updates the maximum hit points based on the player's level.
-        /// </summary>
-        /// <param name="experiencePointsToAdd">The amount of experience points to add.</param>
-        private void AddExperiencePoints(int experiencePointsToAdd)
-        {
-            ExperiencePoints += experiencePointsToAdd;
-            MaximumHitPoints = (Level * 10);
-        }
-
-        /// <summary>
-        /// Gives rewards to the player for completing a quest.
-        /// </summary>
-        /// <param name="quest">The quest completed by the player.</param>
-        private void GivePlayerQuestRewards(Level quest)
-        {
-            RaiseMessage("");
-            RaiseMessage("You complete the '" + quest.Name + "' quest.");
-            RaiseMessage("You receive: ");
-            RaiseMessage(quest.RewardExperiencePoints + " experience points");
-            RaiseMessage(quest.RewardGold + " gold");
-            RaiseMessage(quest.RewardItem.Name, true);
-
-            AddExperiencePoints(quest.RewardExperiencePoints);
-            Gold += quest.RewardGold;
-            RemoveQuestCompletionItems(quest);
-            AddItemToInventory(quest.RewardItem);
-            MarkPlayerQuestCompleted(quest);
-        }
-
-        /// <summary>
-        /// Marks a quest as completed for the player.
-        /// </summary>
-        /// <param name="quest">The quest to mark as completed.</param>
-        private void MarkPlayerQuestCompleted(Level quest)
-        {
-            Quest playerQuest = Quests.SingleOrDefault(pq => pq.Details.ID == quest.ID);
-
-            if (playerQuest != null)
+            catch
             {
-                playerQuest.IsCompleted = true;
+                // If there was an error with the XML data, return a default player object
+                return Player.CreateDefaultPlayer();
             }
         }
 
         /// <summary>
-        /// Lets the current enemy attack the player.
+        /// Creates a Player object from database values.
         /// </summary>
-        private void LetTheEnemyAttack()
+        /// <param name="currentHitPoints">The current hit points of the player.</param>
+        /// <param name="maximumHitPoints">The maximum hit points of the player.</param>
+        /// <param name="gold">The amount of gold the player has.</param>
+        /// <param name="experiencePoints">The experience points of the player.</param>
+        /// <param name="currentLocationID">The ID of the current location of the player.</param>
+        /// <returns>The Player object created from the database values.</returns>
+        public static Player CreatePlayerFromDatabase(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int currentLocationID)
         {
-            int damageToPlayer = RandomNumberGenerator.NumberBetween(0, CurrentEnemy.MaximumDamage);
-            RaiseMessage("The " + CurrentEnemy.Name + " did " + damageToPlayer + " points of damage.");
-            CurrentHitPoints -= damageToPlayer;
-
-            if (IsDead)
-            {
-                RaiseMessage("The " + CurrentEnemy.Name + " killed you.");
-                MoveHome();
-            }
+            Player player = new Player(currentHitPoints, maximumHitPoints, gold, experiencePoints);
+            Navigation.MoveTo(player, World.LocationByID(currentLocationID));
+            return player;
         }
 
-        /// <summary>
-        /// Moves the player back to their home location.
-        /// </summary>
-        private void MoveHome()
-        {
-            MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
-        }
-
-        // SERIALIZATION?
-
-        /// <summary>
-        /// Creates a new child XML node with the specified element name and value, and appends it to the parent node.
-        /// </summary>
-        /// <param name="document">The XML document.</param>
-        /// <param name="parentNode">The parent XML node.</param>
-        /// <param name="elementName">The name of the new child element.</param>
-        /// <param name="value">The value of the new child element.</param>
-        private void CreateNewChildXmlNode(XmlDocument document, XmlNode parentNode, string elementName, object value)
-        {
-            XmlNode node = document.CreateElement(elementName);
-            node.AppendChild(document.CreateTextNode(value.ToString()));
-            parentNode.AppendChild(node);
-        }
-
-        /// <summary>
-        /// Adds an XML attribute with the specified attribute name and value to the XML node.
-        /// </summary>
-        /// <param name="document">The XML document.</param>
-        /// <param name="node">The XML node.</param>
-        /// <param name="attributeName">The name of the attribute.</param>
-        /// <param name="value">The value of the attribute.</param>
-        private void AddXmlAttributeToNode(XmlDocument document, XmlNode node, string attributeName, object value)
-        {
-            XmlAttribute attribute = document.CreateAttribute(attributeName);
-            attribute.Value = value.ToString();
-            node.Attributes.Append(attribute);
-        }
 
         // END SERIALIZATION?
 
 
 
-        /// <summary>
-        /// Raises a message event with the specified message.
-        /// </summary>
-        /// <param name="message">The message to raise.</param>
-        /// <param name="addExtraNewLine">Optional. Specifies whether to add an extra new line after the message.</param>
-        private void RaiseMessage(string message, bool addExtraNewLine = false)
-        {
-            if (OnMessage != null)
-            {
-                OnMessage(this, new MessageEventArgs(message, addExtraNewLine));
-            }
-        }
 
     }
 }
