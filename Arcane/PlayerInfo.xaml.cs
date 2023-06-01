@@ -127,12 +127,12 @@ namespace Arcane
             string propertyName = e.Column.SortMemberPath;
 
             // Get the inventory of the current player.
-            BindingList<InventoryItem> inventory = _CurrentPlayer.Inventory;
+            BindingList<Inventory> inventory = _CurrentPlayer.Inventory;
 
             if (inventory != null)
             {
                 // Sort the inventory based on the sort direction.
-                List<InventoryItem> sortedInventory = dgvInventorySortDirection == ListSortDirection.Ascending ?
+                List<Inventory> sortedInventory = dgvInventorySortDirection == ListSortDirection.Ascending ?
                     inventory.OrderBy(x => GetPropertyValue(x, propertyName)).ToList() :
                     inventory.OrderByDescending(x => GetPropertyValue(x, propertyName)).ToList();
 

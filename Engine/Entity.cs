@@ -56,5 +56,23 @@ namespace Engine
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+        /// <summary>
+        /// Heals the player by a specified amount of hit points.
+        /// </summary>
+        /// <param name="hitPointsToHeal">The number of hit points to heal.</param>
+        protected void Heal(int hitPointsToHeal)
+        {
+            CurrentHitPoints = Math.Min(CurrentHitPoints + hitPointsToHeal, MaximumHitPoints);
+        }
+
+
+        /// <summary>
+        /// Completely heals the player to maximum hit points.
+        /// </summary>
+        protected void CompletelyHeal()
+        {
+            CurrentHitPoints = MaximumHitPoints;
+        }
     }
 }

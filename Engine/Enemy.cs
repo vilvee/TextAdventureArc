@@ -12,7 +12,7 @@ namespace Engine
         public int RewardGold { get; set; } // Gold rewarded when the enemy is defeated
 
         public List<Loot> LootTable { get; set; } // List of possible items that the enemy can drop
-        internal List<InventoryItem> LootItems { get; } // List of items the enemy has in its inventory
+        internal List<Inventory> LootItems { get; } // List of items the enemy has in its inventory
 
         public Enemy(int id, string name, int maximumDamage, int rewardExperiencePoints, int rewardGold, int currentHitPoints, int maximumHitPoints)
             : base(currentHitPoints, maximumHitPoints)
@@ -24,7 +24,7 @@ namespace Engine
             RewardGold = rewardGold;
 
             LootTable = new List<Loot>();
-            LootItems = new List<InventoryItem>();
+            LootItems = new List<Inventory>();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Engine
             // Add items to the LootItems list, comparing a random number to the drop percentage
             foreach (Loot lootItem in LootTable.Where(lootItem => RandomNumberGenerator.NumberBetween(1, 100) <= lootItem.DropPercentage))
             {
-                newEnemy.LootItems.Add(new InventoryItem(lootItem.Details, 1));
+                newEnemy.LootItems.Add(new Inventory(lootItem.Details, 1));
             }
 
             // If no items were randomly selected, add the default loot item(s)
@@ -48,7 +48,7 @@ namespace Engine
             {
                 foreach (Loot lootItem in LootTable.Where(x => x.IsDefaultItem))
                 {
-                    newEnemy.LootItems.Add(new InventoryItem(lootItem.Details, 1));
+                    newEnemy.LootItems.Add(new Inventory(lootItem.Details, 1));
                 }
             }
 

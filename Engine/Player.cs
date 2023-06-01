@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace Engine
 {
-    
+
 
     /// <summary>
     /// Represents the player in the game.
@@ -23,7 +23,9 @@ namespace Engine
         private Potion _currentPotion;
         private bool usedMight = false;
 
-        Bitmap image =new Bitmap();
+        private Inventory playerInventory;
+        //TODO: Add image to player
+        /* Bitmap image =new Bitmap();*/
 
 
         /// <summary>
@@ -84,21 +86,21 @@ namespace Engine
         /// <summary>
         /// Gets or sets the current weapon of the player.
         /// </summary>
-        public Potion CurrentPotion 
-        { 
+        public Potion CurrentPotion
+        {
             get => _currentPotion;
             set
             {
                 if (Potions.Count > 0)
-                    _currentPotion = Potions[0] ;
-                     OnPropertyChanged("Potions");
+                    _currentPotion = Potions[0];
+                OnPropertyChanged("Potions");
             }
         }
 
-        /// <summary>
+       /// <summary>
         /// Gets the inventory of the player.
         /// </summary>
-        public BindingList<InventoryItem> Inventory { get; set; }
+        public BindingList<Inventory> Inventory { get; set; }
 
         /// <summary>
         /// Gets the weapons in the player's inventory.
@@ -117,6 +119,9 @@ namespace Engine
         }
 
 
+
+
+
         /// <summary>
         /// Gets the quests of the player.
         /// </summary>
@@ -133,7 +138,7 @@ namespace Engine
         {
             Gold = gold;
             ExperiencePoints = experiencePoints;
-            Inventory = new BindingList<InventoryItem>();
+            Inventory = new BindingList<Inventory>();
             Quests = new BindingList<Quest>();
             LocationsVisited = new List<int>();
         }
@@ -145,7 +150,7 @@ namespace Engine
         public static Player CreateDefaultPlayer()
         {
             Player player = new Player(10, 10, 20, 0);
-            player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
+            player.Inventory.Add(new Inventory(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
             player.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
             return player;
         }
@@ -190,7 +195,7 @@ namespace Engine
                     player.LocationsVisited.Add(id);
                 }
 
-                foreach (XmlNode node in playerData.SelectNodes("/Player/InventoryItems/InventoryItem"))
+                foreach (XmlNode node in playerData.SelectNodes("/Player/InventoryItems/Inventory"))
                 {
                     int id = Convert.ToInt32(node.Attributes["ID"].Value);
                     int quantity = Convert.ToInt32(node.Attributes["Quantity"].Value);
@@ -371,7 +376,7 @@ namespace Engine
             Gold += CurrentEnemy.RewardGold;
 
             // Give monster's loot items to the player
-            foreach (InventoryItem inventoryItem in CurrentEnemy.LootItems)
+            foreach (Inventory inventoryItem in CurrentEnemy.LootItems)
             {
                 AddItemToInventory(inventoryItem.Detail);
                 RaiseMessage(string.Format("You loot {0} {1}", inventoryItem.Quantity, inventoryItem.Description));
@@ -389,7 +394,7 @@ namespace Engine
             if (healPotion != null && mightPotion == null)
             {
                 RaiseMessage("You drink a " + healPotion.Name);
-                HealPlayer(healPotion.AmountToHeal);
+                Heal(healPotion.AmountToHeal);
                 RemoveItemFromInventory(healPotion);
             }
             else if (mightPotion != null)
@@ -398,7 +403,7 @@ namespace Engine
                 MightPlayer(mightPotion.BonusHit);
                 RemoveItemFromInventory(mightPotion);
             }
-            
+
 
             // The player used their turn to drink the potion, so let the monster attack now
             LetTheEnemyAttack();
@@ -411,21 +416,38 @@ namespace Engine
         }
 
         /// <summary>
+        /// Raises the inventory changed event for a specific item type.
+        /// </summary>
+        /// <param name="item">The item that caused the inventory change.</param>
+        public void RaiseInventoryChangedEvent(Item item)
+        {
+            if (item is Weapon)
+            {
+                OnPropertyChanged("Weapons");
+            }
+
+            if (item is HealingPotion)
+            {
+                OnPropertyChanged("Potions");
+            }
+        }
+
+        /// <summary>
         /// Adds an item to the player's inventory with the specified quantity.
         /// </summary>
         /// <param name="itemToAdd">The item to add to the inventory.</param>
         /// <param name="quantity">The quantity of the item to add (default: 1).</param>
         public void AddItemToInventory(Item itemToAdd, int quantity = 1)
         {
-            InventoryItem existingItemInInventory = Inventory.SingleOrDefault(ii => ii.Detail.ID == itemToAdd.ID);
+            Inventory existingInInventory = Inventory.SingleOrDefault(ii => ii.Detail.ID == itemToAdd.ID);
 
-            if (existingItemInInventory == null)
+            if (existingInInventory == null)
             {
-                Inventory.Add(new InventoryItem(itemToAdd, quantity));
+                Inventory.Add(new Inventory(itemToAdd, quantity));
             }
             else
             {
-                existingItemInInventory.Quantity += quantity;
+                existingInInventory.Quantity += quantity;
             }
 
             RaiseInventoryChangedEvent(itemToAdd);
@@ -438,7 +460,7 @@ namespace Engine
         /// <param name="quantity">The quantity of the item to remove (default: 1).</param>
         public void RemoveItemFromInventory(Item itemToRemove, int quantity = 1)
         {
-            InventoryItem item = Inventory.SingleOrDefault(ii => ii.Detail.ID == itemToRemove.ID && ii.Quantity >= quantity);
+            Inventory item = Inventory.SingleOrDefault(ii => ii.Detail.ID == itemToRemove.ID && ii.Quantity >= quantity);
 
             if (item != null)
             {
@@ -498,14 +520,14 @@ namespace Engine
                 locationsVisited.AppendChild(locationVisited);
             }
 
-            // Create the "InventoryItems" child node to hold each InventoryItem node
+            // Create the "InventoryItems" child node to hold each Inventory node
             XmlNode inventoryItems = playerData.CreateElement("InventoryItems");
             player.AppendChild(inventoryItems);
 
-            // Create an "InventoryItem" node for each item in the player's inventory
-            foreach (InventoryItem item in Inventory)
+            // Create an "Inventory" node for each item in the player's inventory
+            foreach (Inventory item in Inventory)
             {
-                XmlNode inventoryItem = playerData.CreateElement("InventoryItem");
+                XmlNode inventoryItem = playerData.CreateElement("Inventory");
                 AddXmlAttributeToNode(playerData, inventoryItem, "ID", item.Detail.ID);
                 AddXmlAttributeToNode(playerData, inventoryItem, "Quantity", item.Quantity);
                 inventoryItems.AppendChild(inventoryItem);
@@ -639,7 +661,7 @@ namespace Engine
         {
             foreach (QuestReward qci in quest.QuestReward)
             {
-                InventoryItem item = Inventory.SingleOrDefault(ii => ii.Detail.ID == qci.Details.ID);
+                Inventory item = Inventory.SingleOrDefault(ii => ii.Detail.ID == qci.Details.ID);
 
                 if (item != null)
                 {
@@ -709,23 +731,6 @@ namespace Engine
         }
 
         /// <summary>
-        /// Heals the player by a specified amount of hit points.
-        /// </summary>
-        /// <param name="hitPointsToHeal">The number of hit points to heal.</param>
-        public void HealPlayer(int hitPointsToHeal)
-        {
-            CurrentHitPoints = Math.Min(CurrentHitPoints + hitPointsToHeal, MaximumHitPoints);
-        }
-
-        /// <summary>
-        /// Completely heals the player to maximum hit points.
-        /// </summary>
-        private void CompletelyHeal()
-        {
-            CurrentHitPoints = MaximumHitPoints;
-        }
-
-        /// <summary>
         /// Moves the player back to their home location.
         /// </summary>
         private void MoveHome()
@@ -733,7 +738,7 @@ namespace Engine
             MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
         }
 
-	// SERIALIZATION?
+        // SERIALIZATION?
 
         /// <summary>
         /// Creates a new child XML node with the specified element name and value, and appends it to the parent node.
@@ -763,24 +768,9 @@ namespace Engine
             node.Attributes.Append(attribute);
         }
 
-	// END SERIALIZATION?
+        // END SERIALIZATION?
 
-        /// <summary>
-        /// Raises the inventory changed event for a specific item type.
-        /// </summary>
-        /// <param name="item">The item that caused the inventory change.</param>
-        private void RaiseInventoryChangedEvent(Item item)
-        {
-            if (item is Weapon)
-            {
-                OnPropertyChanged("Weapons");
-            }
 
-            if (item is HealingPotion)
-            {
-                OnPropertyChanged("Potions");
-            }
-        }
 
         /// <summary>
         /// Raises a message event with the specified message.

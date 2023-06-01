@@ -17,7 +17,7 @@ namespace Engine
         /// <summary>
         /// Gets the inventory of the vendor.
         /// </summary>
-        public BindingList<InventoryItem> Inventory { get; private set; }
+        public BindingList<Inventory> Inventory { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vendor"/> class with the specified name.
@@ -26,7 +26,7 @@ namespace Engine
         public Vendor(string name)
         {
             Name = name;
-            Inventory = new BindingList<InventoryItem>();
+            Inventory = new BindingList<Inventory>();
         }
 
         /// <summary>
@@ -36,11 +36,11 @@ namespace Engine
         /// <param name="quantity">The quantity of the item to add (default is 1).</param>
         public void AddItemToInventory(Item itemToAdd, int quantity = 1)
         {
-            InventoryItem item = Inventory.SingleOrDefault(ii => ii.Detail.ID == itemToAdd.ID);
+            Inventory item = Inventory.SingleOrDefault(ii => ii.Detail.ID == itemToAdd.ID);
             if (item == null)
             {
                 // They didn't have the item, so add it to their inventory
-                Inventory.Add(new InventoryItem(itemToAdd, quantity));
+                Inventory.Add(new Inventory(itemToAdd, quantity));
             }
             else
             {
@@ -58,7 +58,7 @@ namespace Engine
         /// <param name="quantity">The quantity of the item to remove (default is 1).</param>
         public void RemoveItemFromInventory(Item itemToRemove, int quantity = 1)
         {
-            InventoryItem item = Inventory.SingleOrDefault(ii => ii.Detail.ID == itemToRemove.ID);
+            Inventory item = Inventory.SingleOrDefault(ii => ii.Detail.ID == itemToRemove.ID);
             if (item == null)
             {
                 // The item is not in the vendor's inventory, so ignore it.

@@ -14,7 +14,7 @@ namespace Engine
         /// <summary>
         /// Gets or sets the details of the item.
         /// </summary>
-        public Item? Details { get; set; }
+        public Item Details { get; set; }
 
         /// <summary>
         /// Gets or sets the drop percentage of the loot.
@@ -32,7 +32,7 @@ namespace Engine
         /// <param name="details">The details of the item.</param>
         /// <param name="dropPercentage">The drop percentage of the loot.</param>
         /// <param name="isDefaultItem">A value indicating whether the loot is a default item.</param>
-        public Loot(Item? details, int dropPercentage, bool isDefaultItem)
+        public Loot(Item details, int dropPercentage, bool isDefaultItem)
         {
             Details = details;
             DropPercentage = dropPercentage;

@@ -270,7 +270,7 @@ namespace Engine
                     }
 
                     // Insert Inventory rows, from the player object
-                    foreach (InventoryItem inventoryItem in player.Inventory)
+                    foreach (Inventory inventoryItem in player.Inventory)
                     {
                         using (SqlCommand insertInventoryCommand = connection.CreateCommand())
                         {

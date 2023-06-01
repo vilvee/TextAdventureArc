@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+
 
 namespace Engine
 {
     /// <summary>
     /// Represents an item in the inventory with its quantity.
     /// </summary>
-    public class InventoryItem : INotifyPropertyChanged
+    public class Inventory : INotifyPropertyChanged // INotifyPropertyChanged is an interface that allows us to notify the UI when a property changes.
     {
+
         private Item _detail;
         private int _quantity;
 
@@ -28,29 +25,29 @@ namespace Engine
             }
         }
 
-        /// <summary>
-        /// Gets or sets the quantity of the item.
-        /// </summary>
-        public int Quantity
-        {
-            get => _quantity;
-            set
-            {
-                _quantity = value;
-                OnPropertyChanged("Quantity");
-                OnPropertyChanged("Description");
-            }
-        }
+          /// <summary>
+       /// Gets or sets the quantity of the item.
+       /// </summary>
+    public int Quantity
+       {
+           get => _quantity;
+           set
+           {
+               _quantity = value;
+               OnPropertyChanged("Quantity");
+               OnPropertyChanged("Description");
+           }
+       }
 
         /// <summary>
         /// Gets the ID of the item.
         /// </summary>
         public int ItemID => Detail.ID;
 
-        /// <summary>
+/*        /// <summary>
         /// Gets the price of the item.
         /// </summary>
-        public int Price => Detail.Price;
+        public int Price => Detail.Price;*/
 
         /// <summary>
         /// Gets the description of the item.
@@ -58,14 +55,15 @@ namespace Engine
         public string Description => Quantity > 1 ? Detail.NamePlural : Detail.Name;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InventoryItem"/> class with the specified item and quantity.
+        /// Initializes a new instance of the <see cref="Inventory"/> class with the specified item and quantity.
         /// </summary>
         /// <param name="detail">The item details.</param>
         /// <param name="quantity">The quantity of the item.</param>
-        public InventoryItem(Item detail, int quantity)
+        public Inventory(Item detail, int quantity)
         {
             Detail = detail;
             Quantity = quantity;
+
         }
 
         /// <summary>
@@ -84,5 +82,6 @@ namespace Engine
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
+
     }
 }

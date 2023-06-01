@@ -43,8 +43,8 @@ namespace Arcane
         private void dgvMyItems_CellClick(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            InventoryItem inventoryItem = (InventoryItem)button.Tag;
-            int itemId = inventoryItem.ItemID;
+            Inventory inventory = (Inventory)button.Tag;
+            int itemId = inventory.ItemID;
             Item itemBeingSold = World.ItemByID(itemId);
 
             if (itemBeingSold.Price == World.UNSELLABLE_ITEM_PRICE)
@@ -67,8 +67,8 @@ namespace Arcane
         private void dgvVendorItems_CellClick(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            InventoryItem inventoryItem = (InventoryItem)button.Tag;
-            int itemId = inventoryItem.ItemID;
+            Inventory inventory = (Inventory)button.Tag;
+            int itemId = inventory.ItemID;
             Item itemBeingSold = World.ItemByID(itemId);
 
             if (_currentPlayer.Gold >= itemBeingSold.Price)
