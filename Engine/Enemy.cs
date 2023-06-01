@@ -35,7 +35,7 @@ namespace Engine
         /// <returns>NewEnemy</returns>
         internal Enemy NewInstanceOfEnemy()
         {
-            Enemy? newEnemy = new Enemy(ID, Name, MaximumDamage, RewardExperiencePoints, RewardGold, CurrentHitPoints, MaximumHitPoints);
+            Enemy newEnemy = new Enemy(ID, Name, MaximumDamage, RewardExperiencePoints, RewardGold, CurrentHitPoints, MaximumHitPoints);
 
             // Add items to the LootItems list, comparing a random number to the drop percentage
             foreach (Loot lootItem in LootTable.Where(lootItem => RandomNumberGenerator.NumberBetween(1, 100) <= lootItem.DropPercentage))

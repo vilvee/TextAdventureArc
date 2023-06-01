@@ -9,8 +9,6 @@ using System.IO;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
-using System.Reflection;
-using Microsoft.Identity.Client;
 
 namespace Arcane
 {
@@ -19,6 +17,8 @@ namespace Arcane
         private const string PLAYER_DATA_FILE_NAME = "PlayerData7.xml";
 
         private readonly Player _player;
+        
+
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
@@ -79,8 +79,12 @@ namespace Arcane
             _player.PropertyChanged += PlayerOnPropertyChanged;
 
             // Subscribe to player's message event and move to current location
-            _player.OnMessage += DisplayMessage;
-            _player.MoveTo(_player.CurrentLocation);
+
+            MessageHandler.OnMessage += HandleMessage;
+
+
+            Navigation.MoveTo(_player, _player.CurrentLocation);
+            
         }
 
         #region Directions
@@ -89,7 +93,7 @@ namespace Arcane
         /// </summary>
         private void btnNorth_Click(object sender, EventArgs e)
         {
-            _player.MoveNorth();
+           Navigation.MoveNorth(_player);
         }
 
         /// <summary>
@@ -97,7 +101,7 @@ namespace Arcane
         /// </summary>
         private void btnEast_Click(object sender, EventArgs e)
         {
-            _player.MoveEast();
+            Navigation.MoveEast(_player);
         }
 
         /// <summary>
@@ -105,7 +109,7 @@ namespace Arcane
         /// </summary>
         private void btnSouth_Click(object sender, EventArgs e)
         {
-            _player.MoveSouth();
+            Navigation.MoveSouth(_player);
         }
 
         /// <summary>
@@ -113,11 +117,23 @@ namespace Arcane
         /// </summary>
         private void btnbtnWest_Click(object sender, EventArgs e)
         {
-            _player.MoveWest();
+            Navigation.MoveWest(_player);
         }
         #endregion
 
-#region Buttons and Drop Menus
+        #region Buttons and Drop Menus
+
+        public Combat HasEnemy()
+        {
+            if (_player.CurrentLocation.HasAEnemy)
+            {
+                Combat combat = new Combat(_player.CurrentLocation);
+                return combat;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Handles the click event for the Use Weapon button and uses the currently selected weapon.
         /// </summary>
@@ -125,7 +141,13 @@ namespace Arcane
         {
             // Get the currently selected weapon from the cboWeapons ComboBox
             Weapon currentWeapon = (Weapon)cboWeapons.SelectedItem;
-            _player.UseWeapon(currentWeapon);
+            Combat combat = HasEnemy();
+
+            if (combat != null)
+            {
+                combat.UseWeapon(_player, currentWeapon);
+            }
+
         }
 
         /// <summary>
@@ -136,23 +158,26 @@ namespace Arcane
            
             // Get the currently selected potion from the combobox
            Potion potion = (Potion)cboPotions.SelectedItem;
-
-           if (potion is HealingPotion)
-            {
-                HealingPotion healingPotion = potion as HealingPotion;
-                if (healingPotion != null)
-                {
-                    _player.UsePotion(healingPotion);
-                }
-            }
-            else if (potion is MightPotion)
-            {
-                MightPotion mightPotion = potion as MightPotion;
-                if (mightPotion != null)
-                {
-                    _player.UsePotion(null, mightPotion);
-                }
-            }
+           Combat combat = HasEnemy();
+           if (combat != null)
+           {
+               if (potion is HealingPotion)
+               {
+                   HealingPotion healingPotion = potion as HealingPotion;
+                   if (healingPotion != null)
+                   {
+                       combat.UsePotion(_player,healingPotion);
+                   }
+               }
+               else if (potion is MightPotion)
+               {
+                   MightPotion mightPotion = potion as MightPotion;
+                   if (mightPotion != null)
+                   {
+                       combat.UsePotion(_player,null, mightPotion);
+                   }
+               }
+           }
         }
 
         /// <summary>
@@ -319,27 +344,15 @@ namespace Arcane
             }
         }
 
- /*       /// <summary>
-        /// Scrolls the messages text box to the end when the text changes.
-        /// </summary>
-        private void rtbMessages_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // Scroll to the end of the messages text box
-            rtbMessages.ScrollToEnd();
-        }*/ 
 
         /// <summary>
         /// Displays a message in the messages text box.
         /// </summary>
         /// <param name="sender">The sender of the message.</param>
         /// <param name="messageEventArgs">The event arguments containing the message.</param>
-        private void DisplayMessage(object sender, MessageEventArgs messageEventArgs)
+        private void HandleMessage(object sender, MessageEventArgs e)
         {
-            rtbMessages.AppendText(messageEventArgs.Message + Environment.NewLine);
-            if (messageEventArgs.AddExtraNewLine)
-            {
-                rtbMessages.AppendText(Environment.NewLine);
-            }
+            rtbMessages.Document.Blocks.Add(new Paragraph(new Run(e.Message)));
             rtbMessages.ScrollToEnd();
         }
 

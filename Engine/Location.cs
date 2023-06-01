@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 
 namespace Engine
@@ -10,9 +12,6 @@ namespace Engine
     public class Location
     {
         private readonly SortedList<int, int> _enemiesAtLocation = new SortedList<int, int>();
-
-
-
 
         /// <summary>
         /// Gets or sets the ID of the location.
@@ -95,6 +94,7 @@ namespace Engine
             Description = description;
             ItemRequiredToEnter = itemRequiredToEnter;
             QuestAvailableHere = questAvailableHere;
+            
         }
 
         /// <summary>
@@ -137,20 +137,21 @@ namespace Engine
             // that is the monster to return.
             int runningTotal = 0;
 
-            foreach (KeyValuePair<int, int> monsterKeyValuePair in _enemiesAtLocation)
+            foreach (KeyValuePair<int, int> enemyKeyValuePair in _enemiesAtLocation)
             {
-                runningTotal += monsterKeyValuePair.Value;
+                runningTotal += enemyKeyValuePair.Value;
 
                 if (randomNumber <= runningTotal)
                 {
-                    return World.EnemyByID(monsterKeyValuePair.Key).NewInstanceOfEnemy();
+                    MessageHandler.RaiseMessage("You see a " + World.EnemyByID(enemyKeyValuePair.Key).Name);
+                    return World.EnemyByID(enemyKeyValuePair.Key).NewInstanceOfEnemy();
                 }
             }
 
             // In case there was a problem, return the last monster in the list.
+            MessageHandler.RaiseMessage("You see a " + World.EnemyByID(_enemiesAtLocation.Keys.Last()).Name);
             return World.EnemyByID(_enemiesAtLocation.Keys.Last()).NewInstanceOfEnemy();
         }
-
 
         /// <summary>
         /// Checks if the player has the required item to enter a specific location.
@@ -177,29 +178,17 @@ namespace Engine
             return !HasRequiredItemToEnterThisLocation(player);
         }
 
-
         /// <summary>
         /// Sets the current enemy for the current location.
         /// </summary>
         /// <param name="location">The current location.</param>
-        public void SetTheCurrentEnemyForTheCurrentLocation(Enemy enemy, Location location)
+        public Enemy SetTheCurrentEnemyForTheCurrentLocation()
         {
             // Populate the current monster with this location's monster (or null, if there is no monster here)
-            enemy = location.NewInstanceOfEnemyLivingHere();
-
-            if (enemy != null)
-            {
-                MessageHandler.RaiseMessage("You see a " + location.Name);
-                MessageHandler.RaiseMessage("You see a " + enemy.Name);
-            }
+            Enemy enemy = NewInstanceOfEnemyLivingHere();
+            return enemy;
         }
 
-
-        private void HandleMessage(object sender, MessageEventArgs e)
-        {
-            // Handle the message event here
-            Console.WriteLine(e.Message);
-        }
 
     }
 }

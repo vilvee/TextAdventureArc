@@ -64,11 +64,6 @@ namespace Engine
             QuestReward = new List<QuestReward>();
         }
 
-        public bool PlayerDoesNotHaveThisQuest(Player player)
-        {
-            return player.Quests.All(pq => pq.Details.ID != ID);
-        }
-
         /// <summary>
         /// Checks if the player has not completed a specific quest.
         /// </summary>
@@ -84,21 +79,31 @@ namespace Engine
         /// Gives a quest to the player.
         /// </summary>
         /// <param name="player">The quest to give to the player.</param>
-        private void GiveQuestToPlayer(Player player)
+        public void GiveQuestToPlayer(Player player, Location location)
         {
-            MessageHandler.RaiseMessage("You receive the " + Name + " quest.");
-            MessageHandler.RaiseMessage(Description);
-            MessageHandler.RaiseMessage("To complete it, return with:");
+           
+                if (player.Quests.Any(aq => aq.Details.ID == ID))
+                {
+                    // The player already has the quest, so don't give it to them again
+                    PlayerHasAllQuestCompletionItemsFor(player);
+                    GivePlayerQuestRewards(player);
+                    return;
+                }
 
-            foreach (QuestReward qci in QuestReward)
-            {
-                MessageHandler.RaiseMessage(string.Format("{0} {1}", qci.Quantity,
-                    qci.Quantity == 1 ? qci.Details.Name : qci.Details.NamePlural));
-            }
+                MessageHandler.RaiseMessage("You receive the " + Name + " quest.");
+                MessageHandler.RaiseMessage(Description);
+                MessageHandler.RaiseMessage("To complete it, return with:");
 
-            MessageHandler.RaiseMessage("");
+                foreach (QuestReward qci in QuestReward)
+                {
+                    MessageHandler.RaiseMessage(string.Format("{0} {1}", qci.Quantity,
+                        qci.Quantity == 1 ? qci.Details.Name : qci.Details.NamePlural));
+                }
 
-            player.Quests.Add(new ActiveQuest(this));
+                MessageHandler.RaiseMessage("");
+
+                player.Quests.Add(new ActiveQuest(this));
+            
         }
 
         /// <summary>
@@ -157,7 +162,7 @@ namespace Engine
             player.Gold += RewardGold;
             RemoveQuestCompletionItems(player);
             player.AddItemToInventory(RewardItem);
-            MarkPlayerQuestCompleted();
+            MarkPlayerQuestCompleted(player);
         }
 
         /// <summary>

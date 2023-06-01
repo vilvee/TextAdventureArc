@@ -20,10 +20,8 @@ namespace Engine
         private int _gold;
         private int _experiencePoints;
         private Location _currentLocation;
-        private Potion _currentPotion;
-        private bool usedMight = false;
 
-        private Inventory playerInventory;
+
         //TODO: Add image to player
         /* Bitmap image =new Bitmap();*/
 
@@ -78,6 +76,8 @@ namespace Engine
             }
         }
 
+        public Combat CurrentCombat { get; set; }
+
         /// <summary>
         /// Gets or sets the current weapon of the player.
         /// </summary>
@@ -86,16 +86,7 @@ namespace Engine
         /// <summary>
         /// Gets or sets the current weapon of the player.
         /// </summary>
-        public Potion CurrentPotion
-        {
-            get => _currentPotion;
-            set
-            {
-                if (Potions.Count > 0)
-                    _currentPotion = Potions[0];
-                OnPropertyChanged("Potions");
-            }
-        }
+        public Potion CurrentPotion { get; set; }
 
        /// <summary>
         /// Gets the inventory of the player.
@@ -152,92 +143,19 @@ namespace Engine
         }
 
         /// <summary>
-        /// Uses the specified weapon to attack the current enemy.
+        /// Creates a Player object from database values.
         /// </summary>
-        /// <param name="weapon">The weapon to use.</param>
-        public void UseWeapon(Weapon weapon)
+        /// <param name="currentHitPoints">The current hit points of the player.</param>
+        /// <param name="maximumHitPoints">The maximum hit points of the player.</param>
+        /// <param name="gold">The amount of gold the player has.</param>
+        /// <param name="experiencePoints">The experience points of the player.</param>
+        /// <param name="currentLocationID">The ID of the current location of the player.</param>
+        /// <returns>The Player object created from the database values.</returns>
+        public static Player CreatePlayerFromDatabase(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int currentLocationID)
         {
-            if (usedMight)
-            {
-                weapon.MaximumDamage += 5;
-            }
-
-            int damage = RandomNumberGenerator.NumberBetween(weapon.MinimumDamage, weapon.MaximumDamage);
-
-            if (damage == 0)
-            {
-                MessageHandler.RaiseMessage("You missed the " + CurrentEnemy.Name);
-            }
-            else
-            {
-                CurrentEnemy.CurrentHitPoints -= damage;
-                MessageHandler.RaiseMessage("You hit the " + CurrentEnemy.Name + " for " + damage + " points.");
-            }
-
-            if (CurrentEnemy.IsDead)
-            {
-                LootTheCurrentEnemy();
-
-                // "Move" to the current location, to refresh the current monster
-                Navigation.MoveTo(this, CurrentLocation);
-            }
-            else
-            {
-                LetTheEnemyAttack();
-            }
-        }
-
-        /// <summary>
-        /// Loots the current enemy after defeating it, gaining experience points, gold, and items.
-        /// </summary>
-        private void LootTheCurrentEnemy()
-        {
-            MessageHandler.RaiseMessage("");
-            MessageHandler.RaiseMessage("You defeated the " + CurrentEnemy.Name);
-            MessageHandler.RaiseMessage("You receive " + CurrentEnemy.RewardExperiencePoints + " experience points");
-            MessageHandler.RaiseMessage("You receive " + CurrentEnemy.RewardGold + " gold");
-
-            AddExperiencePoints(CurrentEnemy.RewardExperiencePoints);
-            Gold += CurrentEnemy.RewardGold;
-
-            // Give monster's loot items to the player
-            foreach (Inventory inventoryItem in CurrentEnemy.LootItems)
-            {
-                AddItemToInventory(inventoryItem.Detail);
-                MessageHandler.RaiseMessage(string.Format("You loot {0} {1}", inventoryItem.Quantity, inventoryItem.Description));
-            }
-
-            MessageHandler.RaiseMessage("");
-        }
-
-        /// <summary>
-        /// Uses a healing potion to heal the player, removes it from the inventory, and lets the enemy attack.
-        /// </summary>
-        /// <param name="potion">The healing potion to use.</param>
-        public void UsePotion(HealingPotion healPotion = null, MightPotion mightPotion = null)
-        {
-            if (healPotion != null && mightPotion == null)
-            {
-                MessageHandler.RaiseMessage("You drink a " + healPotion.Name);
-                Heal(healPotion.AmountToHeal);
-                RemoveItemFromInventory(healPotion);
-            }
-            else if (mightPotion != null)
-            {
-                MessageHandler.RaiseMessage("You drink a " + mightPotion.Name);
-                MightPlayer(mightPotion.BonusHit);
-                RemoveItemFromInventory(mightPotion);
-            }
-
-
-            // The player used their turn to drink the potion, so let the monster attack now
-            LetTheEnemyAttack();
-        }
-
-        public void MightPlayer(int might)
-        {
-            usedMight = true;
-            MessageHandler.RaiseMessage("You gain " + might + " might.");
+            Player player = new Player(currentHitPoints, maximumHitPoints, gold, experiencePoints);
+            Navigation.MoveTo(player,World.LocationByID(currentLocationID));
+            return player;
         }
 
         /// <summary>
@@ -300,8 +218,6 @@ namespace Engine
             }
         }
 
-    
-
         /// <summary>
         /// Adds experience points to the player and updates the maximum hit points based on the player's level.
         /// </summary>
@@ -312,54 +228,9 @@ namespace Engine
             MaximumHitPoints = (Quest * 10);
         }
 
-        /// <summary>
-        /// Lets the current enemy attack the player.
-        /// </summary>
-        private void LetTheEnemyAttack()
-        {
-            int damageToPlayer = RandomNumberGenerator.NumberBetween(0, CurrentEnemy.MaximumDamage);
-            MessageHandler.RaiseMessage("The " + CurrentEnemy.Name + " did " + damageToPlayer + " points of damage.");
-            CurrentHitPoints -= damageToPlayer;
-
-            if (IsDead)
-            {
-                MessageHandler.RaiseMessage("The " + CurrentEnemy.Name + " killed you.");
-                Navigation.MoveHome(this);
-            }
-        }
-
-
         // SERIALIZATION?
 
         /// <summary>
-        /// Creates a new child XML node with the specified element name and value, and appends it to the parent node.
-        /// </summary>
-        /// <param name="document">The XML document.</param>
-        /// <param name="parentNode">The parent XML node.</param>
-        /// <param name="elementName">The name of the new child element.</param>
-        /// <param name="value">The value of the new child element.</param>
-        private void CreateNewChildXmlNode(XmlDocument document, XmlNode parentNode, string elementName, object value)
-        {
-            XmlNode node = document.CreateElement(elementName);
-            node.AppendChild(document.CreateTextNode(value.ToString()));
-            parentNode.AppendChild(node);
-        }
-
-        /// <summary>
-        /// Adds an XML attribute with the specified attribute name and value to the XML node.
-        /// </summary>
-        /// <param name="document">The XML document.</param>
-        /// <param name="node">The XML node.</param>
-        /// <param name="attributeName">The name of the attribute.</param>
-        /// <param name="value">The value of the attribute.</param>
-        private void AddXmlAttributeToNode(XmlDocument document, XmlNode node, string attributeName, object value)
-        {
-            XmlAttribute attribute = document.CreateAttribute(attributeName);
-            attribute.Value = value.ToString();
-            node.Attributes.Append(attribute);
-        }
-
-            /// <summary>
         /// Converts the player data to an XML string.
         /// </summary>
         /// <returns>The player data represented as an XML string.</returns>
@@ -435,6 +306,34 @@ namespace Engine
 
 
         /// <summary>
+        /// Creates a new child XML node with the specified element name and value, and appends it to the parent node.
+        /// </summary>
+        /// <param name="document">The XML document.</param>
+        /// <param name="parentNode">The parent XML node.</param>
+        /// <param name="elementName">The name of the new child element.</param>
+        /// <param name="value">The value of the new child element.</param>
+        private void CreateNewChildXmlNode(XmlDocument document, XmlNode parentNode, string elementName, object value)
+        {
+            XmlNode node = document.CreateElement(elementName);
+            node.AppendChild(document.CreateTextNode(value.ToString()));
+            parentNode.AppendChild(node);
+        }
+
+        /// <summary>
+        /// Adds an XML attribute with the specified attribute name and value to the XML node.
+        /// </summary>
+        /// <param name="document">The XML document.</param>
+        /// <param name="node">The XML node.</param>
+        /// <param name="attributeName">The name of the attribute.</param>
+        /// <param name="value">The value of the attribute.</param>
+        private void AddXmlAttributeToNode(XmlDocument document, XmlNode node, string attributeName, object value)
+        {
+            XmlAttribute attribute = document.CreateAttribute(attributeName);
+            attribute.Value = value.ToString();
+            node.Attributes.Append(attribute);
+        }
+
+        /// <summary>
         /// Creates a Player object from an XML string.
         /// </summary>
         /// <param name="xmlPlayerData">The XML string containing player data.</param>
@@ -503,23 +402,6 @@ namespace Engine
                 return Player.CreateDefaultPlayer();
             }
         }
-
-        /// <summary>
-        /// Creates a Player object from database values.
-        /// </summary>
-        /// <param name="currentHitPoints">The current hit points of the player.</param>
-        /// <param name="maximumHitPoints">The maximum hit points of the player.</param>
-        /// <param name="gold">The amount of gold the player has.</param>
-        /// <param name="experiencePoints">The experience points of the player.</param>
-        /// <param name="currentLocationID">The ID of the current location of the player.</param>
-        /// <returns>The Player object created from the database values.</returns>
-        public static Player CreatePlayerFromDatabase(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int currentLocationID)
-        {
-            Player player = new Player(currentHitPoints, maximumHitPoints, gold, experiencePoints);
-            Navigation.MoveTo(player, World.LocationByID(currentLocationID));
-            return player;
-        }
-
 
         // END SERIALIZATION?
 
