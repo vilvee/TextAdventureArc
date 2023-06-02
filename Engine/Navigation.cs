@@ -34,7 +34,7 @@ namespace Engine
             if (location.HasAQuest)
             {
                 Quest giveQuest = location.QuestAvailableHere;
-                giveQuest.GiveQuestToPlayer(player, location);
+                giveQuest.Status(player, location);
             }
         }
 
@@ -46,7 +46,6 @@ namespace Engine
             if (player.CurrentLocation.LocationToNorth != null)
             {
                 MoveTo( player, player.CurrentLocation.LocationToNorth);
-                MessageHandler.RaiseMessage(player.CurrentLocation.Name);
             }
         }
 
@@ -58,7 +57,6 @@ namespace Engine
             if (player.CurrentLocation.LocationToEast != null)
             {
                 MoveTo(player, player.CurrentLocation.LocationToEast);
-                MessageHandler.RaiseMessage(player.CurrentLocation.Name);
             }
         }
 
@@ -70,7 +68,6 @@ namespace Engine
             if (player.CurrentLocation.LocationToSouth != null)
             {
                 MoveTo(player, player.CurrentLocation.LocationToSouth);
-                MessageHandler.RaiseMessage(player.CurrentLocation.Name);
             }
         }
 
@@ -82,7 +79,6 @@ namespace Engine
             if (player.CurrentLocation.LocationToWest != null)
             {
                 MoveTo(player, player.CurrentLocation.LocationToWest);
-                MessageHandler.RaiseMessage(player.CurrentLocation.Name);
             }
         }
 

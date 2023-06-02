@@ -12,6 +12,7 @@ namespace Engine
     /// </summary>
     public class ActiveQuest
     {
+
         private Quest _details; // Holds the details of the quest.
         private bool _isCompleted; // Indicates whether the quest is completed or not.
 

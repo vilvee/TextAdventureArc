@@ -143,12 +143,14 @@ namespace Engine
 
                 if (randomNumber <= runningTotal)
                 {
+                    
                     MessageHandler.RaiseMessage("You see a " + World.EnemyByID(enemyKeyValuePair.Key).Name);
                     return World.EnemyByID(enemyKeyValuePair.Key).NewInstanceOfEnemy();
                 }
             }
 
             // In case there was a problem, return the last monster in the list.
+          
             MessageHandler.RaiseMessage("You see a " + World.EnemyByID(_enemiesAtLocation.Keys.Last()).Name);
             return World.EnemyByID(_enemiesAtLocation.Keys.Last()).NewInstanceOfEnemy();
         }

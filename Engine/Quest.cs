@@ -69,41 +69,70 @@ namespace Engine
         /// </summary>
         /// <param name="player">The quest to check.</param>
         /// <returns>True if the player has not completed the quest, false otherwise.</returns>
-        private bool PlayerHasNotCompleted(Player player)
+        private bool IsCompleted(Player player, Location location)
         {
             //aq = ActiveQuest
-            return player.Quests.Any(aq => aq.Details.ID == ID && !aq.IsCompleted);
+            foreach (var aq in player.Quests)
+            {
+                if (aq.Details.ID == location.QuestAvailableHere.ID && aq.IsCompleted) return true;
+            }
+
+            return false;
+        }
+
+        public void Status(Player player, Location location)
+        {
+            //Does player has this quest?
+            foreach (var aq in player.Quests)
+            {
+                if (aq.Details.ID == location.QuestAvailableHere.ID)
+                {
+                    // The player already has the quest, so don't give it to them again
+                    //Does player has completed this quest?
+                    if (!IsCompleted(player, location))
+                    {
+                        // The player has completed the quest, so don't give it to them again
+
+                        //Did the player complete all the quests required for this quest?
+                        if (HasAllQuestCompletionItems(player))
+                        {
+                            //Give reward
+                            GiveRewards(player);
+                            return;
+                        }
+
+                        return;
+                    }
+
+                    return;
+                }
+            }
+
+            // Give the player the quest
+           GiveQuest(player, location);
         }
 
         /// <summary>
         /// Gives a quest to the player.
         /// </summary>
         /// <param name="player">The quest to give to the player.</param>
-        public void GiveQuestToPlayer(Player player, Location location)
+        public void GiveQuest(Player player, Location location)
         {
-           
-                if (player.Quests.Any(aq => aq.Details.ID == ID))
-                {
-                    // The player already has the quest, so don't give it to them again
-                    PlayerHasAllQuestCompletionItemsFor(player);
-                    GivePlayerQuestRewards(player);
-                    return;
-                }
 
-                MessageHandler.RaiseMessage("You receive the " + Name + " quest.");
-                MessageHandler.RaiseMessage(Description);
-                MessageHandler.RaiseMessage("To complete it, return with:");
+            MessageHandler.RaiseMessage("You receive the " + Name + " quest.");
+            MessageHandler.RaiseMessage(Description);
+            MessageHandler.RaiseMessage("To complete it, return with:");
 
-                foreach (QuestReward qci in QuestReward)
-                {
-                    MessageHandler.RaiseMessage(string.Format("{0} {1}", qci.Quantity,
-                        qci.Quantity == 1 ? qci.Details.Name : qci.Details.NamePlural));
-                }
+            foreach (QuestReward qci in QuestReward)
+            {
+                MessageHandler.RaiseMessage(string.Format("{0} {1}", qci.Quantity,
+                    qci.Quantity == 1 ? qci.Details.Name : qci.Details.NamePlural));
+            }
 
-                MessageHandler.RaiseMessage("");
+            MessageHandler.RaiseMessage("");
 
-                player.Quests.Add(new ActiveQuest(this));
-            
+            player.Quests.Add(new ActiveQuest(location.QuestAvailableHere));
+
         }
 
         /// <summary>
@@ -111,7 +140,7 @@ namespace Engine
         /// </summary>
         /// <param name="quest">The quest to check.</param>
         /// <returns>True if the player has all the quest completion items, false otherwise.</returns>
-        private bool PlayerHasAllQuestCompletionItemsFor(Player player)
+        private bool HasAllQuestCompletionItems(Player player)
         {
             // See if the player has all the items needed to complete the quest here
             foreach (QuestReward qci in QuestReward)
@@ -149,8 +178,9 @@ namespace Engine
         /// Gives rewards to the player for completing a quest.
         /// </summary>
         /// <param name="quest">The quest completed by the player.</param>
-        private void GivePlayerQuestRewards(Player player)
+        private void GiveRewards(Player player)
         {
+         
             MessageHandler.RaiseMessage("");
             MessageHandler.RaiseMessage("You complete the '" + Name + "' quest.");
             MessageHandler.RaiseMessage("You receive: ");
@@ -163,6 +193,8 @@ namespace Engine
             RemoveQuestCompletionItems(player);
             player.AddItemToInventory(RewardItem);
             MarkPlayerQuestCompleted(player);
+            
+
         }
 
         /// <summary>
@@ -176,6 +208,7 @@ namespace Engine
             if (playerActiveQuest != null)
             {
                 playerActiveQuest.IsCompleted = true;
+                player.Quests.Add(playerActiveQuest);
             }
         }
     }

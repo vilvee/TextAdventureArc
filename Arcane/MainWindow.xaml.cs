@@ -14,7 +14,7 @@ namespace Arcane
 {
     public partial class MainWindow : Window
     {
-        private const string PLAYER_DATA_FILE_NAME = "PlayerData7.xml";
+        private const string PLAYER_DATA_FILE_NAME = "PlayerData8.xml";
 
         private readonly Player _player;
         

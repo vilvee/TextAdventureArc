@@ -76,8 +76,6 @@ namespace Engine
             }
         }
 
-        public Combat CurrentCombat { get; set; }
-
         /// <summary>
         /// Gets or sets the current weapon of the player.
         /// </summary>
