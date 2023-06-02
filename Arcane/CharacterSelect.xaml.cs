@@ -29,8 +29,10 @@ namespace Arcane
     {
         private Player _player;
         private string enteredUsername;
-        private string characterImagePath;
+        public string CharacterImagePath { get; set; }
         private bool isBorderWhite = false;
+        private Border _lastSelectedBorder = null;
+
         private Dictionary<Image, string> _imagePaths;
 
         public CharacterSelect()
@@ -72,23 +74,23 @@ namespace Arcane
 
             if (imageBorder != null)
             {
-                if (isBorderWhite)
+                if (_lastSelectedBorder != null)
                 {
-                    // Change the border color back to the previous color (e.g., #343661)
-                    imageBorder.BorderBrush = (SolidColorBrush)new BrushConverter().ConvertFromString("#343661");
-                    isBorderWhite = false;
-                }
-                else
-                {
-                    // Change the border color to white
-                    imageBorder.BorderBrush = Brushes.White;
-                    isBorderWhite = true;
+                    // Restore the previous color of the last selected border
+                    _lastSelectedBorder.BorderBrush = (SolidColorBrush)new BrushConverter().ConvertFromString("#343661");
                 }
 
+                // Change the border color to white
+                imageBorder.BorderBrush = Brushes.White;
+
                 // Save the path of the image
-                characterImagePath = image.Source.ToString();
+                CharacterImagePath = image.Source.ToString();
+
+                // Store the currently selected border
+                _lastSelectedBorder = imageBorder;
             }
         }
+
 
         private Border FindParentBorder(FrameworkElement element)
         {
@@ -111,22 +113,14 @@ namespace Arcane
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_player.CharacterImagePath == null)
-            {
-                btnSave.IsEnabled = false;
-            }
-            else
-            {
+           
                 btnSave.IsEnabled = true;
-                _player.CharacterImagePath = characterImagePath;
                 enteredUsername = txtCharacterName.Text;
-                _player = Player.CreateDefaultPlayer(enteredUsername, _player.CharacterImagePath);
+                _player = Player.CreateDefaultPlayer(enteredUsername, CharacterImagePath);
                 GameWindow gameSession = new(_player);
                 gameSession.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 this.Close();
                 gameSession.ShowDialog();
-            }
-
 
         }
 

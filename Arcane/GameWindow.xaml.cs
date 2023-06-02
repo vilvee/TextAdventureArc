@@ -9,18 +9,20 @@ using System.IO;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Arcane
 {
+
     public partial class GameWindow : Window
     {
-/*        private const string PLAYER_DATA_FILE_NAME = "PlayerData8.xml";
+        /*      private const string PLAYER_DATA_FILE_NAME = "PlayerData8.xml";
 
-        private readonly Player _player;
-        
-*/
+                private readonly Player _player;
 
-        public  Player _player { get; set; }
+        */
+
+        public Player _player { get; set; }
         /// <summary>
         /// Initializes a new instance of the GameWindow class.
         /// </summary>
@@ -31,7 +33,12 @@ namespace Arcane
             //_plaper = player;
             _player = player;
 
-       /*     _player.AddItemToInventory(World.ItemByID(World.ITEM_ID_MIGHT_POTION));*/
+            /*     _player.AddItemToInventory(World.ItemByID(World.ITEM_ID_MIGHT_POTION));*/
+
+            string characterImagePath = _player.CharacterImagePath;
+
+            // load the imgPlayer from characterImagePath
+            SetImage(imgPlayer, characterImagePath);
 
             // Set up data bindings for player properties
             lblName.SetBinding(ContentProperty, new Binding("CharacterName") { Source = _player });
@@ -74,7 +81,17 @@ namespace Arcane
 
 
             Navigation.MoveTo(_player, _player.CurrentLocation);
-            
+
+        }
+
+        private void SetImage(Image img, string imagePath)
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(imagePath, UriKind.RelativeOrAbsolute);
+            bitmapImage.EndInit();
+
+            img.Source = bitmapImage;
         }
 
         #region Directions
@@ -83,7 +100,7 @@ namespace Arcane
         /// </summary>
         private void btnNorth_Click(object sender, EventArgs e)
         {
-           Navigation.MoveNorth(_player);
+            Navigation.MoveNorth(_player);
         }
 
         /// <summary>
@@ -145,29 +162,29 @@ namespace Arcane
         /// </summary>
         private void btnUsePotion_Click(object sender, RoutedEventArgs e)
         {
-           
+
             // Get the currently selected potion from the combobox
-           Potion potion = (Potion)cboPotions.SelectedItem;
-           Combat combat = HasEnemy();
-           if (combat != null)
-           {
-               if (potion is HealingPotion)
-               {
-                   HealingPotion healingPotion = potion as HealingPotion;
-                   if (healingPotion != null)
-                   {
-                       combat.UsePotion(_player,healingPotion);
-                   }
-               }
-               else if (potion is MightPotion)
-               {
-                   MightPotion mightPotion = potion as MightPotion;
-                   if (mightPotion != null)
-                   {
-                       combat.UsePotion(_player,null, mightPotion);
-                   }
-               }
-           }
+            Potion potion = (Potion)cboPotions.SelectedItem;
+            Combat combat = HasEnemy();
+            if (combat != null)
+            {
+                if (potion is HealingPotion)
+                {
+                    HealingPotion healingPotion = potion as HealingPotion;
+                    if (healingPotion != null)
+                    {
+                        combat.UsePotion(_player, healingPotion);
+                    }
+                }
+                else if (potion is MightPotion)
+                {
+                    MightPotion mightPotion = potion as MightPotion;
+                    if (mightPotion != null)
+                    {
+                        combat.UsePotion(_player, null, mightPotion);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -244,7 +261,7 @@ namespace Arcane
             mapScreen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             mapScreen.ShowDialog();
         }
-#endregion
+        #endregion
 
         /// <summary>
         /// Handles the PropertyChanged event of the player and updates UI elements based on the changed property.
@@ -398,9 +415,9 @@ namespace Arcane
             // Save player data to XML file
             File.WriteAllText(dataFile, _player.ToXmlString());
 
-   /*         // Save player data to the database
-            PlayerDataMapper.SaveToDatabase(_player);
-            // Close the window.*/
+            /*         // Save player data to the database
+                     PlayerDataMapper.SaveToDatabase(_player);
+                     // Close the window.*/
             Close();
         }
 
