@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Characters\FemaleAristocrat.jpg" />
+    <None Remove="Images\Characters\FemaleScavanger.jpg" />
+    <None Remove="Images\Characters\FemaleWitch.jpg" />
+    <None Remove="Images\Characters\MaleAristocrat.jpg" />
+    <None Remove="Images\Characters\MaleMage.jpg" />
     <None Remove="Images\Characters\MaleScavanger.jpg" />
   </ItemGroup>
 
@@ -21,6 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Characters\FemaleAristocrat.jpg" />
+    <Resource Include="Images\Characters\FemaleScavanger.jpg" />
+    <Resource Include="Images\Characters\FemaleWitch.jpg" />
+    <Resource Include="Images\Characters\MaleAristocrat.jpg" />
+    <Resource Include="Images\Characters\MaleMage.jpg" />
     <Resource Include="Images\Characters\MaleScavanger.jpg" />
   </ItemGroup>
 

@@ -15,28 +15,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Image = System.Drawing.Image;
 
 
 namespace Arcane
 {
-    public struct ImagePath
-    {
-        public string Path { get; set; }
-    }
-
-    public class CharacterSelectViewModel
-    {
-
-        public ImagePath MaleSacavger { get; set; }
-        public ImagePath MaleAristocrat { get; set; }
-        public ImagePath MaleMage { get; set; }
-        public ImagePath FemaleScavanger { get; set; }
-        public ImagePath FemaleAristocrat { get; set; }
-        public ImagePath FemaleWitch { get; set; }
-
-    }
-
 
     // filesPath = "../../../files/LargeFirstNameDescendingOrder.txt";
 
@@ -47,26 +29,41 @@ namespace Arcane
     {
         private Player _player;
         private string enteredUsername;
-        private List<string> _imagePaths;
         private string characterImagePath;
         private bool isBorderWhite = false;
+        private Dictionary<Image, string> _imagePaths;
 
         public CharacterSelect()
         {
-          InitializeComponent();
+            InitializeComponent();
+           
+            _imagePaths= new Dictionary<Image, string>
+            {
+                { imgMaleScavanger, "../../../Images/Characters/MaleScavanger.jpg" },
+                { imgMaleAristocrat, "../../../Images/Characters/MaleAristocrat.jpg" },
+                { imgMaleMage, "../../../Images/Characters/MaleMage.jpg" },
+                { imgFemaleScavanger, "../../../Images/Characters/FemaleScavanger.jpg" },
+                { imgFemaleAristocrat, "../../../Images/Characters/FemaleAristocrat.jpg" },
+                { imgFemaleWitch, "../../../Images/Characters/FemaleWitch.jpg" }
+            };
 
-            // Specify the image source path
-            string imagePath = "../../../Images/Characters/MaleScavanger.jpg";
+            foreach (var entry in _imagePaths)
+            {
+                SetImage(entry.Key, entry.Value);
+            }
+        }
 
+
+
+        private void SetImage(Image img, string imagePath)
+        {
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
             bitmapImage.UriSource = new Uri(imagePath, UriKind.Relative);
             bitmapImage.EndInit();
 
-            imgMaleScavanger.Source = bitmapImage;
+            img.Source = bitmapImage;
         }
-
-
 
         private void imageControl_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -111,10 +108,11 @@ namespace Arcane
         }
 
 
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (_player.CharacterImagePath == null)
-            { 
+            {
                 btnSave.IsEnabled = false;
             }
             else
@@ -128,7 +126,7 @@ namespace Arcane
                 this.Close();
                 gameSession.ShowDialog();
             }
-            
+
 
         }
 
@@ -141,7 +139,8 @@ namespace Arcane
                 {
                     WindowState = System.Windows.WindowState.Normal;
 
-                    double pct = PointToScreen(e.GetPosition(this)).X / System.Windows.SystemParameters.PrimaryScreenWidth;
+                    double pct = PointToScreen(e.GetPosition(this)).X /
+                                 System.Windows.SystemParameters.PrimaryScreenWidth;
                     Top = 0;
                     Left = e.GetPosition(this).X - (pct * Width);
                 }
