@@ -21,23 +21,68 @@ namespace Arcane
     /// </summary>
     public partial class MainScreen : Window
     {
+        private string playerData;
+
+        private Player _player;
+
+
         public MainScreen()
         {
             InitializeComponent();
+
+            // Look if PlayerData.xml file pattern exiasta in the current directory bool
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string searchPattern = "PlayerData*.xml";
+            string[] files = Directory.GetFiles(baseDirectory, searchPattern)
+                    .OrderByDescending(file => new FileInfo(file).CreationTime)
+                    .ToArray();
+
+            if(files.Length == 0)
+            {
+                btnContinueGame.IsEnabled = false;
+            }
         }
 
 
         private void btnNewGame_Click(object sender, RoutedEventArgs e)
         {
-            GameWindow gameWindow = new GameWindow();
-            gameWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            gameWindow.ShowDialog();
+            
+            CharacterSelect characterSelect = new();
+            characterSelect.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Close();
+            characterSelect.ShowDialog();
         }
 
         private void btnContinueGame_Click(object sender, RoutedEventArgs e)
         {
-            GameWindow gameWindow = new GameWindow();
+           /* // Create the player instance
+            _player = PlayerDataMapper.CreateFromDatabase();*/
+
+            // If player data is not available in the database, try to load from XML file or create a default player
+            if (_player == null)
+            {
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string searchPattern = "PlayerData*.xml";
+                string[] files = Directory.GetFiles(baseDirectory, searchPattern)
+                    .OrderByDescending(file => new FileInfo(file).CreationTime)
+                    .ToArray();
+
+                if (files.Length > 0)
+                {
+                    playerData = files[0];
+               
+                }
+
+                if (File.Exists(playerData))
+                {
+                    _player = Player.CreatePlayerFromXmlString(File.ReadAllText(playerData));
+                }
+            
+            }
+
+            GameWindow gameWindow = new GameWindow(_player);
             gameWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Close();
             gameWindow.ShowDialog();
         }
 

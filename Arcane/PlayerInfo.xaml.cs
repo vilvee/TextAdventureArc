@@ -34,7 +34,7 @@ namespace Arcane
             lbHitPoints.SetBinding(ContentProperty, new Binding("CurrentHitPoints") { Source = _CurrentPlayer });
             lbGold.SetBinding(ContentProperty, new Binding("Gold") { Source = _CurrentPlayer });
             lbExperience.SetBinding(ContentProperty, new Binding("ExperiencePoints") { Source = _CurrentPlayer });
-            lbQuest.SetBinding(ContentProperty, new Binding("Quest") { Source = _CurrentPlayer });
+            lbLevel.SetBinding(ContentProperty, new Binding("Quest") { Source = _CurrentPlayer });
 
             // Set the item source of the inventory and quests data grids.
             dgvInventory.ItemsSource = _CurrentPlayer.Inventory;

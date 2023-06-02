@@ -1,6 +1,6 @@
-- Move HealPlayer from player class into entity, rename as Heal
-add Damage function
-CompletelyHeal can also go into entity
+X Move HealPlayer from player class into entity, rename as Heal
+[]add Damage function
+X CompletelyHeal can also go into entity
 
 MarkPlayerQuestCompleted
 Does quest functionality have to be related to the player? It's sort of a "world state" type thing.
@@ -8,8 +8,7 @@ Does quest functionality have to be related to the player? It's sort of a "world
 LetTheEnemyAttack
 Inside the player class, but the battle mechanics should control the player, the player shouldn't control the battle mechanics
 
-RaiseInventoryChangedEvent
-belongs to an inventory class?
+X RaiseInventoryChangedEvent belongs to an inventory class?
 
 LootTheCurrentEnemy
 This deals with:

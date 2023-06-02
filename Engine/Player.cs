@@ -20,10 +20,24 @@ namespace Engine
         private int _gold;
         private int _experiencePoints;
         private Location _currentLocation;
+        private string _characterName;
+
+        public string PlayerData { get; set; }
 
         //TODO: Add player image
     /*    //Player image
         Bitmap image =new Bitmap();*/
+
+
+    public string CharacterName
+    {
+            get => _characterName;
+            set
+            {
+                _characterName = value;
+                OnPropertyChanged("CharacterName");
+            }
+        }
 
         /// <summary>
         /// Gets or sets the amount of gold the player has.
@@ -111,29 +125,42 @@ namespace Engine
         /// </summary>
         public List<int> LocationsVisited { get; set; }
 
-        private Enemy CurrentEnemy { get; set; }
 
-        private Player(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints) : base(currentHitPoints, maximumHitPoints)
+        private Player(string name, int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints) : base(currentHitPoints, maximumHitPoints)
         {
+            CharacterName = name;
             Gold = gold;
             ExperiencePoints = experiencePoints;
             Inventory = new BindingList<Inventory>();
             Quests = new BindingList<ActiveQuest>();
             LocationsVisited = new List<int>();
+            PlayerData = CreatePlayerDataFile();
+
+        }
+
+        public string CreatePlayerDataFile()
+        {
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string fileName = $"PlayerData{CharacterName}.xml";
+            string filePath = Path.Combine(baseDirectory, fileName);
+
+            // Create the player data file using the filePath
+
+            return filePath;
         }
 
         /// <summary>
         /// Creates a default player.
         /// </summary>
         /// <returns>The default player instance.</returns>
-        public static Player CreateDefaultPlayer()
+        public static Player CreateDefaultPlayer(string name)
         {
-            Player player = new Player(10, 10, 20, 0);
+            Player player = new Player(name,10, 10, 20, 0);
             player.Inventory.Add(new Inventory(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
             player.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
             return player;
         }
-
+/*
         /// <summary>
         /// Creates a Player object from database values.
         /// </summary>
@@ -143,12 +170,12 @@ namespace Engine
         /// <param name="experiencePoints">The experience points of the player.</param>
         /// <param name="currentLocationID">The ID of the current location of the player.</param>
         /// <returns>The Player object created from the database values.</returns>
-        public static Player CreatePlayerFromDatabase(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int currentLocationID)
+        public static Player CreatePlayerFromDatabase(string name, int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int currentLocationID)
         {
-            Player player = new Player(currentHitPoints, maximumHitPoints, gold, experiencePoints);
+            Player player = new Player(name, currentHitPoints, maximumHitPoints, gold, experiencePoints);
             Navigation.MoveTo(player,World.LocationByID(currentLocationID));
             return player;
-        }
+        }*/
 
         /// <summary>
         /// Raises the inventory changed event for a specific item type.
@@ -239,6 +266,7 @@ namespace Engine
             player.AppendChild(stats);
 
             // Create the child nodes for the "Stats" node
+            CreateNewChildXmlNode(playerData, stats, "CharacterName", CharacterName);
             CreateNewChildXmlNode(playerData, stats, "CurrentHitPoints", CurrentHitPoints);
             CreateNewChildXmlNode(playerData, stats, "MaximumHitPoints", MaximumHitPoints);
             CreateNewChildXmlNode(playerData, stats, "Gold", Gold);
@@ -337,12 +365,13 @@ namespace Engine
                 XmlDocument playerData = new XmlDocument();
                 playerData.LoadXml(xmlPlayerData);
 
+                string characterName = playerData.SelectSingleNode($"/Player/Stats/CharacterName")?.InnerText;
                 int currentHitPoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentHitPoints").InnerText);
                 int maximumHitPoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/MaximumHitPoints").InnerText);
                 int gold = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/Gold").InnerText);
                 int experiencePoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/ExperiencePoints").InnerText);
 
-                Player player = new Player(currentHitPoints, maximumHitPoints, gold, experiencePoints);
+                Player player = new Player(characterName,currentHitPoints, maximumHitPoints, gold, experiencePoints);
 
                 int currentLocationID = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentLocation").InnerText);
                 player.CurrentLocation = World.LocationByID(currentLocationID);
@@ -390,8 +419,9 @@ namespace Engine
             }
             catch
             {
-                // If there was an error with the XML data, return a default player object
-                return Player.CreateDefaultPlayer();
+                /*// If there was an error with the XML data, return a default player object
+                return Player.CreateDefaultPlayer();*/
+                return null;
             }
         }
 

@@ -58,15 +58,28 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-             
+
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="25*"/>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="326"/>
+                        <ColumnDefinition Width="83"/>
                     </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="3"
+                           Content="ECHOE OF THE ANCIENTS" 
+                           Foreground="#f96b88" 
+                           FontFamily="Bookman Old Style" 
+                           FontSize="22" 
+                           VerticalAlignment="Bottom" 
+                           HorizontalAlignment="Left" 
+                           HorizontalContentAlignment="Center" 
+                           VerticalContentAlignment="Center" 
+                           BorderBrush="{x:Null}" 
+                           Background="{x:Null}" 
+                           FontStretch="Expanded" Height="36" Width="308" />
 
                     <Border Grid.Row="1" Grid.Column="1" 
                         Background="#343661" 
@@ -83,21 +96,48 @@
 
                     </Border>
 
-
                     <Border Grid.Row="3" Grid.Column="1" 
-                            Background="#343661" 
-                            BorderBrush="#343661" 
-                            BorderThickness="1" 
-                            CornerRadius="8">
-                        <Button   x:Name="btnContinueGame" Content="CONTINUE" 
-                                  Click="btnContinueGame_Click" BorderBrush="{x:Null}" 
-                                  Foreground="White"
-                                  UseLayoutRounding="False"
-                                  FontFamily="Bookman Old Style" 
-                                  FontSize="16" Cursor="Hand"
-                                  Background="{x:Null}"  />
-
+    Background="#343661" 
+    BorderBrush="#343661" 
+    BorderThickness="1" 
+    CornerRadius="8">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="#343661"/>
+                                <Setter Property="BorderBrush" Value="#343661"/>
+                                <Setter Property="CornerRadius" Value="8"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=btnContinueGame, Path=IsEnabled}" Value="False">
+                                        <Setter Property="Background" Value="Gray"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Button x:Name="btnContinueGame" Content="CONTINUE" 
+            Click="btnContinueGame_Click" 
+            Foreground="White"
+            UseLayoutRounding="False"
+            FontFamily="Bookman Old Style" 
+            FontSize="16" Cursor="Hand"
+            Background="{x:Null}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="8">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Background" TargetName="border" Value="Gray" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
                     </Border>
+
+
+
+
 
                 </Grid>
             </DockPanel>

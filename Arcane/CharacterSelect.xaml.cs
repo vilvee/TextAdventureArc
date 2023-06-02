@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Engine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,10 +21,26 @@ namespace Arcane
     /// </summary>
     public partial class CharacterSelect : Window
     {
+        private Player _player;
+        private string enteredUsername;
+
         public CharacterSelect()
         {
             InitializeComponent();
+
         }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            enteredUsername = txtCharacterName.Text;
+            _player = Player.CreateDefaultPlayer(enteredUsername);
+            GameWindow gameSession = new(_player);
+            gameSession.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Close();
+            gameSession.ShowDialog();
+
+        }
+
 
         private void TriggerMoveWindow(object sender, MouseEventArgs e)
         {

@@ -90,10 +90,12 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="35*"/>
+                                <RowDefinition Height="35*"/>
                                 <RowDefinition Height="35*" />
                                 <RowDefinition Height="35*" />
                                 <RowDefinition Height="35*" />
                                 <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*"/>
                                 <RowDefinition Height="35*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
@@ -102,44 +104,50 @@
                                 <ColumnDefinition Width="60*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Border  Grid.RowSpan="6" Grid.Column="0"  Grid.Row="0"
+                            <Border  Grid.RowSpan="8" Grid.Column="0"  Grid.Row="0"
                                      BorderBrush="#fffefc" BorderThickness="2"  
                                      CornerRadius="8" Margin="15,10,8,10"
                                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                      MinHeight="100"  MinWidth="100" Width="Auto" Height="Auto">
                                 <Image   OpacityMask="Black"/>
                             </Border>
-                            <Label Grid.Row="1" Grid.Column="1" Content="Quest:" HorizontalAlignment="Left" 
+
+                            <Label Grid.Row="1" Grid.ColumnSpan="3" x:Name="lblName" Content="" 
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                   Foreground="#fffefc" FontFamily="Bookman Old Style" 
+                                   FontSize="16" Height="25" MinWidth="181" Margin="153,0,0,0"/>
+
+                            <Label Grid.Row="3" Grid.Column="1" Content="Level:" HorizontalAlignment="Left" 
                            VerticalAlignment="Top" TextBlock.Foreground="#fffefc" 
                            FontFamily="Bookman Old Style" FontSize="14" Foreground="#fffefc" 
                            Height="26" Width="49" />
-                            <Label Grid.Row="2"  Grid.Column="1" Content="Experience:" 
+                            <Label Grid.Row="4"  Grid.Column="1" Content="Experience:" 
                            HorizontalAlignment="Left" VerticalAlignment="Top" 
                            TextBlock.Foreground="#FFE5DBDB" FontFamily="Bookman Old Style" 
                            FontSize="14" Foreground="#fffefc" Height="26" Width="90" />
-                            <Label Grid.Row="3" Grid.Column="1" Content="Hit Points:" 
+                            <Label Grid.Row="5" Grid.Column="1" Content="Hit Points:" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Center" Background="{x:Null}" 
                                    FontFamily="Bookman Old Style" FontSize="14" Foreground="#fffefc" 
                                    Height="26" Width="94"/>
-                            <Label Grid.Row="4" Grid.Column="1" Content="Gold:" HorizontalAlignment="Left" 
+                            <Label Grid.Row="6" Grid.Column="1" Content="Gold:" HorizontalAlignment="Left" 
                                    VerticalAlignment="Center" Background="{x:Null}" 
                                    FontFamily="Bookman Old Style" FontSize="14" Foreground="#fffefc" 
                                    Height="26" Width="46" />
 
-                            <Label Grid.Row="1" Grid.Column="2" x:Name="lbQuest" Content="" 
+                            <Label Grid.Row="3" Grid.Column="2" x:Name="lbLevel" Content="" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" 
                            Foreground="#fffefc" FontFamily="Bookman Old Style" 
                            FontSize="16" Height="25" Width="66"/>
-                            <Label Grid.Row="2" Grid.Column="2" x:Name="lbExperience" 
+                            <Label Grid.Row="4" Grid.Column="2" x:Name="lbExperience" 
                            Content="" HorizontalAlignment="Left" VerticalAlignment="Center" 
                            Foreground="#fffefc" FontFamily="Bookman Old Style" 
                            FontSize="16" Height="25" Width="66"  />
-                            <Label Grid.Row="4" Grid.Column="2" x:Name="lbGold" Content="" 
+                            <Label Grid.Row="6" Grid.Column="2" x:Name="lbGold" Content="" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" 
                            Foreground="#fffefc" FontFamily="Bookman Old Style" FontSize="16"
                            Height="25" Width="66"  />
-                            <Label Grid.Row="3" Grid.Column="2" x:Name="lbHitPoints" 
+                            <Label Grid.Row="5" Grid.Column="2" x:Name="lbHitPoints" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16"
                            Foreground="#fffefc" FontFamily="Bookman Old Style" 
                            Height="25" Width="66" />

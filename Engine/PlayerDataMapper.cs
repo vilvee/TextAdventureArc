@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
@@ -27,7 +27,7 @@ namespace Engine
                     using (SqlCommand savedGameCommand = connection.CreateCommand())
                     {
                         savedGameCommand.CommandType = CommandType.Text;
-                        // This SQL statement reads the first rows in teh SavedGame table.
+                        // This SQL statement reads the first rows in the SavedGame table.
                         // For this program, we should only ever have one row,
                         // but this will ensure we only get one record in our SQL query results.
                         savedGameCommand.CommandText = "SELECT TOP 1 * FROM SavedGame";
@@ -47,6 +47,7 @@ namespace Engine
                         reader.Read();
 
                         // Get the column values for the row/record
+                        string charcName = reader.GetString("CharacterName");
                         int currentHitPoints = (int)reader["CurrentHitPoints"];
                         int maximumHitPoints = (int)reader["MaximumHitPoints"];
                         int gold = (int)reader["Gold"];
@@ -54,7 +55,7 @@ namespace Engine
                         currentLocationID = (int)reader["CurrentLocationID"];
 
                         // Create the Player object, with the saved game values
-                        player = Player.CreatePlayerFromDatabase(currentHitPoints, maximumHitPoints, gold,
+                        player = Player.CreatePlayerFromDatabase(charcName, maximumHitPoints, gold,
                             experiencePoints, currentLocationID);
 
                         reader.Close();
@@ -317,4 +318,4 @@ namespace Engine
             }
         }
     }
-}
+}*/

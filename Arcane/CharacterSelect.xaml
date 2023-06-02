@@ -51,7 +51,7 @@
                 <Grid Margin="15,15,15, 15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="15* "/>
-                        <RowDefinition Height="25*"/>
+                        <RowDefinition Height="15*"/>
                         <RowDefinition Height="25*"/>
                         <RowDefinition Height="25*"/>
                         <RowDefinition Height="25*" />
@@ -67,20 +67,43 @@
                     </Grid.ColumnDefinitions>
 
 
-
-                    <Label Grid.Row="0" Grid.Column="2"  Content="Character Name"  Grid.ColumnSpan="2"
-                           FontSize="20" Foreground="#FFE5DBDB"
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Bottom"/>
-
                     <Border 
-                        Grid.Row ="1" Grid.Column="1" Grid.ColumnSpan="4"
+                        Grid.Row ="0" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="2"
                         Background="#343661" BorderThickness="1" 
                             CornerRadius="8" >
-                        <TextBox Background="{x:Null}" BorderBrush="{x:Null}"
-                                 >
-
-                        </TextBox>
+                        <Grid>
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="CHARACTER NAME" 
+                                           Foreground="White" 
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           FontSize="18" FontFamily="Book Antiqua"/>
+                                <Border 
+                                    Background="White" BorderThickness="1" 
+                                    CornerRadius="8" Height="30" >
+                                    <TextBox x:Name="txtCharacterName" Width="201" 
+                                             Margin="0,-1,0,-1"
+                                             Background="{x:Null}"
+                                             BorderBrush="{x:Null}"
+                                             FontFamily="Bookman Old Style"
+                                             FontSize="16"
+                                             Padding="5, 5, 5,5"/>
+                                </Border>
+                                <Border 
+                                        Background="#343661" 
+                                        BorderBrush="White" 
+                                        BorderThickness="1" 
+                                        CornerRadius="8"
+                                        Width="80" Margin="0,10">
+                                    <Button Content="Save" Click="SaveButton_Click" 
+                                            BorderBrush="{x:Null}" 
+                                            Foreground="White"
+                                            UseLayoutRounding="False"
+                                            FontFamily="Bookman Old Style" 
+                                            FontSize="16" Cursor="Hand"
+                                            Background="{x:Null}" />
+                                </Border>
+                            </StackPanel>
+                        </Grid>
                     </Border>
 
                     <Grid Margin="15,0,15, 15"

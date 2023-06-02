@@ -14,41 +14,31 @@ namespace Arcane
 {
     public partial class GameWindow : Window
     {
-        private const string PLAYER_DATA_FILE_NAME = "PlayerData8.xml";
+/*        private const string PLAYER_DATA_FILE_NAME = "PlayerData8.xml";
 
         private readonly Player _player;
         
+*/
 
+        public  Player _player { get; set; }
         /// <summary>
         /// Initializes a new instance of the GameWindow class.
         /// </summary>
-        public GameWindow()
+        public GameWindow(Player player)
         {
             InitializeComponent();
 
-            // Create the player instance
-            _player = PlayerDataMapper.CreateFromDatabase();
+            //_plaper = player;
+            _player = player;
 
-            // If player data is not available in the database, try to load from XML file or create a default player
-            if (_player == null)
-            {
-                if (File.Exists(PLAYER_DATA_FILE_NAME))
-                {
-                    _player = Player.CreatePlayerFromXmlString(File.ReadAllText(PLAYER_DATA_FILE_NAME));
-                }
-                else
-                {
-                    _player = Player.CreateDefaultPlayer();
-                }
-            }
-
-            _player.AddItemToInventory(World.ItemByID(World.ITEM_ID_MIGHT_POTION));
+       /*     _player.AddItemToInventory(World.ItemByID(World.ITEM_ID_MIGHT_POTION));*/
 
             // Set up data bindings for player properties
+            lblName.SetBinding(ContentProperty, new Binding("CharacterName") { Source = _player });
             lbHitPoints.SetBinding(ContentProperty, new Binding("CurrentHitPoints") { Source = _player });
             lbGold.SetBinding(ContentProperty, new Binding("Gold") { Source = _player });
             lbExperience.SetBinding(ContentProperty, new Binding("ExperiencePoints") { Source = _player });
-            lbQuest.SetBinding(ContentProperty, new Binding("Quest") { Source = _player });
+            lbLevel.SetBinding(ContentProperty, new Binding("Quest") { Source = _player });
 
             // Set up combo box for weapons
             cboWeapons.ItemsSource = _player.Weapons;
@@ -378,7 +368,6 @@ namespace Arcane
             }
         }
 
-
         /// <summary>
         /// Event handler for maximizing or restoring the window when the user clicks on it.
         /// </summary>
@@ -405,12 +394,13 @@ namespace Arcane
         /// <param name="e">The event arguments.</param>
         private void TriggerClose(object sender, RoutedEventArgs e)
         {
+            string dataFile = _player.PlayerData;
             // Save player data to XML file
-            File.WriteAllText(PLAYER_DATA_FILE_NAME, _player.ToXmlString());
+            File.WriteAllText(dataFile, _player.ToXmlString());
 
-            // Save player data to the database
+   /*         // Save player data to the database
             PlayerDataMapper.SaveToDatabase(_player);
-            // Close the window.
+            // Close the window.*/
             Close();
         }
 
