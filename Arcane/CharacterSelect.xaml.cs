@@ -1,6 +1,10 @@
 ﻿using Engine;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -16,6 +20,26 @@ using System.Windows.Shapes;
 
 namespace Arcane
 {
+    public struct ImagePath
+    {
+        public string Path { get; set; }
+    }
+
+    public class CharacterSelectViewModel
+    {
+
+        public ImagePath MaleSacavger { get; set; }
+        public ImagePath MaleAristocrat { get; set; }
+        public ImagePath MaleMage { get; set; }
+        public ImagePath FemaleScavanger { get; set; }
+        public ImagePath FemaleAristocrat { get; set; }
+        public ImagePath FemaleWitch { get; set; }
+
+    }
+
+
+    // filesPath = "../../../files/LargeFirstNameDescendingOrder.txt";
+
     /// <summary>
     /// Interaction logic for Test.xaml
     /// </summary>
@@ -23,21 +47,52 @@ namespace Arcane
     {
         private Player _player;
         private string enteredUsername;
+        private List<string> _imagePaths;
 
         public CharacterSelect()
         {
-            InitializeComponent();
+          InitializeComponent();
+            // Specify the image source path
+            // string imagePath = "../../../Images/Characters/MaleScavanger.png";
+            string imagePath = "C:\\Users\\vvile\\Documents\\Arcane\\Arcane\\Images\\Characters\\MaleScavanger.jpg";
 
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(imagePath, UriKind.Absolute);
+            bitmapImage.EndInit();
+
+            imgMaleScavanger.Source = bitmapImage;
         }
+
+
+/*
+        private void imageControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Image clickedImage = (Image)sender;
+            // Retrieve the ImagePath from the clicked Image control
+            if (clickedImage.DataContext is ImagePath imagePath)
+            {
+                _player.CharacterImagePath = imagePath.Path; // Set the player's image path to the retrieved image path
+            }
+        }*/
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            enteredUsername = txtCharacterName.Text;
-            _player = Player.CreateDefaultPlayer(enteredUsername);
-            GameWindow gameSession = new(_player);
-            gameSession.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            this.Close();
-            gameSession.ShowDialog();
+            if (_player.CharacterImagePath == null)
+            { 
+                btnSave.IsEnabled = false;
+            }
+            else
+            {
+                btnSave.IsEnabled = true;
+                enteredUsername = txtCharacterName.Text;
+                _player = Player.CreateDefaultPlayer(enteredUsername, _player.CharacterImagePath);
+                GameWindow gameSession = new(_player);
+                gameSession.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                this.Close();
+                gameSession.ShowDialog();
+            }
+            
 
         }
 

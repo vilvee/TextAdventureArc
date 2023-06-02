@@ -7,22 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arcane", "Arcane.csproj", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "..\Engine\Engine.csproj", "{EF10C5EC-151D-4061-83FB-4B07C01AD4AE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{73737440-851B-4315-A276-76097F5B8C18}"
-	ProjectSection(SolutionItems) = preProject
-		..\Images\Bridge.png = ..\Images\Bridge.png
-		..\Images\FarmFields.png = ..\Images\FarmFields.png
-		..\Images\Farmhouse.png = ..\Images\Farmhouse.png
-		..\Images\FogLocation.png = ..\Images\FogLocation.png
-		..\Images\HerbalistsGarden.png = ..\Images\HerbalistsGarden.png
-		..\Images\HerbalistsHut.png = ..\Images\HerbalistsHut.png
-		..\Images\Home.png = ..\Images\Home.png
-		..\Images\MainBackground.jpg = ..\Images\MainBackground.jpg
-		..\Images\SpiderForest.png = ..\Images\SpiderForest.png
-		..\Images\TownGate.png = ..\Images\TownGate.png
-		..\Images\TownSquare.png = ..\Images\TownSquare.png
-		..\Images\Trader.png = ..\Images\Trader.png
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

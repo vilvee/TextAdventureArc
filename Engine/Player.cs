@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading;
 using System.Xml;
+using System.Xml.Linq;
 
 
 namespace Engine
@@ -21,12 +23,19 @@ namespace Engine
         private int _experiencePoints;
         private Location _currentLocation;
         private string _characterName;
+        private string _imagePath;
 
         public string PlayerData { get; set; }
 
-        //TODO: Add player image
-    /*    //Player image
-        Bitmap image =new Bitmap();*/
+        public string CharacterImagePath
+        {
+            get => _imagePath;
+            set
+            {
+                _imagePath = value;
+                OnPropertyChanged("CharacterImagePath");
+            }
+        }
 
 
     public string CharacterName
@@ -126,9 +135,10 @@ namespace Engine
         public List<int> LocationsVisited { get; set; }
 
 
-        private Player(string name, int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints) : base(currentHitPoints, maximumHitPoints)
+        private Player(string name, string imagePath, int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints) : base(currentHitPoints, maximumHitPoints)
         {
             CharacterName = name;
+            CharacterImagePath = imagePath;
             Gold = gold;
             ExperiencePoints = experiencePoints;
             Inventory = new BindingList<Inventory>();
@@ -153,9 +163,9 @@ namespace Engine
         /// Creates a default player.
         /// </summary>
         /// <returns>The default player instance.</returns>
-        public static Player CreateDefaultPlayer(string name)
+        public static Player CreateDefaultPlayer(string name, string imagePath)
         {
-            Player player = new Player(name,10, 10, 20, 0);
+            Player player = new Player(name, imagePath,10, 10, 20, 0);
             player.Inventory.Add(new Inventory(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
             player.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
             return player;
@@ -266,6 +276,7 @@ namespace Engine
             player.AppendChild(stats);
 
             // Create the child nodes for the "Stats" node
+            CreateNewChildXmlNode(playerData, stats, "CharacterImagePath", CharacterImagePath);
             CreateNewChildXmlNode(playerData, stats, "CharacterName", CharacterName);
             CreateNewChildXmlNode(playerData, stats, "CurrentHitPoints", CurrentHitPoints);
             CreateNewChildXmlNode(playerData, stats, "MaximumHitPoints", MaximumHitPoints);
@@ -340,13 +351,13 @@ namespace Engine
         }
 
         /// <summary>
-        /// Adds an XML attribute with the specified attribute name and value to the XML node.
-        /// </summary>
-        /// <param name="document">The XML document.</param>
-        /// <param name="node">The XML node.</param>
-        /// <param name="attributeName">The name of the attribute.</param>
-        /// <param name="value">The value of the attribute.</param>
-        private void AddXmlAttributeToNode(XmlDocument document, XmlNode node, string attributeName, object value)
+            /// Adds an XML attribute with the specified attribute name and value to the XML node.
+            /// </summary>
+            /// <param name="document">The XML document.</param>
+            /// <param name="node">The XML node.</param>
+            /// <param name="attributeName">The name of the attribute.</param>
+            /// <param name="value">The value of the attribute.</param>
+            private void AddXmlAttributeToNode(XmlDocument document, XmlNode node, string attributeName, object value)
         {
             XmlAttribute attribute = document.CreateAttribute(attributeName);
             attribute.Value = value.ToString();
@@ -365,13 +376,15 @@ namespace Engine
                 XmlDocument playerData = new XmlDocument();
                 playerData.LoadXml(xmlPlayerData);
 
+
+                string characterImagePath = playerData.SelectSingleNode($"/Player/Stats/CharacterImagePath")?.InnerText;
                 string characterName = playerData.SelectSingleNode($"/Player/Stats/CharacterName")?.InnerText;
                 int currentHitPoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentHitPoints").InnerText);
                 int maximumHitPoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/MaximumHitPoints").InnerText);
                 int gold = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/Gold").InnerText);
                 int experiencePoints = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/ExperiencePoints").InnerText);
 
-                Player player = new Player(characterName,currentHitPoints, maximumHitPoints, gold, experiencePoints);
+                Player player = new Player(characterName, characterImagePath,  currentHitPoints, maximumHitPoints, gold, experiencePoints);
 
                 int currentLocationID = Convert.ToInt32(playerData.SelectSingleNode("/Player/Stats/CurrentLocation").InnerText);
                 player.CurrentLocation = World.LocationByID(currentLocationID);

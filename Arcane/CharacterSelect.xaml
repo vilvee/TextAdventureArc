@@ -94,7 +94,8 @@
                                         BorderThickness="1" 
                                         CornerRadius="8"
                                         Width="80" Margin="0,10">
-                                    <Button Content="Save" Click="SaveButton_Click" 
+                                    <Button 
+                                       x:Name="btnSave"  Content="Save" Click="SaveButton_Click" 
                                             BorderBrush="{x:Null}" 
                                             Foreground="White"
                                             UseLayoutRounding="False"
@@ -105,7 +106,6 @@
                             </StackPanel>
                         </Grid>
                     </Border>
-
                     <Grid Margin="15,0,15, 15"
                           Grid.Row="2" Grid.ColumnSpan="6"
                           Grid.RowSpan="4" Grid.Column="0"
@@ -127,18 +127,17 @@
                             <ColumnDefinition Width="10*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border Grid.Row ="1" Grid.Column="1" 
-        BorderBrush="#343661" BorderThickness="5" 
-        CornerRadius="8" >
+                
+                            <Image x:Name="imgMaleScavanger" Grid.Row="1" Grid.Column="1"/>
 
+                      <!--    <Border Grid.Row="1" Grid.Column="3" BorderBrush="#343661" 
+                           <Image x:Name="imageControl2" 
+                                   Source="{Binding ImageAristocrat.Path}" 
+                                   MouseDown="imageControl_MouseDown" Stretch="Fill" /> 
+                          
+                        </Border>  -->
+                       
 
-                        </Border>
-                        <Border Grid.Row ="1" Grid.Column="3" 
-                                BorderBrush="#343661" BorderThickness="5" 
-                                CornerRadius="8" >
-
-
-                        </Border>
                         <Border Grid.Row ="1" Grid.Column="5" 
                                 BorderBrush="#343661" BorderThickness="5" 
                                 CornerRadius="8" >
