@@ -3,7 +3,6 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -16,7 +15,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Image = System.Drawing.Image;
+
 
 namespace Arcane
 {
@@ -48,33 +48,68 @@ namespace Arcane
         private Player _player;
         private string enteredUsername;
         private List<string> _imagePaths;
+        private string characterImagePath;
+        private bool isBorderWhite = false;
 
         public CharacterSelect()
         {
           InitializeComponent();
+
             // Specify the image source path
-            // string imagePath = "../../../Images/Characters/MaleScavanger.png";
-            string imagePath = "C:\\Users\\vvile\\Documents\\Arcane\\Arcane\\Images\\Characters\\MaleScavanger.jpg";
+            string imagePath = "../../../Images/Characters/MaleScavanger.jpg";
 
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(imagePath, UriKind.Absolute);
+            bitmapImage.UriSource = new Uri(imagePath, UriKind.Relative);
             bitmapImage.EndInit();
 
             imgMaleScavanger.Source = bitmapImage;
         }
 
 
-/*
-        private void imageControl_MouseDown(object sender, MouseButtonEventArgs e)
+
+        private void imageControl_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Image clickedImage = (Image)sender;
-            // Retrieve the ImagePath from the clicked Image control
-            if (clickedImage.DataContext is ImagePath imagePath)
+            System.Windows.Controls.Image image = (System.Windows.Controls.Image)sender;
+            Border imageBorder = FindParentBorder(image);
+
+            if (imageBorder != null)
             {
-                _player.CharacterImagePath = imagePath.Path; // Set the player's image path to the retrieved image path
+                if (isBorderWhite)
+                {
+                    // Change the border color back to the previous color (e.g., #343661)
+                    imageBorder.BorderBrush = (SolidColorBrush)new BrushConverter().ConvertFromString("#343661");
+                    isBorderWhite = false;
+                }
+                else
+                {
+                    // Change the border color to white
+                    imageBorder.BorderBrush = Brushes.White;
+                    isBorderWhite = true;
+                }
+
+                // Save the path of the image
+                characterImagePath = image.Source.ToString();
             }
-        }*/
+        }
+
+        private Border FindParentBorder(FrameworkElement element)
+        {
+            FrameworkElement parent = (FrameworkElement)element.Parent;
+
+            while (parent != null)
+            {
+                if (parent is Border border)
+                {
+                    return border;
+                }
+
+                parent = (FrameworkElement)parent.Parent;
+            }
+
+            return null;
+        }
+
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -85,6 +120,7 @@ namespace Arcane
             else
             {
                 btnSave.IsEnabled = true;
+                _player.CharacterImagePath = characterImagePath;
                 enteredUsername = txtCharacterName.Text;
                 _player = Player.CreateDefaultPlayer(enteredUsername, _player.CharacterImagePath);
                 GameWindow gameSession = new(_player);

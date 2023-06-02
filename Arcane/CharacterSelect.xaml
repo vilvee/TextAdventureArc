@@ -19,10 +19,10 @@
     </Window.Resources>
 
     <!-- Define the main grid -->
-    <Grid>
+    <Grid Margin="0,0,0,0">
         <!-- Create a border with specific properties -->
         <Border Background="#14213d" BorderBrush="Black" BorderThickness="1" 
-                CornerRadius="20" Margin="-10,0,10,0">
+                CornerRadius="20">
             <DockPanel>
                 <!-- Create a dock panel for the top section -->
                 <DockPanel DockPanel.Dock="Top">
@@ -127,15 +127,15 @@
                             <ColumnDefinition Width="10*"/>
                         </Grid.ColumnDefinitions>
 
-                
-                            <Image x:Name="imgMaleScavanger" Grid.Row="1" Grid.Column="1"/>
+                        <Border Grid.Row="1" Grid.Column="1" BorderBrush="#343661"
+                                BorderThickness="3" CornerRadius="8">
+                            <Image x:Name="imgMaleScavanger"  MouseDown="imageControl_MouseDown"/>
+                        </Border>
 
-                      <!--    <Border Grid.Row="1" Grid.Column="3" BorderBrush="#343661" 
-                           <Image x:Name="imageControl2" 
-                                   Source="{Binding ImageAristocrat.Path}" 
-                                   MouseDown="imageControl_MouseDown" Stretch="Fill" /> 
+                        <Border Grid.Row="1" Grid.Column="3" BorderBrush="#343661">
+                            <Image x:Name="imageControl2" Stretch="Fill" /> 
                           
-                        </Border>  -->
+                        </Border>  
                        
 
                         <Border Grid.Row ="1" Grid.Column="5" 
