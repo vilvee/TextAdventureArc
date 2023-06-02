@@ -10,6 +10,9 @@
     <Compile Update="CharacterSelect.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="MainScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="TradingScreen.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -18,7 +21,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="MainWindow.xaml">
+    <Page Update="MainScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="GameWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CharacterSelect.xaml">

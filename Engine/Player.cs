@@ -21,15 +21,9 @@ namespace Engine
         private int _experiencePoints;
         private Location _currentLocation;
 
-
-        //TODO: Add image to player
-        /* Bitmap image =new Bitmap();*/
-
-
-/*        /// <summary>
-        /// Event that is raised when a message needs to be displayed.
-        /// </summary>
-        public event EventHandler<MessageEventArgs> OnMessage;*/
+        //TODO: Add player image
+    /*    //Player image
+        Bitmap image =new Bitmap();*/
 
         /// <summary>
         /// Gets or sets the amount of gold the player has.

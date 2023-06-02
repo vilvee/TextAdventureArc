@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace Arcane
 {
-    public partial class MainWindow : Window
+    public partial class GameWindow : Window
     {
         private const string PLAYER_DATA_FILE_NAME = "PlayerData8.xml";
 
@@ -20,9 +20,9 @@ namespace Arcane
         
 
         /// <summary>
-        /// Initializes a new instance of the MainWindow class.
+        /// Initializes a new instance of the GameWindow class.
         /// </summary>
-        public MainWindow()
+        public GameWindow()
         {
             InitializeComponent();
 
