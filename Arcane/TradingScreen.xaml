@@ -20,7 +20,8 @@
                     Value="#F2BA87" />
         </Style>
     </Window.Resources>
-    <DockPanel>
+    <Border BorderBrush="#261F1A" BorderThickness="1">
+        <DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <TextBlock DockPanel.Dock="Right"
                        VerticalAlignment="Center" Margin="0,0,12,0" Foreground="#F2BA87" FontFamily="Book Antiqua">
@@ -41,7 +42,7 @@
             </StatusBar>
 
         </DockPanel>
-
+       
         <Canvas>
         <Label Content="My Inventory" x:Name="lblMyInventory" Canvas.Left="99" 
                Canvas.Top="13" Foreground="#FFF2BA87"/>
@@ -154,5 +155,5 @@
 
 
     </DockPanel>
-
+    </Border>
 </Window>

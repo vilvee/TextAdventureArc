@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowStyle="None" Height="664" Width="721" MinHeight="501" MinWidth="700"
         AllowsTransparency="True"
-        ResizeMode="CanResizeWithGrip"
-        Background="Transparent" >
+        ResizeMode="CanResizeWithGrip">
 
     <!-- Define window resources -->
     <Window.Resources>
@@ -14,14 +13,14 @@
             <Setter Property="FontSize" Value="16" />
             <Setter Property="TextBlock.TextDecorations" Value="{x:Null}" />
             <Setter Property="Cursor" Value="{x:Null}" />
-            <Setter Property="Foreground" Value="#ffff" />
+            <Setter Property="Foreground" Value="#F2BA87" />
         </Style>
     </Window.Resources>
 
     <!-- Define the main grid -->
     <Grid>
         <!-- Create a border with specific properties -->
-        <Border Background="#14213d" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="-10,0,10,0">
+        <Border BorderThickness="1" CornerRadius="20">
             <DockPanel>
                 <!-- Create a dock panel for the top section -->
                 <DockPanel DockPanel.Dock="Top">
@@ -36,7 +35,8 @@
                     <!-- Create a status bar with specific properties -->
                     <StatusBar Background="Transparent" MouseDoubleClick="TriggerMaximize" MouseMove="TriggerMoveWindow">
                         <!-- Create a text block inside the status bar -->
-                        <TextBlock DockPanel.Dock="Left" Text="Almanac" FontSize="16" Margin="14,0,0,0" Foreground="#FFE5DBDB"/>
+                        <TextBlock DockPanel.Dock="Left" Text="Almanac" FontSize="16" 
+                                   Margin="14,0,0,0" Foreground="#F2BA87"/>
                     </StatusBar>
                 </DockPanel>
                 <!-- main content -->
@@ -61,8 +61,8 @@
 
                     <Border Grid.Row="0" Grid.Column="0"  
                             BorderBrush="#261F1A" 
-                            BorderThickness="1" CornerRadius="8"
-                            Background="#261F1A"  
+                            BorderThickness="1"
+                            Background="#CC261F1A"  
                             Width="Auto"
                             Height="Auto" 
                             Margin="30,15,30,15"
@@ -70,12 +70,12 @@
                             Grid.RowSpan="4">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="35*"/>
+                                <RowDefinition Height="15"/>
                                 <RowDefinition Height="35*" />
                                 <RowDefinition Height="35*" />
                                 <RowDefinition Height="35*" />
                                 <RowDefinition Height="35*" />
-                                <RowDefinition Height="35*"/>
+                                <RowDefinition Height="15"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="197*"/>
@@ -89,52 +89,52 @@
                                      BorderBrush="#F2BA87" BorderThickness="2"  
                                      CornerRadius="8" Margin="15,7,8,7"
                                      MinHeight="100"  MinWidth="100" Width="Auto" Height="Auto">
-                                <Image   OpacityMask="Black"/>
+                                <Image x:Name="imgPlayer"  OpacityMask="Black"/>
                             </Border>
                             <Label Grid.Row="1" Grid.Column="2" Content="Level:" HorizontalAlignment="Left" 
-                           VerticalAlignment="Top" TextBlock.Foreground="#F2BA87" 
+                           VerticalAlignment="Bottom" TextBlock.Foreground="#F2BA87" 
                            FontFamily="Bookman Old Style" FontSize="14" Foreground="#F2BA87" 
-                           Height="26" Width="49" Margin="21,0,0,0" />
-                            <Label Grid.Row="1"  Grid.Column="2" Content="Experience:" 
-                           HorizontalAlignment="Left" VerticalAlignment="Top" 
+                           Height="26" Width="49"/>
+                            <Label Grid.Row="2"  Grid.Column="2" Content="Experience:" 
+                           HorizontalAlignment="Left" VerticalAlignment="Bottom" 
                            TextBlock.Foreground="#FFE5DBDB" FontFamily="Bookman Old Style" 
-                           FontSize="14" Foreground="#F2BA87" Height="26" Width="90" Margin="21,28,0,0" Grid.RowSpan="2" />
+                           FontSize="14" Foreground="#F2BA87" Height="26" Width="90"/>
                             <Label Grid.Row="3" Grid.Column="2" Content="Hit Points:" 
                                    HorizontalAlignment="Left" 
-                                   VerticalAlignment="Center" Background="{x:Null}" 
+                                   VerticalAlignment="Bottom" Background="{x:Null}" 
                                    FontFamily="Bookman Old Style" FontSize="14" Foreground="#F2BA87" 
-                                   Height="26" Width="94" Margin="21,0,0,0"/>
+                                   Height="26" Width="94"/>
                             <Label Grid.Row="4" Grid.Column="2" Content="Gold:" HorizontalAlignment="Left" 
-                                   VerticalAlignment="Center" Background="{x:Null}" 
+                                   VerticalAlignment="Bottom" Background="{x:Null}" 
                                    FontFamily="Bookman Old Style" FontSize="14" Foreground="#F2BA87" 
-                                   Height="26" Width="46" Margin="21,0,0,0" />
+                                   Height="26" Width="46"/>
 
                             <Label Grid.Row="1" Grid.Column="3" x:Name="lbLevel" Content="" 
-                           HorizontalAlignment="Left" VerticalAlignment="Center" 
+                           HorizontalAlignment="Left" VerticalAlignment="Bottom" 
                            Foreground="#F2BA87" FontFamily="Bookman Old Style" 
                            FontSize="16" Height="25" Width="66"/>
                             <Label Grid.Row="2" Grid.Column="3" x:Name="lbExperience" 
-                           Content="" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                           Content="" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
                            Foreground="#F2BA87" FontFamily="Bookman Old Style" 
                            FontSize="16" Height="25" Width="66"  />
                             <Label Grid.Row="4" Grid.Column="3" x:Name="lbGold" Content="" 
-                           HorizontalAlignment="Left" VerticalAlignment="Center" 
+                           HorizontalAlignment="Left" VerticalAlignment="Bottom" 
                            Foreground="#F2BA87" FontFamily="Bookman Old Style" FontSize="16"
-                           Height="26" Width="66"  />
+                           Height="25" Width="66"  />
                             <Label Grid.Row="3" Grid.Column="3" x:Name="lbHitPoints" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16"
                            Foreground="#F2BA87" FontFamily="Bookman Old Style" 
-                           Height="24" Width="66" />
+                           Height="25" Width="66" />
 
                             <Border Grid.Row="1" Grid.Column="4"
-                            BorderBrush="#58c8f1" 
+                            BorderBrush="#F2BA87" 
                             BorderThickness="1" CornerRadius="8"
-                            Background="#58c8f1" 
+                            Background="#261F1A" 
                             MinWidth="84" MinHeight="25"
                             Height="Auto" Width="Auto"
                             Margin="78,10,10,0">
                                 <ToggleButton  x:Name="btnMap" Content="Map" Click="btnMap_Click"
-                                       Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White"
+                                       Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#F2BA87"
                                        UseLayoutRounding="False" FontFamily="Bookman Old Style" FontSize="16"
                                        Cursor="Hand"  >
                                     <ToggleButton.Template>
@@ -174,22 +174,21 @@
                                       VerticalAlignment="Top" Foreground="#261F1A" 
                                       HorizontalGridLinesBrush="#FF4E4E4E" 
                                       VerticalGridLinesBrush="#FF4E4E4E" 
-                                      Sorting="dgvInventory_Sorting" Background="#261F1A"
+                                      Sorting="dgvInventory_Sorting" Background="#CC261F1A"
                                       BorderBrush="#261F1A" FontFamily="Book Antiqua" 
                                       Margin="24,29,36,0" Height="334"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2">
                         <DataGrid.Resources>
                             <Style TargetType="DataGridCell">
                                 <Setter Property="Background" Value="#261F1A" />
-                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Foreground" Value="#F2BA87" />
                                 <Setter Property="BorderBrush" Value="{x:Null}" />
                                 <Setter Property="IsHitTestVisible" Value="False" />
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background" Value="#58c8f1" />
-                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Foreground" Value="#F2BA87" />
                                 <Setter Property="BorderBrush" Value="#FF4E4E4E" />
                                 <Setter Property="BorderThickness" Value="0.5" />
                                 <Setter Property="Padding" Value="6,4" />
@@ -227,22 +226,21 @@
                                       VerticalAlignment="Top" Foreground="#261F1A" 
                                       HorizontalGridLinesBrush="#FF4E4E4E" 
                                       VerticalGridLinesBrush="#FF4E4E4E" 
-                                      Sorting="dgvQuests_Sorting" Background="#261F1A"
+                                      Sorting="dgvQuests_Sorting" Background="#CC261F1A"
                                       BorderBrush="#261F1A" FontFamily="Book Antiqua" 
                                       Margin="30,29,0,0" Height="353"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2">
                         <DataGrid.Resources>
                             <Style TargetType="DataGridCell">
                                 <Setter Property="Background" Value="#261F1A" />
-                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Foreground" Value="#F2BA87" />
                                 <Setter Property="BorderBrush" Value="{x:Null}" />
                                 <Setter Property="IsHitTestVisible" Value="False" />
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background" Value="#58c8f1" />
-                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Foreground" Value="#F2BA87" />
                                 <Setter Property="BorderBrush" Value="#FF4E4E4E" />
                                 <Setter Property="BorderThickness" Value="0.5" />
                                 <Setter Property="Padding" Value="6,4" />

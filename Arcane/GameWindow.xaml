@@ -17,7 +17,7 @@
             <Setter Property="Cursor"
                     Value="{x:Null}" />
             <Setter Property="Foreground"
-                    Value="#ffff" />
+                    Value="#261F1A" />
         </Style>
 
     </Window.Resources>
@@ -28,13 +28,13 @@
                 <DockPanel DockPanel.Dock="Top">
                     <TextBlock DockPanel.Dock="Right"
                        VerticalAlignment="Center" Margin="0,0,12,0" 
-                       Foreground="#FFE5DCDC">
+                       Foreground="#261F1A">
                 <Hyperlink Click="TriggerClose"
                            Style="{StaticResource WindowIconStyle}">r</Hyperlink>
                     </TextBlock>
                     <TextBlock DockPanel.Dock="Right"
                        VerticalAlignment="Center" Margin="0,0,29,0" 
-                       Foreground="#FFE5DCDC">
+                       Foreground="#261F1A">
                 <Hyperlink Click="TriggerMinimize"
                            Style="{StaticResource WindowIconStyle}">0</Hyperlink>
                     </TextBlock>
@@ -43,7 +43,8 @@
                        MouseMove="TriggerMoveWindow">
                         <TextBlock DockPanel.Dock="Left"
                            Text="Arcane"
-                           FontSize="16" Margin="9,0,0,0" Foreground="#F2BA87"/>
+                           FontSize="16" Margin="9,0,0,0"
+                           Foreground="#261F1A"/>
                     </StatusBar>
                 </DockPanel>
                 <!-- main content -->
@@ -113,7 +114,7 @@
                             <Label Grid.Row="1" Grid.ColumnSpan="3" x:Name="lblName" Content="" 
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                                    Foreground="#F2BA87" FontFamily="Bookman Old Style" 
-                                   FontSize="20" Height="25" MinWidth="181" Margin="153,0,0,0"/>
+                                   FontSize="20" Height="34" MinWidth="181" Margin="153,0,0,0"/>
 
                             <Label Grid.Row="3" Grid.Column="1" Content="Level:" HorizontalAlignment="Left" 
                            VerticalAlignment="Top" TextBlock.Foreground="#F2BA87" 
@@ -358,7 +359,7 @@
           SelectedValuePath="ID" IsDropDownOpen="False"
           SelectionChanged="cboWeapons_SelectionChanged"
           Loaded="cboWeapons_Loaded"
-          Background="{x:Null}" BorderBrush="#261F1A"
+          Background="#CC1E3C40" BorderBrush="#261F1A"
           Foreground="#F2BA87"
           Height="Auto" MinHeight="25" Width="Auto" MinWidth="235"
           Margin="11,0,15,0">
@@ -498,7 +499,7 @@
                     <ComboBox Grid.Row="7" x:Name="cboPotions" DisplayMemberPath="Name" Grid.ColumnSpan="3"
                               SelectedValuePath="ID" IsDropDownOpen="False"
                               SelectionChanged="cboPotions_SelectionChanged"
-                              Background="{x:Null}" BorderBrush="#261F1A"
+                              Background="#CC1E3C40" BorderBrush="#261F1A"
                               Foreground="#F2BA87"
                               Height="Auto" MinHeight="25" Width="Auto" MinWidth="235"
                               Margin="10,0,16,0"

@@ -30,6 +30,14 @@ namespace Arcane
             // Set the current player.
             _CurrentPlayer = player;
 
+            // load the imgPlayer from characterImagePath
+            string characterImagePath = player.CharacterImagePath;
+            SetImage(imgPlayer, characterImagePath);
+
+            ImageBrush myBrush = new ImageBrush();
+            myBrush.ImageSource = new BitmapImage(new Uri("../../../Images/charcterInfo.jpg", UriKind.RelativeOrAbsolute));
+            this.Background = myBrush;
+
             // Bind the properties of the player to the labels.
             lbHitPoints.SetBinding(ContentProperty, new Binding("CurrentHitPoints") { Source = _CurrentPlayer });
             lbGold.SetBinding(ContentProperty, new Binding("Gold") { Source = _CurrentPlayer });
@@ -39,6 +47,15 @@ namespace Arcane
             // Set the item source of the inventory and quests data grids.
             dgvInventory.ItemsSource = _CurrentPlayer.Inventory;
             dgvQuests.ItemsSource = _CurrentPlayer.Quests;
+        }
+        private void SetImage(Image img, string imagePath)
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(imagePath, UriKind.RelativeOrAbsolute);
+            bitmapImage.EndInit();
+
+            img.Source = bitmapImage;
         }
 
         #region WindowControls
