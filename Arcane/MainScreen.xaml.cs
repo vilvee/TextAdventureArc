@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace Arcane
 {
@@ -29,13 +30,13 @@ namespace Arcane
         public MainScreen()
         {
             InitializeComponent();
-
+            LoadFiles();
             ImageBrush myBrush = new ImageBrush();
             myBrush.ImageSource = new BitmapImage(new Uri("../../../Images/MainWindow.jpg", UriKind.RelativeOrAbsolute));
             this.Background = myBrush;
 
             // Look if PlayerData.xml file pattern exiasta in the current directory bool
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string baseDirectory = "../../../Saves";
             string searchPattern = "PlayerData*.xml";
             string[] files = Directory.GetFiles(baseDirectory, searchPattern)
                     .OrderByDescending(file => new FileInfo(file).CreationTime)
@@ -47,7 +48,42 @@ namespace Arcane
             }
         }
 
+        private void LoadFiles()
+        {
+            string directoryPath = "../../../Saves";
+            // Gets the file names of the directory with the search pattern "PlayerData*.xml" and adds them to the ListBox
+            var files = Directory.GetFiles(directoryPath, "PlayerData*.xml");
+            foreach (var file in files)
+            {
+                // Extract the unique part of each file name
+                string fileName = System.IO.Path.GetFileNameWithoutExtension(file); 
+                string characterName = fileName.Replace("PlayerData", "");
+                SavesListBox.Items.Add(characterName);
+            }
+        }
+        private void btnLoadGame_Click(object sender, RoutedEventArgs e)
+        {
 
+            if (SavesListBox.SelectedItem != null)
+            {
+                string uniquePart = SavesListBox.SelectedItem.ToString();
+                string directoryPath = "../../../Saves";
+                // Construct the full path of the selected file
+                playerData = Path.Combine(directoryPath, $"PlayerData{uniquePart}.xml");
+                // Display the file path in the TextBox
+                _player = Player.CreatePlayerFromXmlString(File.ReadAllText(playerData));
+
+            }
+            else
+            {
+                MessageBox.Show("Please select a file from the list first.");
+            }
+
+            GameWindow gameWindow = new GameWindow(_player);
+            gameWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Close();
+            gameWindow.ShowDialog();
+        }
         private void btnNewGame_Click(object sender, RoutedEventArgs e)
         {
             
@@ -65,9 +101,9 @@ namespace Arcane
             // If player data is not available in the database, try to load from XML file or create a default player
             if (_player == null)
             {
-                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string directoryPath = "../../../Saves";
                 string searchPattern = "PlayerData*.xml";
-                string[] files = Directory.GetFiles(baseDirectory, searchPattern)
+                string[] files = Directory.GetFiles(directoryPath, searchPattern)
                     .OrderByDescending(file => new FileInfo(file).CreationTime)
                     .ToArray();
 

@@ -438,7 +438,7 @@ namespace Arcane
         /// <param name="e">The event arguments.</param>
         private void TriggerClose(object sender, RoutedEventArgs e)
         {
-            string dataFile = _player.PlayerData;
+            string dataFile = _player.PlayerDataFileName;
             // Save player data to XML file
             File.WriteAllText(dataFile, _player.ToXmlString());
 

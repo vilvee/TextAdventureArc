@@ -25,7 +25,7 @@ namespace Engine
         private string _characterName;
         private string _imagePath;
 
-        public string PlayerData { get; set; }
+        public string PlayerDataFileName { get; set; }
 
         public string CharacterImagePath
         {
@@ -144,17 +144,16 @@ namespace Engine
             Inventory = new BindingList<Inventory>();
             Quests = new BindingList<ActiveQuest>();
             LocationsVisited = new List<int>();
-            PlayerData = CreatePlayerDataFile();
+            PlayerDataFileName = CreatePlayerXMLFilePath();
 
         }
 
-        public string CreatePlayerDataFile()
+        public string CreatePlayerXMLFilePath()
         {
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            /*  string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;*/
+            string saveDirectory = "../../../Saves";
             string fileName = $"PlayerData{CharacterName}.xml";
-            string filePath = Path.Combine(baseDirectory, fileName);
-
-            // Create the player data file using the filePath
+            string filePath = Path.Combine(saveDirectory, fileName);
 
             return filePath;
         }
