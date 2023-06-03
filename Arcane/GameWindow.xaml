@@ -798,7 +798,10 @@
                                         UseLayoutRounding="False"
                                         FontFamily="Bookman Old Style" 
                                         FontSize="16" Cursor="Hand"
-                                        Background="{x:Null}" />
+                                        Background="{x:Null}" 
+                                        x:Name="btnNext"
+                                        Click="btnNext_Click" 
+                                        IsEnabled="{Binding IsNextButtonEnabled}"/>
                             </Border>
                         </Grid>
                     </Border>

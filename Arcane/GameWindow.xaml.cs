@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace Arcane
 {
@@ -24,15 +25,20 @@ namespace Arcane
     {
 
         public Player _player { get; set; }
-        private int _vendorCounter;
         private Dictionary<int, string> _imagePaths;
         private Dictionary<int, string> _NPCiDs;
         private int _currentNPCID;
         private string _currentNPCName;
         private int _currentLocationID;
-        private int currentIndex = 0;
-        private DispatcherTimer timer;
-        private string Dialogue { get; set; }
+
+        private StreamReader streamReader;
+        private string filePath;
+        private string[] lines;
+        private int currentLineIndex;
+        private bool typewriterEffect = true;
+        private bool interruptTypewriter;
+        private bool isReading;
+        private int currentCharIndex;
 
         /// <summary>
         /// Initializes a new instance of the GameWindow class.
@@ -159,65 +165,132 @@ namespace Arcane
 
         private bool IsVendorPresent() => (_player.CurrentLocation.VendorWorkingHere != null) ? true : false;
 
+
         private void DialogueAvailable()
         {
             if (IsVendorPresent())
             {
                 int counter = _player.CurrentLocation.VendorWorkingHere.Counter;
-                string filePath = $"../../../Dialogues/{_currentNPCName}/{counter}.txt";
-                
-                ReadAndDisplayDialogues(filePath);
+                filePath = $"../../../Dialogues/{_currentNPCName}/{counter}.txt";
+
+                lines = File.ReadAllLines(filePath);
+                currentLineIndex = 0;
+                currentCharIndex = 0;
+                isReading = true;
+               // DisableOtherButtons();
+
+                rtbMessages.Document.Blocks.Clear();
+                ReadAndDisplayNextLine();
             }
         }
 
-        private async void ReadAndDisplayDialogues(string filePath)
+        private async void ReadAndDisplayNextLine()
         {
-            using (StreamReader reader = new StreamReader(filePath))
+            if (!isReading)
             {
-                string line;
-                string[] text;
+                btnNext.IsEnabled = false;
+                return;
+            }
 
-                while ((line = await reader.ReadLineAsync()) != null)
+            if (typewriterEffect)
+            {
+                string currentLine = lines[currentLineIndex];
+                typewriterEffect = false;
+                interruptTypewriter = false;
+
+                // Split the line by the first comma
+                string[] lineParts = currentLine.Split(new char[] { ',' }, 2);
+
+                // Replace the 'V' with the 'vendorname' variable
+                lineParts[0] = lineParts[0].Replace("V", _player.CurrentLocation.VendorWorkingHere.Name).Replace("P", _player.CharacterName  );
+
+                // Check if the line contains a comma
+                if (lineParts.Length > 1)
                 {
-                    // Create a new FlowDocument for each dialogue line
-                    FlowDocument flowDocument = new FlowDocument();
+                    // Concatenate the modified line parts
+                    currentLine = lineParts[0] + ":" + lineParts[1] + Environment.NewLine;
+                }
 
-                    // Split the line into dialogue and speaker
-                    text = line.Split(new char[] { ',' }, 2);
-                    string name = text[0].Replace("P", _player.CharacterName + " : ").Replace("V", _player.CurrentLocation.VendorWorkingHere.Name + " : ");
-                    string dialogue = text[1];
+                for (int i = currentCharIndex; i < currentLine.Length; i++)
+                {
+                    if (interruptTypewriter)
+                    {
+                        typewriterEffect = true;
+                        interruptTypewriter = false;
+                        rtbMessages.AppendText(currentLine.Substring(currentCharIndex));
+                        rtbMessages.ScrollToEnd();
+                        break;
+                    }
 
-                    // Create a new paragraph to hold the dialogue text
-                    Paragraph paragraph = new Paragraph();
-                    flowDocument.Blocks.Add(paragraph);
+                    rtbMessages.AppendText(currentLine[i].ToString());
+                    await Task.Delay(50);
+                    currentCharIndex++;
+                }
 
-                    // Combine dialogue[0] and dialogue[1] if both elements are available
-                    string fullDialogue = dialogue.Length > 1 ? $"{name} {text[1]}" : name;
+                if (!interruptTypewriter && currentCharIndex == currentLine.Length - 1)
+                {
+                    typewriterEffect = true;
+                    currentLineIndex++;
+                    currentCharIndex = 0;
+                    if (currentLineIndex < lines.Length)
+                    {
+                        await Task.Delay(500);  // Delay before showing the next line
+                        rtbMessages.AppendText(Environment.NewLine + lines[currentLineIndex]);
+                        rtbMessages.ScrollToEnd();
+                        // DisableOtherButtons();
+                    }
+                    else
+                    {
+                        isReading = false;
+                        EnableOtherButtons();
+                    }
+                }
+            }
+            else
+            {
+                typewriterEffect = true;
+                ReadAndDisplayNextLine();
+            }
+        }
 
-                    // Add the FlowDocument to the RichTextBox
-                    rtbMessages.Document = flowDocument;
 
-                    // Start the typing effect
-                    await TypingEffect(fullDialogue, paragraph);
 
-                    // Wait for 4 seconds before clearing the text
-                    await Task.Delay(4000);
-
-                    // Clear the text
-                    paragraph.Inlines.Clear();
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (isReading)
+            {
+                if (!typewriterEffect)
+                {
+                    interruptTypewriter = true;
+                }
+                else
+                {
+                    currentLineIndex++;
+                    currentCharIndex = 0;
+                    if (currentLineIndex < lines.Length)
+                    {
+                        ReadAndDisplayNextLine();
+                    }
+                    else
+                    {
+                        isReading = false;
+                        EnableOtherButtons();
+                    }
                 }
             }
         }
 
-        private async Task TypingEffect(string text, Paragraph paragraph)
-        {
-            for (int i = 0; i < text.Length; i++)
-            {
-                paragraph.Inlines.Add(new Run(text[i].ToString()));
 
-                // Pause for a short interval between each character
-                await Task.Delay(100); // Adjust the delay as per your preference
-            }
+
+
+        private void EnableOtherButtons()
+        {
+            // Enable other buttons here
+        }
+
+        private void DisableOtherButtons()
+        {
+            // Disable other buttons here
         }
 
         #region Directions

@@ -9,16 +9,19 @@ namespace Engine
     /// </summary>
     public class Vendor : INotifyPropertyChanged
     {
-        public int Counter { get; private set; } 
-        
+        private int _counter = 0;
+
+        public int Counter
+        {
+            get { return _counter; }
+            set { _counter = value; }
+        }
         /// <summary>
         /// Gets or sets the name of the vendor.
         /// </summary>
         public string Name { get; set; }
 
         public int ID { get; set; }
-
-        public string Dialogues { get; set; }
 
         /// <summary>
         /// Gets the inventory of the vendor.
@@ -34,7 +37,7 @@ namespace Engine
             ID = iD;
             Name = name;
             Inventory = new BindingList<Inventory>();
-            Counter++;
+            ++Counter;
             
         }
 
