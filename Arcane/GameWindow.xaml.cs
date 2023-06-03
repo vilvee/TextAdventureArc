@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Numerics;
 
 namespace Arcane
 {
@@ -20,7 +21,7 @@ namespace Arcane
 
         public Player _player { get; set; }
         private Dictionary<string, string> _imagePaths;
-
+        private string _currentLocationID;
         /// <summary>
         /// Initializes a new instance of the GameWindow class.
         /// </summary>
@@ -28,19 +29,9 @@ namespace Arcane
         {
             InitializeComponent();
 
-            // Set the background image from code-behind
-            _imagePaths = new Dictionary<string, string>
-            {
-                { "HomeVillage" , "../../../Images/homeVillage.jpg" },
-
-            };
-
-
-            this.Background = SetBackgroundImage(_imagePaths["HomeVillage"]);
-            
-
             //_plaper = player;
             _player = player;
+            UpdateBackgroundImage();
 
                _player.AddItemToInventory(World.ItemByID(World.ITEM_ID_MIGHT_POTION));
 
@@ -94,13 +85,27 @@ namespace Arcane
         }
 
         //TODO:Change background depending on location
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void UpdateBackgroundImage()
         {
-          
-            // Change the background image of the window
-            ImageBrush imageBrush = new ImageBrush();
-            imageBrush.ImageSource = new BitmapImage(new Uri("image.jpg", UriKind.Relative)); // Replace "image.jpg" with the path to your image file
-            this.Background = imageBrush;
+            // Set the background image from code-behind
+            _imagePaths = new Dictionary<string, string>
+            {
+                { "1" , "../../../Images/homeVillage.jpg" },
+                { "2" , "../../../Images/wastelands.jpg" },
+                { "3" , "../../../Images/ruinedCity.jpg" },
+                { "4" , "../../../Images/forestOfEchoes.jpg" },
+                { "5" , "../../../Images/ancientTemple.jpg" },
+                { "6" , "../../../Images/cursedDesert.jpg" },
+                { "7" , "../../../Images/mountainOfSolitude.jpg" },
+                { "8" , "../../../Images/skyFortress.jpg" },
+                { "9" , "../../../Images/underwaterRuins.jpg" },
+                { "10" , "../../../Images/sanctuary.jpg" },
+
+            };
+
+            _currentLocationID = _player.CurrentLocation.ID.ToString();
+
+            this.Background = SetBackgroundImage(_imagePaths[_currentLocationID]);
         }
 
         private void SetImage(Image img, string imagePath)
@@ -128,6 +133,7 @@ namespace Arcane
         private void btnNorth_Click(object sender, EventArgs e)
         {
             Navigation.MoveNorth(_player);
+            UpdateBackgroundImage();
         }
 
         /// <summary>
@@ -136,6 +142,7 @@ namespace Arcane
         private void btnEast_Click(object sender, EventArgs e)
         {
             Navigation.MoveEast(_player);
+            UpdateBackgroundImage();
         }
 
         /// <summary>
@@ -144,6 +151,7 @@ namespace Arcane
         private void btnSouth_Click(object sender, EventArgs e)
         {
             Navigation.MoveSouth(_player);
+            UpdateBackgroundImage();
         }
 
         /// <summary>
@@ -152,6 +160,7 @@ namespace Arcane
         private void btnbtnWest_Click(object sender, EventArgs e)
         {
             Navigation.MoveWest(_player);
+            UpdateBackgroundImage();
         }
         #endregion
 

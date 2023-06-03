@@ -12,7 +12,7 @@ namespace Engine
     public class Location
     {
         private readonly SortedList<int, int> _enemiesAtLocation = new SortedList<int, int>();
-
+        private string _imagePath;
         /// <summary>
         /// Gets or sets the ID of the location.
         /// </summary>
@@ -22,6 +22,8 @@ namespace Engine
         /// Gets or sets the name of the location.
         /// </summary>
         public string Name { get; set; }
+
+        public string LocationImagePath { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the location.
