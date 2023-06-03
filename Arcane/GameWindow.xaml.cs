@@ -10,19 +10,17 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace Arcane
 {
 
     public partial class GameWindow : Window
     {
-        /*      private const string PLAYER_DATA_FILE_NAME = "PlayerData8.xml";
-
-                private readonly Player _player;
-
-        */
 
         public Player _player { get; set; }
+        private Dictionary<string, string> _imagePaths;
+
         /// <summary>
         /// Initializes a new instance of the GameWindow class.
         /// </summary>
@@ -30,10 +28,21 @@ namespace Arcane
         {
             InitializeComponent();
 
+            // Set the background image from code-behind
+            _imagePaths = new Dictionary<string, string>
+            {
+                { "HomeVillage" , "../../../Images/homeVillage.jpg" },
+
+            };
+
+
+            this.Background = SetBackgroundImage(_imagePaths["HomeVillage"]);
+            
+
             //_plaper = player;
             _player = player;
 
-            /*     _player.AddItemToInventory(World.ItemByID(World.ITEM_ID_MIGHT_POTION));*/
+               _player.AddItemToInventory(World.ItemByID(World.ITEM_ID_MIGHT_POTION));
 
             string characterImagePath = _player.CharacterImagePath;
 
@@ -84,6 +93,16 @@ namespace Arcane
 
         }
 
+        //TODO:Change background depending on location
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+          
+            // Change the background image of the window
+            ImageBrush imageBrush = new ImageBrush();
+            imageBrush.ImageSource = new BitmapImage(new Uri("image.jpg", UriKind.Relative)); // Replace "image.jpg" with the path to your image file
+            this.Background = imageBrush;
+        }
+
         private void SetImage(Image img, string imagePath)
         {
             BitmapImage bitmapImage = new BitmapImage();
@@ -93,6 +112,14 @@ namespace Arcane
 
             img.Source = bitmapImage;
         }
+
+        private ImageBrush SetBackgroundImage(string imagePath)
+        {
+            ImageBrush imageBrush = new();
+            imageBrush.ImageSource = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+            return imageBrush;
+        }
+
 
         #region Directions
         /// <summary>

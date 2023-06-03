@@ -14,6 +14,7 @@
     <None Remove="Images\Characters\MaleAristocrat.jpg" />
     <None Remove="Images\Characters\MaleMage.jpg" />
     <None Remove="Images\Characters\MaleScavanger.jpg" />
+    <None Remove="Images\homeVillage.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +33,7 @@
     <Resource Include="Images\Characters\MaleAristocrat.jpg" />
     <Resource Include="Images\Characters\MaleMage.jpg" />
     <Resource Include="Images\Characters\MaleScavanger.jpg" />
+    <Resource Include="Images\homeVillage.jpg" />
   </ItemGroup>
 
   <ItemGroup>

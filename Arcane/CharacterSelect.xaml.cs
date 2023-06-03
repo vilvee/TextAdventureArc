@@ -30,7 +30,6 @@ namespace Arcane
         private Player _player;
         private string enteredUsername;
         public string CharacterImagePath { get; set; }
-        private bool isBorderWhite = false;
         private Border _lastSelectedBorder = null;
 
         private Dictionary<Image, string> _imagePaths;

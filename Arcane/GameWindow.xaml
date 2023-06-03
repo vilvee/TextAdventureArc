@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowStyle="None" Height="670" Width=" 800"
         AllowsTransparency="True" 
-        ResizeMode="CanResizeWithGrip" 
-        Background="Transparent">
+        ResizeMode="CanResizeWithGrip" >
 
     <Window.Resources>
         <Style x:Key="WindowIconStyle"
@@ -20,12 +19,11 @@
             <Setter Property="Foreground"
                     Value="#ffff" />
         </Style>
+
     </Window.Resources>
     <Grid>
-        <Border Background="#181736" 
-                BorderBrush="Black" 
-                BorderThickness="1" 
-                CornerRadius="20">
+        <Border  BorderThickness="1" 
+                 CornerRadius="20">
             <DockPanel>
                 <DockPanel DockPanel.Dock="Top">
                     <TextBlock DockPanel.Dock="Right"
@@ -45,7 +43,7 @@
                        MouseMove="TriggerMoveWindow">
                         <TextBlock DockPanel.Dock="Left"
                            Text="Arcane"
-                           FontSize="16" Margin="9,0,0,0" Foreground="#FFE5DBDB"/>
+                           FontSize="16" Margin="9,0,0,0" Foreground="#F2BA87"/>
                     </StatusBar>
                 </DockPanel>
                 <!-- main content -->
@@ -79,9 +77,9 @@
 
                     <!-- PlayerInfo -->
                     <Border Grid.Row="0" Grid.Column="0"  
-                            BorderBrush="#f96b88" 
-                            BorderThickness="1" CornerRadius="8"
-                            Background="#f96b88"  
+                            BorderBrush="#261F1A" 
+                            BorderThickness="1" 
+                            Background="#CC261F1A"  
                             Width="Auto"
                             Height="Auto" 
                             Margin="10,15,0,15"
@@ -105,7 +103,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Border  Grid.RowSpan="8" Grid.Column="0"  Grid.Row="0"
-                                     BorderBrush="#fffefc" BorderThickness="3"  
+                                     BorderBrush="#F2BA87" BorderThickness="3"  
                                      Margin="15,10,8,10"
                                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                      MinHeight="100"  MinWidth="100" Width="Auto" Height="Auto">
@@ -114,56 +112,56 @@
 
                             <Label Grid.Row="1" Grid.ColumnSpan="3" x:Name="lblName" Content="" 
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
-                                   Foreground="#fffefc" FontFamily="Bookman Old Style" 
-                                   FontSize="16" Height="25" MinWidth="181" Margin="153,0,0,0"/>
+                                   Foreground="#F2BA87" FontFamily="Bookman Old Style" 
+                                   FontSize="20" Height="25" MinWidth="181" Margin="153,0,0,0"/>
 
                             <Label Grid.Row="3" Grid.Column="1" Content="Level:" HorizontalAlignment="Left" 
-                           VerticalAlignment="Top" TextBlock.Foreground="#fffefc" 
-                           FontFamily="Bookman Old Style" FontSize="14" Foreground="#fffefc" 
+                           VerticalAlignment="Top" TextBlock.Foreground="#F2BA87" 
+                           FontFamily="Bookman Old Style" FontSize="14" Foreground="#F2BA87" 
                            Height="26" Width="49" />
                             <Label Grid.Row="4"  Grid.Column="1" Content="Experience:" 
                            HorizontalAlignment="Left" VerticalAlignment="Top" 
-                           TextBlock.Foreground="#FFE5DBDB" FontFamily="Bookman Old Style" 
-                           FontSize="14" Foreground="#fffefc" Height="26" Width="90" />
+                           TextBlock.Foreground="#F2BA87" FontFamily="Bookman Old Style" 
+                           FontSize="14" Foreground="#F2BA87" Height="26" Width="90" />
                             <Label Grid.Row="5" Grid.Column="1" Content="Hit Points:" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Center" Background="{x:Null}" 
-                                   FontFamily="Bookman Old Style" FontSize="14" Foreground="#fffefc" 
+                                   FontFamily="Bookman Old Style" FontSize="14" Foreground="#F2BA87" 
                                    Height="26" Width="94"/>
                             <Label Grid.Row="6" Grid.Column="1" Content="Gold:" HorizontalAlignment="Left" 
                                    VerticalAlignment="Center" Background="{x:Null}" 
-                                   FontFamily="Bookman Old Style" FontSize="14" Foreground="#fffefc" 
+                                   FontFamily="Bookman Old Style" FontSize="14" Foreground="#F2BA87" 
                                    Height="26" Width="46" />
 
                             <Label Grid.Row="3" Grid.Column="2" x:Name="lbLevel" Content="" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" 
-                           Foreground="#fffefc" FontFamily="Bookman Old Style" 
+                           Foreground="#F2BA87" FontFamily="Bookman Old Style" 
                            FontSize="16" Height="25" Width="66"/>
                             <Label Grid.Row="4" Grid.Column="2" x:Name="lbExperience" 
                            Content="" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                           Foreground="#fffefc" FontFamily="Bookman Old Style" 
+                           Foreground="#F2BA87" FontFamily="Bookman Old Style" 
                            FontSize="16" Height="25" Width="66"  />
                             <Label Grid.Row="6" Grid.Column="2" x:Name="lbGold" Content="" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" 
-                           Foreground="#fffefc" FontFamily="Bookman Old Style" FontSize="16"
+                           Foreground="#F2BA87" FontFamily="Bookman Old Style" FontSize="16"
                            Height="25" Width="66"  />
                             <Label Grid.Row="5" Grid.Column="2" x:Name="lbHitPoints" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16"
-                           Foreground="#fffefc" FontFamily="Bookman Old Style" 
+                           Foreground="#F2BA87" FontFamily="Bookman Old Style" 
                            Height="25" Width="66" />
                         </Grid>
                     </Border>
 
                     <Border Grid.Row="7" Grid.Column="6" 
-                            BorderBrush="#58c8f1" 
+                            BorderBrush="#594438" 
                             BorderThickness="1" CornerRadius="8"
-                            Background="#58c8f1" 
+                            Background="#594438" 
                             MinWidth="84" MinHeight="25"
                             Height="Auto" Width="Auto"
                             Margin="105,0,9,1">
                         <ToggleButton  x:Name="btnInfo" Content="Almanac" 
                                    Background="{x:Null}" BorderBrush="{x:Null}" 
-                                   Foreground="White"
+                                   Foreground="#F2BA87"
                                    UseLayoutRounding="False" 
                                    FontFamily="Bookman Old Style" FontSize="16"
                                    Cursor="Hand" Checked="btnInfo_Checked">
@@ -179,7 +177,7 @@
                             </ToggleButton.Template>
                             <ToggleButton.Style>
                                 <Style TargetType="ToggleButton">
-                                    <Setter Property="Foreground" Value="#FFDAD9D6" />
+                                    <Setter Property="Foreground" Value="#F2BA87" />
                                     <Style.Triggers>
                                         <Trigger Property="IsChecked" Value="True">
                                             <Setter Property="Foreground" Value="Gray" />
@@ -191,14 +189,14 @@
                     </Border>
 
                     <Border Grid.Row="5" Grid.Column="6"
-                            BorderBrush="#58c8f1" 
+                            BorderBrush="#594438" 
                             BorderThickness="1" CornerRadius="8"
-                            Background="#58c8f1" 
+                            Background="#594438" 
                             MinWidth="84" MinHeight="25"
                             Height="Auto" Width="Auto"
                             Margin="105,0,9,0">
                         <ToggleButton  x:Name="btnMap" Content="Map" Click="btnMap_Click"
-                                       Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White"
+                                       Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#F2BA87"
                                        UseLayoutRounding="False" FontFamily="Bookman Old Style" FontSize="16"
                                        Cursor="Hand"  >
                             <ToggleButton.Template>
@@ -213,7 +211,7 @@
                             </ToggleButton.Template>
                             <ToggleButton.Style>
                                 <Style TargetType="ToggleButton">
-                                    <Setter Property="Foreground" Value="#FFDAD9D6" />
+                                    <Setter Property="Foreground" Value="#F2BA87" />
                                     <Style.Triggers>
                                         <Trigger Property="IsChecked" Value="True">
                                             <Setter Property="Foreground" Value="Gray" />
@@ -225,12 +223,12 @@
                     </Border>
 
                     <Border Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="5" 
-                            BorderBrush="#f96b88" 
-                            BorderThickness="1" CornerRadius="8"
-                            Background="#f96b88"  
+                            BorderBrush="#261F1A" 
+                            BorderThickness="1"
+                            Background="#CC261F1A"  
                             Width="Auto"
                             Height="Auto"
-                            Margin="10,15,10,15">
+                            Margin="15,15,15,15">
                         <Grid >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -246,14 +244,14 @@
                             <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" x:Name="btnNorth" 
                                 Content="North" 
                                 Click="btnNorth_Click" Background="{x:Null}" 
-                                BorderBrush="{x:Null}" Foreground="#FFDAD9D6" 
+                                BorderBrush="{x:Null}" Foreground="#F2BA87" 
                                 FontFamily="Bookman Old Style" FontSize="16" Cursor="Hand" 
                                 Margin="0" Width="374" Height="22" />
 
                             <Button Grid.Row="1" Grid.Column="0" x:Name="btnWest" 
                                 Content="West" 
                                 Click="btnbtnWest_Click" Background="{x:Null}" 
-                                BorderBrush="{x:Null}" Foreground="#FFDAD9D6" 
+                                BorderBrush="{x:Null}" Foreground="#F2BA87" 
                                 FontFamily="Bookman Old Style" FontSize="16" Cursor="Hand" 
                                 Margin="0" Width="118" Height="22">
                                 <Button.LayoutTransform>
@@ -263,7 +261,7 @@
 
                             <Button Grid.Row="1" Grid.Column="2" x:Name="btnEast" 
                                 Content="East" Click="btnEast_Click" Background="{x:Null}" 
-                                BorderBrush="{x:Null}" Foreground="#FFDAD9D6" 
+                                BorderBrush="{x:Null}" Foreground="#F2BA87" 
                                 FontFamily="Bookman Old Style" FontSize="16" Cursor="Hand"
                                 Margin="0" Width="118" Height="22">
                                 <Button.LayoutTransform>
@@ -274,7 +272,7 @@
                             <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="btnSouth" 
                                 Content="South" VerticalAlignment="Bottom"
                                 Click="btnSouth_Click" Background="{x:Null}" 
-                                BorderBrush="{x:Null}" Foreground="#FFDAD9D6" 
+                                BorderBrush="{x:Null}" Foreground="#F2BA87" 
                                 FontFamily="Bookman Old Style" FontSize="16" Cursor="Hand"
                                 Margin="0,-5,0,0" Width="374" Height="22" />
 
@@ -287,7 +285,7 @@
                                      BorderBrush="{x:Null}" 
                                      SelectionBrush="{x:Null}" 
                                      SelectionTextBrush="{x:Null}"
-                                     Foreground="White" 
+                                     Foreground="#F2BA87" 
                                      FontFamily="Book Antiqua" 
                                      FontSize="16">
                                 <RichTextBox.Style>
@@ -316,9 +314,9 @@
                             </RichTextBox>
 
                             <Border x:Name="btnTradeBorder" Grid.Column="1" Grid.Row="1"  
-                                    BorderBrush="#58c8f1" 
+                                    BorderBrush="#594438" 
                                     BorderThickness="1" CornerRadius="8"
-                                    Background="#58c8f1"  
+                                    Background="#594438"  
                                     Width="84" Height="25" 
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Bottom"
@@ -326,7 +324,7 @@
                                 <ToggleButton x:Name="btnTrade" Content="Trade"
                                           Click="btnTrade_Click" 
                                       Background="{x:Null}" 
-                                      BorderBrush="{x:Null}" Foreground="White"
+                                      BorderBrush="{x:Null}" Foreground="#F2BA87"
                                       UseLayoutRounding="False" 
                                       FontFamily="Bookman Old Style" 
                                       FontSize="16"
@@ -343,7 +341,7 @@
                                     </ToggleButton.Template>
                                     <ToggleButton.Style>
                                         <Style TargetType="ToggleButton">
-                                            <Setter Property="Foreground" Value="#FFDAD9D6" />
+                                            <Setter Property="Foreground" Value="#F2BA87" />
                                             <Style.Triggers>
                                                 <Trigger Property="IsChecked" Value="True">
                                                     <Setter Property="Foreground" Value="Gray" />
@@ -360,20 +358,20 @@
           SelectedValuePath="ID" IsDropDownOpen="False"
           SelectionChanged="cboWeapons_SelectionChanged"
           Loaded="cboWeapons_Loaded"
-          Background="{x:Null}" BorderBrush="#3cdcc5"
-          Foreground="#fffefc"
+          Background="{x:Null}" BorderBrush="#261F1A"
+          Foreground="#F2BA87"
           Height="Auto" MinHeight="25" Width="Auto" MinWidth="235"
           Margin="11,0,15,0">
                         <ComboBox.Resources>
                             <Style TargetType="ToggleButton">
-                                <Setter Property="Background" Value="#fffefc" />
-                                <Setter Property="Foreground" Value="#fffefc" />
+                                <Setter Property="Background" Value="#261F1A" />
+                                <Setter Property="Foreground" Value="#F2BA87" />
                             </Style>
                         </ComboBox.Resources>
                         <ComboBox.Style>
                             <Style TargetType="ComboBox">
-                                <Setter Property="Background" Value="#343661" />
-                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Background" Value="#261F1A" />
+                                <Setter Property="Foreground" Value="#F2BA87" />
                                 <Setter Property="BorderThickness" Value="1" />
                                 <Setter Property="Template">
                                     <Setter.Value>
@@ -455,14 +453,14 @@
 
 
                     <Border Grid.Row="5" Grid.Column="3"  
-        BorderBrush="#58c8f1" 
+        BorderBrush="#594438" 
         BorderThickness="1" CornerRadius="8"
         MinWidth="84"
         MinHeight="25" 
         Margin="10,0,0,0">
                         <Border.Style>
                             <Style TargetType="Border">
-                                <Setter Property="Background" Value="#58c8f1"/>
+                                <Setter Property="Background" Value="#594438"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ElementName=btnUseWeapon, Path=IsEnabled}" Value="False">
                                         <Setter Property="Background" Value="Gray"/>
@@ -473,7 +471,7 @@
                         </Border.Style>
                         <Button   x:Name="btnUseWeapon" Content="Attack" 
                                   Click="btnUseWeapon_Click" BorderBrush="{x:Null}" 
-              Foreground="White"
+              Foreground="#F2BA87"
               UseLayoutRounding="False"
               FontFamily="Bookman Old Style" 
               FontSize="16" Cursor="Hand"
@@ -489,7 +487,7 @@
                                         <Trigger Property="IsEnabled" Value="false">
                                             <Setter Property="Background" Value="{x:Null}"/>
                                             <Setter Property="BorderBrush" Value="{x:Null}"/>
-                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="Foreground" Value="#F2BA87"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -500,21 +498,21 @@
                     <ComboBox Grid.Row="7" x:Name="cboPotions" DisplayMemberPath="Name" Grid.ColumnSpan="3"
                               SelectedValuePath="ID" IsDropDownOpen="False"
                               SelectionChanged="cboPotions_SelectionChanged"
-                              Background="{x:Null}" BorderBrush="#3cdcc5"
-                              Foreground="#fffefc"
+                              Background="{x:Null}" BorderBrush="#261F1A"
+                              Foreground="#F2BA87"
                               Height="Auto" MinHeight="25" Width="Auto" MinWidth="235"
                               Margin="10,0,16,0"
                               Loaded="cboPotions_Loaded">
                         <ComboBox.Resources>
                             <Style TargetType="ToggleButton">
-                                <Setter Property="Background" Value="#fffefc" />
-                                <Setter Property="Foreground" Value="#fffefc" />
+                                <Setter Property="Background" Value="#261F1A" />
+                                <Setter Property="Foreground" Value="#F2BA87" />
                             </Style>
                         </ComboBox.Resources>
                         <ComboBox.Style>
                             <Style TargetType="ComboBox">
-                                <Setter Property="Background" Value="#343661" />
-                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Background" Value="#261F1A" />
+                                <Setter Property="Foreground" Value="#F2BA87" />
                                 <Setter Property="BorderThickness" Value="1" />
                                 <Setter Property="Template">
                                     <Setter.Value>
@@ -597,7 +595,7 @@
 
 
                     <Border Grid.Row="7" Grid.Column="3" 
-                            BorderBrush="#58c8f1" 
+                            BorderBrush="#594438" 
                             BorderThickness="1" CornerRadius="8"
                             MinWidth="84"
                             MinHeight="25"
@@ -605,7 +603,7 @@
 
                         <Border.Style>
                             <Style TargetType="Border">
-                                <Setter Property="Background" Value="#58c8f1"/>
+                                <Setter Property="Background" Value="#594438"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ElementName=btnUsePotion, Path=IsEnabled}" Value="False">
                                         <Setter Property="Background" Value="Gray"/>
@@ -617,7 +615,7 @@
                         <Button  x:Name="btnUsePotion" Content="Drink" 
                                  Click="btnUsePotion_Click" 
                                  BorderBrush="{x:Null}" 
-                                 Foreground="White"
+                                 Foreground="#F2BA87"
                                  UseLayoutRounding="False" FontFamily="Bookman Old Style"
                                  FontSize="16" Cursor="Hand"
                                  Background="{x:Null}">
@@ -632,7 +630,7 @@
                                         <Trigger Property="IsEnabled" Value="false">
                                             <Setter Property="Background" Value="{x:Null}"/>
                                             <Setter Property="BorderBrush" Value="{x:Null}"/>
-                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="Foreground" Value="#F2BA87"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -643,8 +641,8 @@
 
                     <!--MessageBox-->
                     <Border Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="7" Grid.RowSpan="5"
-                            BorderBrush="#343661" Background="#343661"
-                            BorderThickness="1" CornerRadius="8" Padding="5,5,5,9"
+                            BorderBrush="#FF261F1A" Background="#CC261F1A"
+                            BorderThickness="1" Padding="5,5,5,9"
                             Width="Auto" Height="Auto" MinHeight="277" MinWidth="300" Margin="10,0,10,0">
                         <RichTextBox x:Name="rtbMessages"
                                      IsReadOnly="True"
@@ -652,7 +650,7 @@
                                      BorderBrush="{x:Null}"
                                      SelectionTextBrush="{x:Null}"
                                      SelectionBrush="{x:Null}"
-                                     Foreground="#fffefc" FontFamily="Book Antiqua" FontSize="22"
+                                     Foreground="#F2BA87" FontFamily="Book Antiqua" FontSize="20"
                                      Width="Auto" Height="Auto"
                                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                      Margin="30,30,30,30">

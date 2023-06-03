@@ -70,7 +70,7 @@
 
                     <Label Grid.Row="0" Grid.Column="3"
                            Content="ECHOE OF THE ANCIENTS" 
-                           Foreground="#f96b88" 
+                           Foreground="#261F1A" 
                            FontFamily="Bookman Old Style" 
                            FontSize="22" 
                            VerticalAlignment="Bottom" 

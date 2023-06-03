@@ -60,9 +60,9 @@
                     </Grid.ColumnDefinitions>
 
                     <Border Grid.Row="0" Grid.Column="0"  
-                            BorderBrush="#f96b88" 
+                            BorderBrush="#261F1A" 
                             BorderThickness="1" CornerRadius="8"
-                            Background="#f96b88"  
+                            Background="#261F1A"  
                             Width="Auto"
                             Height="Auto" 
                             Margin="30,15,30,15"
@@ -86,44 +86,44 @@
                             </Grid.ColumnDefinitions>
 
                             <Border  Grid.RowSpan="4" Grid.Column="0"  Grid.Row="1"
-                                     BorderBrush="#fffefc" BorderThickness="2"  
+                                     BorderBrush="#F2BA87" BorderThickness="2"  
                                      CornerRadius="8" Margin="15,7,8,7"
                                      MinHeight="100"  MinWidth="100" Width="Auto" Height="Auto">
                                 <Image   OpacityMask="Black"/>
                             </Border>
                             <Label Grid.Row="1" Grid.Column="2" Content="Level:" HorizontalAlignment="Left" 
-                           VerticalAlignment="Top" TextBlock.Foreground="#fffefc" 
-                           FontFamily="Bookman Old Style" FontSize="14" Foreground="#fffefc" 
+                           VerticalAlignment="Top" TextBlock.Foreground="#F2BA87" 
+                           FontFamily="Bookman Old Style" FontSize="14" Foreground="#F2BA87" 
                            Height="26" Width="49" Margin="21,0,0,0" />
                             <Label Grid.Row="1"  Grid.Column="2" Content="Experience:" 
                            HorizontalAlignment="Left" VerticalAlignment="Top" 
                            TextBlock.Foreground="#FFE5DBDB" FontFamily="Bookman Old Style" 
-                           FontSize="14" Foreground="#fffefc" Height="26" Width="90" Margin="21,28,0,0" Grid.RowSpan="2" />
+                           FontSize="14" Foreground="#F2BA87" Height="26" Width="90" Margin="21,28,0,0" Grid.RowSpan="2" />
                             <Label Grid.Row="3" Grid.Column="2" Content="Hit Points:" 
                                    HorizontalAlignment="Left" 
                                    VerticalAlignment="Center" Background="{x:Null}" 
-                                   FontFamily="Bookman Old Style" FontSize="14" Foreground="#fffefc" 
+                                   FontFamily="Bookman Old Style" FontSize="14" Foreground="#F2BA87" 
                                    Height="26" Width="94" Margin="21,0,0,0"/>
                             <Label Grid.Row="4" Grid.Column="2" Content="Gold:" HorizontalAlignment="Left" 
                                    VerticalAlignment="Center" Background="{x:Null}" 
-                                   FontFamily="Bookman Old Style" FontSize="14" Foreground="#fffefc" 
+                                   FontFamily="Bookman Old Style" FontSize="14" Foreground="#F2BA87" 
                                    Height="26" Width="46" Margin="21,0,0,0" />
 
                             <Label Grid.Row="1" Grid.Column="3" x:Name="lbLevel" Content="" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" 
-                           Foreground="#fffefc" FontFamily="Bookman Old Style" 
+                           Foreground="#F2BA87" FontFamily="Bookman Old Style" 
                            FontSize="16" Height="25" Width="66"/>
                             <Label Grid.Row="2" Grid.Column="3" x:Name="lbExperience" 
                            Content="" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                           Foreground="#fffefc" FontFamily="Bookman Old Style" 
+                           Foreground="#F2BA87" FontFamily="Bookman Old Style" 
                            FontSize="16" Height="25" Width="66"  />
                             <Label Grid.Row="4" Grid.Column="3" x:Name="lbGold" Content="" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" 
-                           Foreground="#fffefc" FontFamily="Bookman Old Style" FontSize="16"
+                           Foreground="#F2BA87" FontFamily="Bookman Old Style" FontSize="16"
                            Height="26" Width="66"  />
                             <Label Grid.Row="3" Grid.Column="3" x:Name="lbHitPoints" 
                            HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16"
-                           Foreground="#fffefc" FontFamily="Bookman Old Style" 
+                           Foreground="#F2BA87" FontFamily="Bookman Old Style" 
                            Height="24" Width="66" />
 
                             <Border Grid.Row="1" Grid.Column="4"
