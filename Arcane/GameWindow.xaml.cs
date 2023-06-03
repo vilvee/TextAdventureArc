@@ -177,7 +177,7 @@ namespace Arcane
                 currentLineIndex = 0;
                 currentCharIndex = 0;
                 isReading = true;
-               // DisableOtherButtons();
+                DisableAllButtonsForDialogue();
 
                 rtbMessages.Document.Blocks.Clear();
                 ReadAndDisplayNextLine();
@@ -189,6 +189,7 @@ namespace Arcane
             if (!isReading)
             {
                 btnNext.IsEnabled = false;
+                //EnableAllButtonsExceptDialogue();
                 return;
             }
 
@@ -224,6 +225,7 @@ namespace Arcane
 
                     rtbMessages.AppendText(currentLine[i].ToString());
                     await Task.Delay(50);
+                    rtbMessages.ScrollToEnd();
                     currentCharIndex++;
                 }
 
@@ -237,12 +239,12 @@ namespace Arcane
                         await Task.Delay(500);  // Delay before showing the next line
                         rtbMessages.AppendText(Environment.NewLine + lines[currentLineIndex]);
                         rtbMessages.ScrollToEnd();
-                        // DisableOtherButtons();
+                        //DisableAllButtonsForDialogue();
                     }
                     else
                     {
                         isReading = false;
-                        EnableOtherButtons();
+                        EnableAllButtonsExceptDialogue();
                     }
                 }
             }
@@ -274,30 +276,58 @@ namespace Arcane
                     else
                     {
                         isReading = false;
-                        EnableOtherButtons();
+                        
                     }
                 }
+            }
+
+            if (!isReading)
+            {
+                EnableAllButtonsExceptDialogue();
             }
         }
 
 
-
-
-        private void EnableOtherButtons()
+        void EnableAllButtonsExceptDialogue()
         {
-            // Enable other buttons here
+            btnNext.IsEnabled = false;
+            btnNorth.IsEnabled = true;
+            btnEast.IsEnabled = true;
+            btnSouth.IsEnabled = true;
+            btnWest.IsEnabled = true;
+            btnInfo.IsEnabled = true;
+            btnMap.IsEnabled = true;
+            btnSave.IsEnabled = true;
+            btnSaveAndQuit.IsEnabled = true;
+            btnTrade.IsEnabled = true;
         }
 
-        private void DisableOtherButtons()
+        void DisableAllButtonsForDialogue( )
         {
-            // Disable other buttons here
+          
+           btnNorth.IsEnabled = false;
+           btnEast.IsEnabled = false;
+           btnSouth.IsEnabled = false;
+           btnWest.IsEnabled = false;
+           btnInfo.IsEnabled = false;
+           btnMap.IsEnabled = false;
+           btnSave.IsEnabled = false;
+           btnSaveAndQuit.IsEnabled = false;
+           btnTrade.IsEnabled = false;
+
+
         }
 
-        #region Directions
-        /// <summary>
-        /// Handles the click event for the North button and moves the player north.
-        /// </summary>
-        private void btnNorth_Click(object sender, EventArgs e)
+
+    
+
+
+
+    #region Directions
+    /// <summary>
+    /// Handles the click event for the North button and moves the player north.
+    /// </summary>
+    private void btnNorth_Click(object sender, EventArgs e)
         {
             Navigation.MoveNorth(_player);
             UpdateBackgroundImage();
