@@ -12,6 +12,10 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Numerics;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Threading;
+using System.Windows.Shapes;
 
 namespace Arcane
 {
@@ -20,8 +24,16 @@ namespace Arcane
     {
 
         public Player _player { get; set; }
-        private Dictionary<string, string> _imagePaths;
-        private string _currentLocationID;
+        private int _vendorCounter;
+        private Dictionary<int, string> _imagePaths;
+        private Dictionary<int, string> _NPCiDs;
+        private int _currentNPCID;
+        private string _currentNPCName;
+        private int _currentLocationID;
+        private int currentIndex = 0;
+        private DispatcherTimer timer;
+        private string Dialogue { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the GameWindow class.
         /// </summary>
@@ -84,26 +96,46 @@ namespace Arcane
 
         }
 
-        //TODO:Change background depending on location
+        private void SetNPCImage()
+        {
+
+            // Set the background image from code-behind
+            _NPCiDs = new Dictionary<int, string>
+            {
+                { 1 , "../../../Images/NPC/LuckyShopOwner.jpg" },
+            };
+
+            if (_player.CurrentLocation.VendorWorkingHere != null)
+            {
+                _currentNPCID = _player.CurrentLocation.VendorWorkingHere.ID;
+                _currentNPCName = _player.CurrentLocation.VendorWorkingHere.Name;
+                SetImage(imgNPC, _NPCiDs[_currentNPCID]);
+            }
+            else
+            {
+                imgNPC.Source = null;
+            }
+        }
+
         private void UpdateBackgroundImage()
         {
             // Set the background image from code-behind
-            _imagePaths = new Dictionary<string, string>
+            _imagePaths = new Dictionary<int, string>
             {
-                { "1" , "../../../Images/homeVillage.jpg" },
-                { "2" , "../../../Images/wastelands.jpg" },
-                { "3" , "../../../Images/ruinedCity.jpg" },
-                { "4" , "../../../Images/forestOfEchoes.jpg" },
-                { "5" , "../../../Images/ancientTemple.jpg" },
-                { "6" , "../../../Images/cursedDesert.jpg" },
-                { "7" , "../../../Images/mountainOfSolitude.jpg" },
-                { "8" , "../../../Images/skyFortress.jpg" },
-                { "9" , "../../../Images/underwaterRuins.jpg" },
-                { "10" , "../../../Images/sanctuary.jpg" },
+                { 1 , "../../../Images/homeVillage.jpg" },
+                { 2 , "../../../Images/wastelands.jpg" },
+                { 3 , "../../../Images/ruinedCity.jpg" },
+                { 4 , "../../../Images/forestOfEchoes.jpg" },
+                { 5 , "../../../Images/ancientTemple.jpg" },
+                { 6 , "../../../Images/cursedDesert.jpg" },
+                { 7 , "../../../Images/mountainOfSolitude.jpg" },
+                { 8 , "../../../Images/skyFortress.jpg" },
+                { 9 , "../../../Images/underwaterRuins.jpg" },
+                { 10 , "../../../Images/sanctuary.jpg" },
 
             };
 
-            _currentLocationID = _player.CurrentLocation.ID.ToString();
+            _currentLocationID = _player.CurrentLocation.ID;
 
             this.Background = SetBackgroundImage(_imagePaths[_currentLocationID]);
         }
@@ -125,6 +157,68 @@ namespace Arcane
             return imageBrush;
         }
 
+        private bool IsVendorPresent() => (_player.CurrentLocation.VendorWorkingHere != null) ? true : false;
+
+        private void DialogueAvailable()
+        {
+            if (IsVendorPresent())
+            {
+                int counter = _player.CurrentLocation.VendorWorkingHere.Counter;
+                string filePath = $"../../../Dialogues/{_currentNPCName}/{counter}.txt";
+                
+                ReadAndDisplayDialogues(filePath);
+            }
+        }
+
+        private async void ReadAndDisplayDialogues(string filePath)
+        {
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                string line;
+                string[] text;
+
+                while ((line = await reader.ReadLineAsync()) != null)
+                {
+                    // Create a new FlowDocument for each dialogue line
+                    FlowDocument flowDocument = new FlowDocument();
+
+                    // Split the line into dialogue and speaker
+                    text = line.Split(new char[] { ',' }, 2);
+                    string name = text[0].Replace("P", _player.CharacterName + " : ").Replace("V", _player.CurrentLocation.VendorWorkingHere.Name + " : ");
+                    string dialogue = text[1];
+
+                    // Create a new paragraph to hold the dialogue text
+                    Paragraph paragraph = new Paragraph();
+                    flowDocument.Blocks.Add(paragraph);
+
+                    // Combine dialogue[0] and dialogue[1] if both elements are available
+                    string fullDialogue = dialogue.Length > 1 ? $"{name} {text[1]}" : name;
+
+                    // Add the FlowDocument to the RichTextBox
+                    rtbMessages.Document = flowDocument;
+
+                    // Start the typing effect
+                    await TypingEffect(fullDialogue, paragraph);
+
+                    // Wait for 4 seconds before clearing the text
+                    await Task.Delay(4000);
+
+                    // Clear the text
+                    paragraph.Inlines.Clear();
+                }
+            }
+        }
+
+        private async Task TypingEffect(string text, Paragraph paragraph)
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                paragraph.Inlines.Add(new Run(text[i].ToString()));
+
+                // Pause for a short interval between each character
+                await Task.Delay(100); // Adjust the delay as per your preference
+            }
+        }
 
         #region Directions
         /// <summary>
@@ -134,6 +228,8 @@ namespace Arcane
         {
             Navigation.MoveNorth(_player);
             UpdateBackgroundImage();
+            SetNPCImage();
+            DialogueAvailable();
         }
 
         /// <summary>
@@ -143,6 +239,8 @@ namespace Arcane
         {
             Navigation.MoveEast(_player);
             UpdateBackgroundImage();
+            SetNPCImage();
+            DialogueAvailable();
         }
 
         /// <summary>
@@ -152,6 +250,8 @@ namespace Arcane
         {
             Navigation.MoveSouth(_player);
             UpdateBackgroundImage();
+            SetNPCImage();
+            DialogueAvailable();
         }
 
         /// <summary>
@@ -161,6 +261,8 @@ namespace Arcane
         {
             Navigation.MoveWest(_player);
             UpdateBackgroundImage();
+            SetNPCImage();
+            DialogueAvailable();
         }
         #endregion
 
@@ -296,6 +398,36 @@ namespace Arcane
             WorldMap mapScreen = new WorldMap(_player);
             mapScreen.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             mapScreen.ShowDialog();
+        }
+
+
+        /// <summary>
+        /// Handles the click event for the Map button and opens the world map screen.
+        /// </summary>
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            string dataFile = _player.PlayerDataFileName;
+            // Save player data to XML file
+            File.WriteAllText(dataFile, _player.ToXmlString());
+
+            /*         // Save player data to the database
+                     PlayerDataMapper.SaveToDatabase(_player);
+                     // Close the window.*/
+        }
+
+        /// <summary>
+        /// Handles the click event for the Map button and opens the world map screen.
+        /// </summary>
+        private void btnSaveAndQuit_Click(object sender, RoutedEventArgs e)
+        {
+            string dataFile = _player.PlayerDataFileName;
+            // Save player data to XML file
+            File.WriteAllText(dataFile, _player.ToXmlString());
+
+            /*         // Save player data to the database
+                     PlayerDataMapper.SaveToDatabase(_player);
+                     // Close the window.*/
+            Close();
         }
         #endregion
 
@@ -447,6 +579,7 @@ namespace Arcane
         /// <param name="e">The event arguments.</param>
         private void TriggerClose(object sender, RoutedEventArgs e)
         {
+             
             string dataFile = _player.PlayerDataFileName;
             // Save player data to XML file
             File.WriteAllText(dataFile, _player.ToXmlString());
@@ -456,6 +589,8 @@ namespace Arcane
                      // Close the window.*/
             Close();
         }
+
+
 
         /// <summary>
         /// Event handler for minimizing the window.

@@ -31,6 +31,7 @@ namespace Arcane
         private string enteredUsername;
         public string CharacterImagePath { get; set; }
         private Border _lastSelectedBorder = null;
+        private bool _characterSelected = false;
 
         private Dictionary<Image, string> _imagePaths;
 
@@ -92,6 +93,7 @@ namespace Arcane
 
                 // Store the currently selected border
                 _lastSelectedBorder = imageBorder;
+                _characterSelected = true;
             }
         }
 
@@ -117,7 +119,8 @@ namespace Arcane
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-           
+            if (!string.IsNullOrWhiteSpace(txtCharacterName.Text) && _characterSelected)
+            {
                 btnSave.IsEnabled = true;
                 enteredUsername = txtCharacterName.Text;
                 _player = Player.CreateDefaultPlayer(enteredUsername, CharacterImagePath);
@@ -125,9 +128,12 @@ namespace Arcane
                 gameSession.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 this.Close();
                 gameSession.ShowDialog();
+            }
+
 
         }
 
+#region Window Events
 
         private void TriggerMoveWindow(object sender, MouseEventArgs e)
         {
@@ -164,5 +170,9 @@ namespace Arcane
         {
             WindowState = System.Windows.WindowState.Minimized;
         }
+
+        #endregion
+
+
     }
 }

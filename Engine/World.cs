@@ -19,6 +19,7 @@ namespace Engine
 
         public const int UNSELLABLE_ITEM_PRICE = -1;
 
+        // Item IDs
         public const int ITEM_ID_RUSTY_SWORD = 1;
         public const int ITEM_ID_RAT_TAIL = 2;
         public const int ITEM_ID_PIECE_OF_FUR = 3;
@@ -31,13 +32,16 @@ namespace Engine
         public const int ITEM_ID_ADVENTURER_PASS = 10;
         public const int ITEM_ID_MIGHT_POTION = 11;
 
+        // Enemy IDs
         public const int Enemy_ID_RAT = 1;
         public const int Enemy_ID_SNAKE = 2;
         public const int Enemy_ID_GIANT_SPIDER = 3;
 
+        // Quest IDs
         public const int Quest_ID_CLEAR_ALCHEMIST_GARDEN = 1;
         public const int Quest_ID_CLEAR_FARMERS_FIELD = 2;
 
+        // Location IDs
         public const int LOCATION_ID_HOME = 1;
         public const int LOCATION_ID_TOWN_SQUARE = 2;
         public const int LOCATION_ID_GUARD_POST = 3;
@@ -47,6 +51,9 @@ namespace Engine
         public const int LOCATION_ID_FARM_FIELD = 7;
         public const int LOCATION_ID_BRIDGE = 8;
         public const int LOCATION_ID_SPIDER_FIELD = 9;
+
+        // NPC IDs
+        public const int LUCKY_ID = 1;
 
         static World()
         {
@@ -109,6 +116,7 @@ namespace Engine
             Enemies.Add(giantSpider);
         }
 
+
         /// <summary>
         /// Populates the list of levels.
         /// </summary>
@@ -153,29 +161,29 @@ namespace Engine
             // Create each location
 
             // Town Square
-            Location townSquare = new Location(LOCATION_ID_TOWN_SQUARE, "Town square", "You see a fountain.");
-            Vendor bobTheRatCatcher = new Vendor("Bob the Rat-Catcher");
-            bobTheRatCatcher.AddItemToInventory(ItemByID(ITEM_ID_PIECE_OF_FUR), 5);
-            bobTheRatCatcher.AddItemToInventory(ItemByID(ITEM_ID_RAT_TAIL), 3);
-            townSquare.VendorWorkingHere = bobTheRatCatcher;
+            Location townSquare = new (LOCATION_ID_TOWN_SQUARE, "Town square", "You see a fountain.");
+            Vendor Lucky = new(LUCKY_ID,"Lucky");
+            Lucky.AddItemToInventory(ItemByID(ITEM_ID_PIECE_OF_FUR), 5);
+            Lucky.AddItemToInventory(ItemByID(ITEM_ID_RAT_TAIL), 3);
+            townSquare.VendorWorkingHere = Lucky;
 
             // Home
-            Location home = new Location(LOCATION_ID_HOME, "Home", "Your house. You really need to clean up the place.");
+            Location home = new (LOCATION_ID_HOME, "Home", "Your house. You really need to clean up the place.");
 
             // Alchemist's Hut
-            Location alchemistHut = new Location(LOCATION_ID_ALCHEMIST_HUT, "Alchemist's hut", "There are many strange plants on the shelves.");
+            Location alchemistHut = new (LOCATION_ID_ALCHEMIST_HUT, "Alchemist's hut", "There are many strange plants on the shelves.");
             alchemistHut.QuestAvailableHere = QuestByID(Quest_ID_CLEAR_ALCHEMIST_GARDEN);
 
             // Alchemist's Garden
-            Location alchemistsGarden = new Location(LOCATION_ID_ALCHEMISTS_GARDEN, "Alchemist's garden", "Many plants are growing here.");
+            Location alchemistsGarden = new (LOCATION_ID_ALCHEMISTS_GARDEN, "Alchemist's garden", "Many plants are growing here.");
             alchemistsGarden.AddEnemy(Enemy_ID_RAT, 100);
 
             // Farmhouse
-            Location farmhouse = new Location(LOCATION_ID_FARMHOUSE, "Farmhouse", "There is a small farmhouse, with a farmer in front.");
+            Location farmhouse = new (LOCATION_ID_FARMHOUSE, "Farmhouse", "There is a small farmhouse, with a farmer in front.");
             farmhouse.QuestAvailableHere = QuestByID(Quest_ID_CLEAR_FARMERS_FIELD);
 
             // Farmer's Field
-            Location farmersField = new Location(LOCATION_ID_FARM_FIELD, "Farmer's field", "You see rows of vegetables growing here.");
+            Location farmersField = new (LOCATION_ID_FARM_FIELD, "Farmer's field", "You see rows of vegetables growing here.");
             farmersField.AddEnemy(Enemy_ID_SNAKE, 100);
 
             // Guard Post

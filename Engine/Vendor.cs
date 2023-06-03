@@ -9,10 +9,16 @@ namespace Engine
     /// </summary>
     public class Vendor : INotifyPropertyChanged
     {
+        public int Counter { get; private set; } 
+        
         /// <summary>
         /// Gets or sets the name of the vendor.
         /// </summary>
         public string Name { get; set; }
+
+        public int ID { get; set; }
+
+        public string Dialogues { get; set; }
 
         /// <summary>
         /// Gets the inventory of the vendor.
@@ -23,10 +29,13 @@ namespace Engine
         /// Initializes a new instance of the <see cref="Vendor"/> class with the specified name.
         /// </summary>
         /// <param name="name">The name of the vendor.</param>
-        public Vendor(string name)
+        public Vendor(int iD, string name )
         {
+            ID = iD;
             Name = name;
             Inventory = new BindingList<Inventory>();
+            Counter++;
+            
         }
 
         /// <summary>
@@ -99,6 +108,11 @@ namespace Engine
         private void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public void DialoguesToDisplay()
+        {
+            
         }
     }
 }

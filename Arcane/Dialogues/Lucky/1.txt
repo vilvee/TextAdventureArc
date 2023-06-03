@@ -1,0 +1,17 @@
+V, "Well, if it isn't my favorite scavenger. What brings you to my humble shop today?"
+
+P, "Just checking in, seeing if you've got anything new."
+
+V, "Always the curious one, aren't you? Well, I've got a few things that might catch your eye."
+
+P, "I'm looking for something to help me in the Wastelands. It's getting tougher out there."
+
+V, "Ah, the Wastelands. Nasty place, that. I've got just the thing. This here's an old relic, said to protect the wearer from harm. It won't make you invincible, but it might just give you the edge you need."
+
+P, "Sounds like exactly what I need. How much?"
+
+V, "For anyone else, it'd be a small fortune. But for you, let's just call it a favor for a friend. Just promise me you'll be careful out there."
+
+P, "I promise. Thanks, friend."
+
+V, "No need for thanks. Just come back in one piece, alright?"
