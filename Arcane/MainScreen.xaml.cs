@@ -72,17 +72,18 @@ namespace Arcane
                 playerData = Path.Combine(directoryPath, $"PlayerData{uniquePart}.xml");
                 // Display the file path in the TextBox
                 _player = Player.CreatePlayerFromXmlString(File.ReadAllText(playerData));
-
+                GameWindow gameWindow = new GameWindow(_player);
+                gameWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                this.Close();
+                gameWindow.ShowDialog();
             }
             else
             {
                 MessageBox.Show("Please select a file from the list first.");
             }
 
-            GameWindow gameWindow = new GameWindow(_player);
-            gameWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            this.Close();
-            gameWindow.ShowDialog();
+
+
         }
         private void btnNewGame_Click(object sender, RoutedEventArgs e)
         {
