@@ -30,6 +30,10 @@ namespace Arcane
         {
             InitializeComponent();
 
+            ImageBrush myBrush = new ImageBrush();
+            myBrush.ImageSource = new BitmapImage(new Uri("../../../Images/MainWindow.jpg", UriKind.RelativeOrAbsolute));
+            this.Background = myBrush;
+
             // Look if PlayerData.xml file pattern exiasta in the current directory bool
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string searchPattern = "PlayerData*.xml";

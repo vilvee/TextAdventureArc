@@ -275,7 +275,7 @@ namespace Arcane
         private void btnTrade_Click(object sender, RoutedEventArgs e)
         {
             TradingScreen tradingScreen = new TradingScreen(_player);
-            tradingScreen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            tradingScreen.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             tradingScreen.ShowDialog();
         }
 
@@ -285,7 +285,7 @@ namespace Arcane
         private void btnMap_Click(object sender, RoutedEventArgs e)
         {
             WorldMap mapScreen = new WorldMap(_player);
-            mapScreen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            mapScreen.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             mapScreen.ShowDialog();
         }
         #endregion

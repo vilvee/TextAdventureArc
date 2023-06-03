@@ -171,16 +171,16 @@
                               CanUserSortColumns="True" AutoGenerateColumns="False"
                                       IsSynchronizedWithCurrentItem="True" IsReadOnly="True" 
                                       HeadersVisibility="Column" SelectionMode="Single" 
-                                      VerticalAlignment="Top" Foreground="#343661" 
+                                      VerticalAlignment="Top" Foreground="#261F1A" 
                                       HorizontalGridLinesBrush="#FF4E4E4E" 
                                       VerticalGridLinesBrush="#FF4E4E4E" 
-                                      Sorting="dgvInventory_Sorting" Background="#343661"
-                                      BorderBrush="#343661" FontFamily="Book Antiqua" 
+                                      Sorting="dgvInventory_Sorting" Background="#261F1A"
+                                      BorderBrush="#261F1A" FontFamily="Book Antiqua" 
                                       Margin="24,29,36,0" Height="334"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2">
                         <DataGrid.Resources>
                             <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="#343661" />
+                                <Setter Property="Background" Value="#261F1A" />
                                 <Setter Property="Foreground" Value="White" />
                                 <Setter Property="BorderBrush" Value="{x:Null}" />
                                 <Setter Property="IsHitTestVisible" Value="False" />
@@ -224,16 +224,16 @@
                               CanUserSortColumns="True" AutoGenerateColumns="False"
                                       IsSynchronizedWithCurrentItem="True" IsReadOnly="True" 
                                       HeadersVisibility="Column" SelectionMode="Single" 
-                                      VerticalAlignment="Top" Foreground="#343661" 
+                                      VerticalAlignment="Top" Foreground="#261F1A" 
                                       HorizontalGridLinesBrush="#FF4E4E4E" 
                                       VerticalGridLinesBrush="#FF4E4E4E" 
-                                      Sorting="dgvQuests_Sorting" Background="#343661"
-                                      BorderBrush="#343661" FontFamily="Book Antiqua" 
+                                      Sorting="dgvQuests_Sorting" Background="#261F1A"
+                                      BorderBrush="#261F1A" FontFamily="Book Antiqua" 
                                       Margin="30,29,0,0" Height="353"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2">
                         <DataGrid.Resources>
                             <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="#343661" />
+                                <Setter Property="Background" Value="#261F1A" />
                                 <Setter Property="Foreground" Value="White" />
                                 <Setter Property="BorderBrush" Value="{x:Null}" />
                                 <Setter Property="IsHitTestVisible" Value="False" />

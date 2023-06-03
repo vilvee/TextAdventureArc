@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowStyle="None"
         AllowsTransparency="True"
-        xmlns:local="clr-namespace:Arcane"
         Title="TradingScreen" Height="349" Width="544">
+
     <Window.Resources>
         <Style x:Key="WindowIconStyle"
                TargetType="{x:Type Hyperlink}">
@@ -17,22 +17,18 @@
             <Setter Property="Cursor"
                     Value="{x:Null}" />
             <Setter Property="Foreground"
-                    Value="White" />
+                    Value="#F2BA87" />
         </Style>
     </Window.Resources>
-    <Window.Background>
-        <ImageBrush ImageSource="/shopjpg.jpg"/>
-    </Window.Background>
-
     <DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <TextBlock DockPanel.Dock="Right"
-                       VerticalAlignment="Center" Margin="0,0,12,0" Foreground="White" FontFamily="Book Antiqua">
+                       VerticalAlignment="Center" Margin="0,0,12,0" Foreground="#F2BA87" FontFamily="Book Antiqua">
                 <Hyperlink Click="TriggerClose"
                            Style="{StaticResource WindowIconStyle}">r</Hyperlink>
             </TextBlock>
             <TextBlock DockPanel.Dock="Right"
-                       VerticalAlignment="Center" Margin="0,0,18,0" Foreground="White">
+                       VerticalAlignment="Center" Margin="0,0,18,0" Foreground="#F2BA87">
                 <Hyperlink Click="TriggerMinimize"
                            Style="{StaticResource WindowIconStyle}">0</Hyperlink>
             </TextBlock>
@@ -41,35 +37,43 @@
                        MouseMove="TriggerMoveWindow">
                 <TextBlock x:Name="Shop" DockPanel.Dock="Left"
                            Text="Shop"
-                           FontSize="16" Margin="9,0,0,0" Foreground="White" FontFamily="Book Antiqua"/>
+                           FontSize="16" Margin="9,0,0,0" Foreground="#F2BA87" FontFamily="Book Antiqua"/>
             </StatusBar>
 
         </DockPanel>
 
         <Canvas>
-        <Label Content="My Inventory" x:Name="lblMyInventory" Canvas.Left="99" Canvas.Top="13"/>
-        <Label Content="Vendor's Inventory" x:Name="lblVendorInventory" Canvas.Left="349" Canvas.Top="13"/>
-            <DataGrid x:Name="dgvMyItems" AutoGenerateColumns="False" Canvas.Left="13" Canvas.Top="43" Width="240" Height="216" EnableRowVirtualization="False"
-          HorizontalGridLinesBrush="#FF4E4E4E" VerticalGridLinesBrush="#FF4E4E4E" AlternationCount="2" AlternatingRowBackground="#FFB1AFAF" Foreground="#F3000000" Background="#9CF0F0F0" BorderBrush="{x:Null}">
+        <Label Content="My Inventory" x:Name="lblMyInventory" Canvas.Left="99" 
+               Canvas.Top="13" Foreground="#FFF2BA87"/>
+        <Label Content="Vendor's Inventory" x:Name="lblVendorInventory"
+               Canvas.Left="349" Canvas.Top="13" Foreground="#FFF2BA87"/>
+            <DataGrid x:Name="dgvMyItems" AutoGenerateColumns="False" 
+                      Canvas.Left="13" Canvas.Top="43" Width="240" Height="216"
+                      EnableRowVirtualization="False"
+          HorizontalGridLinesBrush="#FF4E4E4E" 
+                      VerticalGridLinesBrush="#FF4E4E4E" 
+                      AlternationCount="2" AlternatingRowBackground="#594438" 
+                      Foreground="#F3000000" Background="#CCF0F0F0"
+                      BorderBrush="{x:Null}">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Foreground" Value="#FFFFFF" />
+                        <Setter Property="Foreground" Value="#F2BA87" />
                         <Setter Property="BorderThickness" Value="0" />
-                        <Setter Property="Background" Value="#FFA9884B" />
+                        <Setter Property="Background" Value="#261F1A" />
                     </Style>
                     <Style TargetType="Separator">
-                        <Setter Property="Background" Value="#FFA9884B" />
+                        <Setter Property="Background" Value="#261F1A" />
                         <Setter Property="Margin" Value="0" />
                     </Style>
                     <Style TargetType="DataGridCell">
                         <Setter Property="Background" Value="#107D6A31" />
-                        <Setter Property="Foreground" Value="#FFA9884B" />
+                        <Setter Property="Foreground" Value="#261F1A" />
                         <Setter Property="BorderBrush" Value="{x:Null}" />
                         <Setter Property="Padding" Value="5" />
                     </Style>
                     <Style TargetType="Button" x:Key="SellButtonStyle">
                         <Setter Property="Background" Value="#107D6A31" />
-                        <Setter Property="Foreground" Value="#FFA9884B" />
+                        <Setter Property="Foreground" Value="#261F1A" />
                         <Setter Property="BorderBrush" Value="#00688CAF" />
                         <Setter Property="Padding" Value="5" />
                     </Style>
@@ -89,27 +93,32 @@
             </DataGrid>
 
 
-            <DataGrid x:Name="dgvVendorItems" AutoGenerateColumns="False" Canvas.Left="276" Canvas.Top="43" Width="240" Height="216" SelectionMode="Single" EnableRowVirtualization="False"
-          HorizontalGridLinesBrush="#FF4E4E4E" VerticalGridLinesBrush="#FF4E4E4E" AlternationCount="2" AlternatingRowBackground="#FFB1AFAF" BorderBrush="{x:Null}" Background="#9BF0F0F0">
+            <DataGrid x:Name="dgvVendorItems" AutoGenerateColumns="False" 
+                      Canvas.Left="276" Canvas.Top="43" Width="240" Height="216"
+                      SelectionMode="Single" EnableRowVirtualization="False"
+          HorizontalGridLinesBrush="#FF4E4E4E" 
+                      VerticalGridLinesBrush="#FF4E4E4E" AlternationCount="2"
+                      AlternatingRowBackground="#594438" BorderBrush="{x:Null}" 
+                      Background="#CCF0F0F0">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Foreground" Value="#FFFFFF" />
+                        <Setter Property="Foreground" Value="#F2BA87" />
                         <Setter Property="BorderThickness" Value="0" />
-                        <Setter Property="Background" Value="#FFA9884B" />
+                        <Setter Property="Background" Value="#261F1A" />
                     </Style>
                     <Style TargetType="Separator">
-                        <Setter Property="Background" Value="#FFA9884B" />
+                        <Setter Property="Background" Value="#261F1A" />
                         <Setter Property="Margin" Value="0" />
                     </Style>
                     <Style TargetType="DataGridCell">
                         <Setter Property="Background" Value="#107D6A31" />
-                        <Setter Property="Foreground" Value="#FFA9884B" />
+                        <Setter Property="Foreground" Value="#261F1A" />
                         <Setter Property="BorderBrush" Value="{x:Null}" />
                         <Setter Property="Padding" Value="5" />
                     </Style>
                     <Style TargetType="Button" x:Key="BuyButtonStyle">
                         <Setter Property="Background" Value="#107D6A31" />
-                        <Setter Property="Foreground" Value="#FFA9884B" />
+                        <Setter Property="Foreground" Value="#261F1A" />
                         <Setter Property="BorderBrush" Value="#00688CAF" />
                         <Setter Property="Padding" Value="5" />
                     </Style>
@@ -129,11 +138,19 @@
 
 
 
-
-            <Button Content="Close" x:Name="btnClose" Canvas.Left="441" Canvas.Top="274" HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Click="btnClose_Click" 
-                    BorderBrush="#00707070" Foreground="#FFDAD9D6" 
-                    UseLayoutRounding="False" FontFamily="Bookman Old Style" FontSize="16" Cursor="Hand" Background="#FFA38149"/>
-    </Canvas>
+            <Border Grid.Row="1" Grid.Column="1" 
+                Background="#261F1A" 
+                BorderBrush="#261F1A" 
+                BorderThickness="1" 
+                CornerRadius="8" Canvas.Left="434" Canvas.Top="276">
+                <Button Content="Close" x:Name="btnClose" Canvas.Left="441" 
+                    Canvas.Top="274" HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" Width="78" Click="btnClose_Click" 
+                    BorderBrush="#00707070" Foreground="#FFF2BA87" 
+                    UseLayoutRounding="False" FontFamily="Bookman Old Style" 
+                    FontSize="16" Cursor="Hand" Background="#FF261F1A"/>
+            </Border>
+        </Canvas>
 
 
     </DockPanel>

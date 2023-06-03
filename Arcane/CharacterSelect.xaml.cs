@@ -37,8 +37,13 @@ namespace Arcane
         public CharacterSelect()
         {
             InitializeComponent();
-           
-            _imagePaths= new Dictionary<Image, string>
+
+            ImageBrush myBrush = new ImageBrush();
+            myBrush.ImageSource = new BitmapImage(new Uri("../../../Images/CharacterWindow.jpg", UriKind.RelativeOrAbsolute));
+            this.Background = myBrush;
+
+
+            _imagePaths = new Dictionary<Image, string>
             {
                 { imgMaleScavanger, "../../../Images/Characters/MaleScavanger.jpg" },
                 { imgMaleAristocrat, "../../../Images/Characters/MaleAristocrat.jpg" },
@@ -76,7 +81,7 @@ namespace Arcane
                 if (_lastSelectedBorder != null)
                 {
                     // Restore the previous color of the last selected border
-                    _lastSelectedBorder.BorderBrush = (SolidColorBrush)new BrushConverter().ConvertFromString("#343661");
+                    _lastSelectedBorder.BorderBrush = (SolidColorBrush)new BrushConverter().ConvertFromString("#261F1A");
                 }
 
                 // Change the border color to white

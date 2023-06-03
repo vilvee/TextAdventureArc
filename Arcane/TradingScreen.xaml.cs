@@ -28,6 +28,11 @@ namespace Arcane
             _currentPlayer = player;
             InitializeComponent();
 
+
+            ImageBrush myBrush = new ImageBrush();
+            myBrush.ImageSource = new BitmapImage(new Uri("../../../Images/vendor.jpg", UriKind.RelativeOrAbsolute));
+            this.Background = myBrush;
+
             // Bind the player's inventory to the My Items data grid view.
             dgvMyItems.ItemsSource = _currentPlayer.Inventory;
 
